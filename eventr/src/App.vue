@@ -6,21 +6,10 @@
       color="red darken-3"
       dark
     >
-      <v-toolbar-title
-        style="width: 300px"
-        class="ml-0 pl-4"
-      >
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <span class="hidden-sm-and-down">Eventr | Friends</span>
+      <v-toolbar-title style="width: 300px" class="ml-0 pl-4" >
+        <span class="hidden-sm-and-down">Eventr</span>
       </v-toolbar-title>
-      <v-text-field
-        flat
-        solo-inverted
-        hide-details
-        prepend-inner-icon="search"
-        label="Search"
-        class="hidden-sm-and-down"
-      ></v-text-field>
+      
       <div class="flex-grow-1"></div>
       <v-btn icon>
         <v-icon>mdi-apps</v-icon>
@@ -44,11 +33,11 @@
       </v-btn>
     </v-app-bar>
     <v-content>
-      <div id="nav">
+      <div id="nav" class="ml-0 pl-4">
         <router-link to="/home">Home</router-link>
         <router-link to="/about"> | About</router-link>
         <router-link to="/eventCreator"> | Event Creator</router-link>
-        <router-link to="/friendsHub"> | Add Friend</router-link>
+        <router-link to="/friendsHub"> | Friends</router-link>
       </div>
       <router-view/>
      

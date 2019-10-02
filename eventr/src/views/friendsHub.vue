@@ -1,5 +1,7 @@
 <template>
+
   <v-app id="inspire">
+      
     <v-navigation-drawer
       v-model="drawer"
       :clipped="$vuetify.breakpoint.lgAndUp"
@@ -76,6 +78,26 @@
       </v-list>
     </v-navigation-drawer>
 
+    
+      <v-toolbar-title
+        style="width: 300px"
+        class="ml-0 pl-4 "
+      >
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+        <span class="hidden-sm-and-down">Friends</span>
+      </v-toolbar-title>
+      <v-text-field
+        flat
+        solo-inverted
+        hide-details
+        prepend-inner-icon="search"
+        label="Search"
+        class="hidden-sm-and-down ml-0 pl-4 mr-0 pr-4"
+      ></v-text-field>
+      <div class="flex-grow-1"></div>
+      
+      
+    </v-app-bar>
         
     <v-content>
       <v-container
