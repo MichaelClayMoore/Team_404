@@ -8,7 +8,7 @@
       <v-spacer></v-spacer>
       <v-btn
         text
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
+        href="https://github.com/MichaelClayMoore/Team_404"
         target="_blank"
       >
         <span class="mr-2">Github Link</span>
