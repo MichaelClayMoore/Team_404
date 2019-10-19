@@ -13,7 +13,7 @@
       <v-card>
         <v-card-title :style="{'background-color':'tomato','color':'white'}" class="title">When is it?</v-card-title>
         <v-card-actions>
-          <v-date-picker landscape full-width color="#ff6347" v-model="eventDate" :style="{'font-size':'15px'}"></v-date-picker>
+          <v-date-picker landscape full-width color="#ff6347" v-model="eventProp['date']" style="font-size:15px" v-on:input="updateDateString" ></v-date-picker>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -28,17 +28,18 @@
     -->
     <v-dialog v-model="locationDialog" max-width="50%">
       <v-card>
+
         <!-- title bar -->
         <v-card-title :style="{'background-color':'tomato','color':'white'}" class="title">Where is it?</v-card-title>
 
         <!-- input for the address -->
         <v-card-text>
           <v-layout row>
-          <v-text-field class="input" label="Address 1"></v-text-field>
-          <v-text-field class="input" label="Address 2 (optional)"></v-text-field>
-          <v-text-field class="input" label="City"></v-text-field>
-          <v-text-field class="input" label="State"></v-text-field>
-          <v-text-field class="input" label="Zip"></v-text-field>
+          <v-text-field v-model="eventProp['location']['address1']" class="input" label="Address 1"></v-text-field>
+          <v-text-field v-model="eventProp['location']['address2']"  class="input" label="Address 2 (optional)"></v-text-field>
+          <v-text-field v-model="eventProp['location']['city']"  class="input" label="City"></v-text-field>
+          <v-text-field v-model="eventProp['location']['state']"  class="input" label="State"></v-text-field>
+          <v-text-field v-model="eventProp['location']['zip']"  class="input" label="Zip"></v-text-field>
           </v-layout>
         </v-card-text>
 
@@ -63,7 +64,8 @@
     </v-dialog>
 
     <!-- this is where the full page starts -->
-    <v-flex flex justify-center align-center column>
+    <div flex justify-center align-center column>
+
       <!-- title line -->
       <h1 :style="{'display':'inline','font-weight':'bold','font-size':'48px'}"><span class="heading">Create a Event </span></h1>
       <i class="material-icons" :style="{'font-size':'36px','position':'relative','top':'5px','color':'tomato'}">whatshot</i>
@@ -72,10 +74,10 @@
       <v-layout column>
 
         <!-- event name field -->
-        <v-text-field v-model="eventName" class="input" id="name" label="Event Name" color="#ff6347"></v-text-field>
+        <v-text-field v-model="eventProp['name']" class="input" id="name" label="Event Name" color="#ff6347"></v-text-field>
 
         <!-- both the location and date buttons. -->
-        <v-layout row>
+        <v-layout row style="margin-bottom:20px">
           <v-spacer/>
           <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="dateDialog = true;">{{eventDateString}}</v-btn>
           <v-spacer/>
@@ -83,15 +85,6 @@
           <v-spacer/>
         </v-layout>
 
-        <!-- rsvp checkbox -->
-        <div class="d-flex flex-row align-content-space-between" >
-          <v-spacer/>
-          <v-checkbox class="flex-grow-1 flex-shrink-0" label="RSVP Required" color="#ff6347"></v-checkbox>
-        </div>
-
-        <!-- tell us a little about section -->
-        <Span class="heading"> Tell us a little about it.</Span>
-        <v-textarea filled clearable></v-textarea>
 
         <!--
         ______ Event style selector ________________________________________________________
@@ -101,15 +94,12 @@
         |     -> this is what hold the value of what they select. originally set to the    |
         |        empty string. it will be replaced with whatever value they select.        |
         L__________________________________________________________________________________|
-        -->
-        <v-select v-model="eventStyle" :items="Events" filled rounded class="input" label="Event Type" color="#ff6347"></v-select>
+      -->
+      <v-select v-model="eventProp['style']" :items="Events" filled rounded class="input" label="Event Type" color="#ff6347"></v-select>
 
-        <!-- this hold the 'where is it' input -->
-        <v-container>
-          <v-layout row>
-            <v-text-field label="Where is it?"></v-text-field>
-          </v-layout>
-        </v-container>
+        <!-- tell us a little about section -->
+        <Span class="heading"> Tell us a little about it.</Span>
+        <v-textarea v-model="eventProp['description']" color="#ff6347" filled clearable></v-textarea>
 
         <!--
          ______ invite people field ________________________________________________________
@@ -118,9 +108,19 @@
         | as well as our database.                                                         |
         L__________________________________________________________________________________|
         -->
-        <v-text-field label="Invite people" hint="Enter the username of your friend or someone you know."></v-text-field>
+        <v-text-field color="#ff6347" label="Invite people" hint="Enter the username of your friend or someone you know."></v-text-field>
+
+        <!-- rsvp checkbox -->
+        <div class="d-flex flex-row align-content-space-between" >
+          <v-spacer/>
+          <v-checkbox v-model="eventProp['rsvp']" class="flex-grow-1 flex-shrink-0" label="RSVP Required" color="#ff6347"></v-checkbox>
+        </div>
+
+        <!-- submit button. the @click will trigger the submit function in the methods section -->
+        <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="createEvent">Submit</v-btn>
+
       </v-layout>
-  </v-flex>
+  </div>
 </v-container>
 </template>
 
@@ -138,12 +138,27 @@ export default {
   data () {
     return {
       // data that will be changed by the user
-      eventName: "",
-      eventLocation: "choose a location",
-      eventDate: new Date().toISOString().substr(0,10),
-      eventStyle: "",
+      eventProp:{
+        'name': "",
+        'location': {
+          'address1':"",
+          'address2':"",
+          'city':"",
+          'state':"",
+          'zip':"",
+          'lat':0,
+          'long':0
+        },
+        'date': new Date().toISOString().substr(0,10),
+        'style': "",
+        'description': "",
+        'rsvp':false,
+        'attendees': []
+
+      },
 
       // used for displaying the date to the user
+      eventLocation: "choose a location",
       eventDateString: "choose a date",
 
       // data used to control page flow
@@ -164,25 +179,34 @@ export default {
   // name changes value, the function will run. the val that is passed into
   // every function is the new value that will be set.
   watch :{
-
-    // if the eventDate variable changes, they are trying to select a date
-    eventDate(val){
-      // hide the dialog because they have choosen now.
-      this.dateDialog = false;
-
-      // gets the new date that was chosen
-      let tempDate = new Date(val);
-      tempDate.setDate( tempDate.getDate() + 1 )
-
-      // sets the display variable so the user can see what they chose
-      this.eventDateString = tempDate.toDateString();
-    }
+    // currently none
   },
 
   // this is the methods portion. This is used to hold functions that our
   // page will use.
   methods :{
-    // currently none
+
+    // this function is for finalizing the event object and pushing it to the
+    // store. it currently does not do anything - we need to implement the store
+    // first.
+    createEvent(){
+      console.info("i am submitting")
+    },
+
+    // this function will run when the input event is emitted from the date
+    // picker. it is responsible for changing the text on the button.
+    updateDateString(){
+
+      // hide the dialog because they have choosen now.
+      this.dateDialog = false;
+
+      // gets the new date that was chosen
+      let tempDate = new Date(this.eventProp.date);
+      tempDate.setDate( tempDate.getDate() + 1 )
+
+      // sets the display variable so the user can see what they chose
+      this.eventDateString = tempDate.toDateString();
+    }
   }
 }
 </script>
