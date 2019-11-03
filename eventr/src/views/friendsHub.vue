@@ -11,10 +11,10 @@
       
         <h1 :style="{'display':'inline','font-weight':'700','font-size':'15px'}"><span class="heading">Friends </span></h1>
         <div class="friendBar ">
-        <router-link to=""><span class="friendBar">| Online </span></router-link>
-        <router-link to=""><span class="friendBar">| All </span></router-link>
-        <router-link to=""><span class="friendBar">| Pending </span></router-link>
-        <router-link to="/fh_AddFriend"><span class="friendBar">| Add Friend </span></router-link>
+        <router-link to="/fh_Online"><span class="friendBar">| Online </span></router-link>
+        <router-link to="/fh_All"><span class="friendBar">| All </span></router-link>
+        <router-link to="/fh_Pending"><span class="friendBar">| Pending </span></router-link>
+        <router-link to="/fh_AddFriend"><span class="friendBar" :style="{'color':'orange'}">| Add Friend </span></router-link>
       </div>
       <i class="material-icons" :style="{'font-size':'36px','position':'relative','top':'5px','color':'tomato'}">whatshot</i>
       
