@@ -9,7 +9,7 @@
         <router-link to="/home" :style="{'text-decoration':'none', 'color':'black'}"><span>Home</span></router-link>
         <router-link to="/about" :style="{'text-decoration':'none', 'color':'black'}"> | About</router-link>
         <router-link to="/eventCreator" :style="{'text-decoration':'none', 'color':'black'}"> | Create Event</router-link>
-        <router-link to="/friendsHub" :style="{'text-decoration':'none', 'color':'black'}"> | Friends</router-link>
+        <router-link to="/fh_AddFriend" :style="{'text-decoration':'none', 'color':'black'}"> | Friends</router-link>
       </div>
       <v-spacer></v-spacer>
     </v-app-bar>
