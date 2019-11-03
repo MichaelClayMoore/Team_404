@@ -1,277 +1,252 @@
 <template>
+  <v-container>
 
-  <v-app id="inspire">
-      
-    <v-navigation-drawer
-      v-model="drawer"
-      :clipped="$vuetify.breakpoint.lgAndUp"
-      app
-    >
-      <v-list dense>
-        <template v-for="item in items">
-          <v-row
-            v-if="item.heading"
-            :key="item.heading"
-            align="center"
-          >
-            <v-col cols="6">
-              <v-subheader v-if="item.heading">
-                {{ item.heading }}
-              </v-subheader>
-            </v-col>
-            <v-col
-              cols="6"
-              class="text-center"
-            >
-              <a
-                href="#!"
-                class="body-2 black--text"
-              >EDIT</a>
-            </v-col>
-          </v-row>
-          <v-list-group
-            v-else-if="item.children"
-            :key="item.text"
-            v-model="item.model"
-            :prepend-icon="item.model ? item.icon : item['icon-alt']"
-            append-icon=""
-          >
-            <template v-slot:activator>
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-title>
-                    {{ item.text }}
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </template>
-            <v-list-item
-              v-for="(child, i) in item.children"
-              :key="i"
-              @click=""
-            >
-              <v-list-item-action v-if="child.icon">
-                <v-icon>{{ child.icon }}</v-icon>
-              </v-list-item-action>
-              <v-list-item-content>
-                <v-list-item-title>
-                  {{ child.text }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-group>
-          <v-list-item
-            v-else
-            :key="item.text"
-            @click=""
-          >
-            <v-list-item-action>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>
-                {{ item.text }}
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </template>
-      </v-list>
-    </v-navigation-drawer>
-
-    
-      <v-toolbar-title
-        style="width: 300px"
-        class="ml-0 pl-4 "
-      >
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <span class="hidden-sm-and-down">Friends</span>
-      </v-toolbar-title>
-      <v-text-field
-        flat
-        solo-inverted
-        hide-details
-        prepend-inner-icon="search"
-        label="Search"
-        class="hidden-sm-and-down ml-0 pl-4 mr-0 pr-4"
-      ></v-text-field>
-      <div class="flex-grow-1"></div>
-      
-      
-    </v-app-bar>
-        
-    <v-content>
-      <v-container
-        class="fill-height"
-        fluid
-      >
-        <v-row
-          align="center"
-          justify="center"
-        >
-          <v-tooltip right>
-            <template v-slot:activator="{ on }">
-              <v-btn
-                :href="source"
-                icon
-                large
-                target="_blank"
-                v-on="on"
-              >
-                <v-icon large>mdi-code-tags</v-icon>
-              </v-btn>
-            </template>
-            <span>Source</span>
-          </v-tooltip>
-          <v-tooltip right>
-            <template v-slot:activator="{ on }">
-              <v-btn
-                icon
-                large
-                href="https://codepen.io/johnjleider/pen/MNYLdL"
-                target="_blank"
-                v-on="on"
-              >
-                <v-icon large>mdi-codepen</v-icon>
-              </v-btn>
-            </template>
-            <span>Codepen</span>
-          </v-tooltip>
-        </v-row>
-      </v-container>
-    </v-content>
-    <v-btn
-      bottom
-      color="pink"
-      dark
-      fab
-      fixed
-      right
-      @click="dialog = !dialog"
-    >
-      <v-icon>mdi-plus</v-icon>
-    </v-btn>
-    <v-dialog
-      v-model="dialog"
-      width="800px"
-    >
+    <!--
+    ______ date dialog _________________________________________________________________
+    | this is the date dialog. this will appear when the date button.                  |
+    | v-model = dateDialog                                                             |
+    |     -> this is what allows this to be visible. if yes, it will be visible.       |
+    |        otherwise it is hidden.                                                   |
+    L__________________________________________________________________________________|
+    -->
+    <v-dialog v-model="dateDialog" max-width="50%">
       <v-card>
-        <v-card-title class="grey darken-2">
-          Create contact
-        </v-card-title>
-        <v-container>
-          <v-row>
-            <v-col
-              class="align-center justify-space-between"
-              cols="12"
-            >
-              <v-row align="center">
-                <v-avatar
-                  size="40px"
-                  class="mr-4"
-                >
-                  <img
-                    src="//ssl.gstatic.com/s2/oz/images/sge/grey_silhouette.png"
-                    alt=""
-                  >
-                </v-avatar>
-                <v-text-field
-                  placeholder="Name"
-                ></v-text-field>
-              </v-row>
-            </v-col>
-            <v-col cols="6">
-              <v-text-field
-                prepend-icon="business"
-                placeholder="Company"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="6">
-              <v-text-field
-                placeholder="Job title"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                prepend-icon="mail"
-                placeholder="Email"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                type="tel"
-                prepend-icon="phone"
-                placeholder="(000) 000 - 0000"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                prepend-icon="notes"
-                placeholder="Notes"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-        </v-container>
+        <v-card-title :style="{'background-color':'tomato','color':'white'}" class="title">When is it?</v-card-title>
         <v-card-actions>
-          <v-btn
-            text
-            color="primary"
-          >More</v-btn>
-          <div class="flex-grow-1"></div>
-          <v-btn
-            text
-            color="primary"
-            @click="dialog = false"
-          >Cancel</v-btn>
-          <v-btn
-            text
-            @click="dialog = false"
-          >Save</v-btn>
+          <v-date-picker landscape full-width color="#ff6347" v-model="eventProp['date']" style="font-size:15px" v-on:input="updateDateString" ></v-date-picker>
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </v-app>
+
+    <!--
+    ______ location dialog _____________________________________________________________
+    | this is the location dialog. this will appear when the location button.          |
+    | v-model = locationDialog                                                         |
+    |     -> this is what allows this to be visible. if yes, it will be visible.       |
+    |        otherwise it is hidden.                                                   |
+    L__________________________________________________________________________________|
+    -->
+    <v-dialog v-model="locationDialog" max-width="50%">
+      <v-card>
+
+        <!-- title bar -->
+        <v-card-title :style="{'background-color':'tomato','color':'white'}" class="title">Where is it?</v-card-title>
+
+        <!-- input for the address -->
+        <v-card-text>
+          <v-layout row>
+          <v-text-field v-model="eventProp['location']['address1']" class="input" label="Address 1"></v-text-field>
+          <v-text-field v-model="eventProp['location']['address2']"  class="input" label="Address 2 (optional)"></v-text-field>
+          <v-text-field v-model="eventProp['location']['city']"  class="input" label="City"></v-text-field>
+          <v-text-field v-model="eventProp['location']['state']"  class="input" label="State"></v-text-field>
+          <v-text-field v-model="eventProp['location']['zip']"  class="input" label="Zip"></v-text-field>
+          </v-layout>
+        </v-card-text>
+
+        <!-- this is the or... on the card -->
+        <v-card-text>
+          <div class="d-flex flex-row align-content-space-between" >
+            <v-spacer/>
+            <span class="title">or...</span>
+            <v-spacer/>
+          </div>
+        </v-card-text>
+
+        <!-- this is the container for the map. it is currently under dev and not fully finished -->
+        <v-card-text>
+          <div>
+            <p>you can also use this map...</p>
+            <div style="background-image: linear-gradient(to bottom right, green, #f06d06); height:200px"></div>
+          </div>
+        </v-card-text>
+
+      </v-card>
+    </v-dialog>
+
+    <!-- this is where the full page starts -->
+    <div flex justify-center align-center column>
+
+      <!-- title line -->
+      <h1 :style="{'display':'inline','font-weight':'bold','font-size':'48px'}"><span class="heading">Create a Event </span></h1>
+      <i class="material-icons" :style="{'font-size':'36px','position':'relative','top':'5px','color':'tomato'}">whatshot</i>
+
+      <!-- content section   -->
+      <v-layout column>
+
+        <!-- event name field -->
+        <v-text-field v-model="eventProp['name']" class="input" id="name" label="Event Name" color="#ff6347"></v-text-field>
+
+        <!-- both the location and date buttons. -->
+        <v-layout row style="margin-bottom:20px">
+          <v-spacer/>
+          <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="dateDialog = true;">{{eventDateString}}</v-btn>
+          <v-spacer/>
+          <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="locationDialog = true;">{{eventLocation}}</v-btn>
+          <v-spacer/>
+        </v-layout>
+
+
+        <!--
+        ______ Event style selector ________________________________________________________
+        | this is the style selector. the user will only be able to select one of the      |
+        | provided items in the Events variable.                                           |
+        | v-model = eventStyle                                                             |
+        |     -> this is what hold the value of what they select. originally set to the    |
+        |        empty string. it will be replaced with whatever value they select.        |
+        L__________________________________________________________________________________|
+      -->
+      <v-select v-model="eventProp['style']" :items="Events" filled rounded class="input" label="Event Type" color="#ff6347"></v-select>
+
+        <!-- tell us a little about section -->
+        <Span class="heading"> Tell us a little about it.</Span>
+        <v-textarea v-model="eventProp['description']" color="#ff6347" filled clearable></v-textarea>
+
+        <!--
+         ______ invite people field ________________________________________________________
+        | this is where they will be able to invite friends.                               |
+        | this is something to be implemented when friends are added to our site           |
+        | as well as our database.                                                         |
+        L__________________________________________________________________________________|
+        -->
+        <v-text-field color="#ff6347" label="Invite people" hint="Enter the username of your friend or someone you know."></v-text-field>
+
+        <!-- rsvp checkbox -->
+        <div class="d-flex flex-row align-content-space-between" >
+          <v-spacer/>
+          <v-checkbox v-model="eventProp['rsvp']" class="flex-grow-1 flex-shrink-0" label="RSVP Required" color="#ff6347"></v-checkbox>
+        </div>
+
+        <!-- submit button. the @click will trigger the submit function in the methods section -->
+        <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="createEvent">Submit</v-btn>
+
+      </v-layout>
+  </div>
+</v-container>
 </template>
 
+<!--
+______ script portion ______________________________________________________________
+| this is the portion of the file that has to deal with all the javascript.        |
+L__________________________________________________________________________________|
+-->
 <script>
-  export default {
-    props: {
-      source: String,
+export default {
+  // name of the file/component
+  name: 'eventCreator',
+
+  // all the initial data for the component.
+  data () {
+    return {
+      // data that will be changed by the user
+      eventProp:{
+        'name': "",
+        'location': {
+          'address1':"",
+          'address2':"",
+          'city':"",
+          'state':"",
+          'zip':"",
+          'lat':0,
+          'long':0
+        },
+        'date': new Date().toISOString().substr(0,10),
+        'style': "",
+        'description': "",
+        'rsvp':false,
+        'attendees': []
+
+      },
+
+      // used for displaying the date to the user
+      eventLocation: "choose a location",
+      eventDateString: "choose a date",
+
+      // data used to control page flow
+      locationDialog: false,
+      dateDialog: false,
+
+      // data used for the user to select from
+      Events: [
+        "Birthday",
+        "Get Together",
+        "Wedding",
+        "Formal Event"
+      ]
+    }
+  },
+
+  // this section is to watch variables. Anytime a variable with a corresponding
+  // name changes value, the function will run. the val that is passed into
+  // every function is the new value that will be set.
+  watch :{
+    // currently none
+  },
+
+  // this is the methods portion. This is used to hold functions that our
+  // page will use.
+  methods :{
+
+    // this function is for finalizing the event object and pushing it to the
+    // store. it currently does not do anything - we need to implement the store
+    // first.
+    createEvent(){
+      console.info("i am submitting")
     },
-    data: () => ({
-      dialog: false,
-      drawer: null,
-      items: [
-        { icon: 'contacts', text: 'Contacts' },
-        { icon: 'history', text: 'Frequently contacted' },
-        { icon: 'content_copy', text: 'Duplicates' },
-        {
-          icon: 'keyboard_arrow_up',
-          'icon-alt': 'keyboard_arrow_down',
-          text: 'Labels',
-          model: true,
-          children: [
-            { icon: 'add', text: 'Create label' },
-          ],
-        },
-        {
-          icon: 'keyboard_arrow_up',
-          'icon-alt': 'keyboard_arrow_down',
-          text: 'More',
-          model: false,
-          children: [
-            { text: 'Import' },
-            { text: 'Export' },
-            { text: 'Print' },
-            { text: 'Undo changes' },
-            { text: 'Other contacts' },
-          ],
-        },
-        { icon: 'settings', text: 'Settings' },
-        { icon: 'chat_bubble', text: 'Send feedback' },
-        { icon: 'help', text: 'Help' },
-        { icon: 'phonelink', text: 'App downloads' },
-        { icon: 'keyboard', text: 'Go to the old version' },
-      ],
-    }),
+
+    // this function will run when the input event is emitted from the date
+    // picker. it is responsible for changing the text on the button.
+    updateDateString(){
+
+      // hide the dialog because they have choosen now.
+      this.dateDialog = false;
+
+      // gets the new date that was chosen
+      let tempDate = new Date(this.eventProp.date);
+      tempDate.setDate( tempDate.getDate() + 1 )
+
+      // sets the display variable so the user can see what they chose
+      this.eventDateString = tempDate.toDateString();
+    }
   }
+}
 </script>
+
+<!--
+______ style _portion ______________________________________________________________
+| this is the portion of the file that has to deal with all the defined css styles.|
+| the scoped prop says that any style defined here is only defined here.           |
+L__________________________________________________________________________________|
+-->
+<style scoped>
+
+  /* style for elements that have the title clas */
+  .title{
+    /* sets text to center and a bold 24px Montserrat font */
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+
+    /* removes bottom margin */
+    margin-bottom: 0px;
+  }
+
+  /* style for imput class */
+  .input{
+    /* adds 5px to left and right of element */
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  /* style for heading class */
+  .heading{
+    /* sets text to center and a 24px Montserrat font*/
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+
+    /* removes margins from the bottom */
+    margin-bottom: 0px;
+  }
+
+</style>
