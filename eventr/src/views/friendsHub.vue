@@ -1,125 +1,30 @@
 <template>
   <v-container>
 
-    <!--
-    ______ date dialog _________________________________________________________________
-    | this is the date dialog. this will appear when the date button.                  |
-    | v-model = dateDialog                                                             |
-    |     -> this is what allows this to be visible. if yes, it will be visible.       |
-    |        otherwise it is hidden.                                                   |
-    L__________________________________________________________________________________|
-    -->
-    <v-dialog v-model="dateDialog" max-width="50%">
-      <v-card>
-        <v-card-title :style="{'background-color':'tomato','color':'white'}" class="title">When is it?</v-card-title>
-        <v-card-actions>
-          <v-date-picker landscape full-width color="#ff6347" v-model="eventProp['date']" style="font-size:15px" v-on:input="updateDateString" ></v-date-picker>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
-    <!--
-    ______ location dialog _____________________________________________________________
-    | this is the location dialog. this will appear when the location button.          |
-    | v-model = locationDialog                                                         |
-    |     -> this is what allows this to be visible. if yes, it will be visible.       |
-    |        otherwise it is hidden.                                                   |
-    L__________________________________________________________________________________|
-    -->
-    <v-dialog v-model="locationDialog" max-width="50%">
-      <v-card>
-
-        <!-- title bar -->
-        <v-card-title :style="{'background-color':'tomato','color':'white'}" class="title">Where is it?</v-card-title>
-
-        <!-- input for the address -->
-        <v-card-text>
-          <v-layout row>
-          <v-text-field v-model="eventProp['location']['address1']" class="input" label="Address 1"></v-text-field>
-          <v-text-field v-model="eventProp['location']['address2']"  class="input" label="Address 2 (optional)"></v-text-field>
-          <v-text-field v-model="eventProp['location']['city']"  class="input" label="City"></v-text-field>
-          <v-text-field v-model="eventProp['location']['state']"  class="input" label="State"></v-text-field>
-          <v-text-field v-model="eventProp['location']['zip']"  class="input" label="Zip"></v-text-field>
-          </v-layout>
-        </v-card-text>
-
-        <!-- this is the or... on the card -->
-        <v-card-text>
-          <div class="d-flex flex-row align-content-space-between" >
-            <v-spacer/>
-            <span class="title">or...</span>
-            <v-spacer/>
-          </div>
-        </v-card-text>
-
-        <!-- this is the container for the map. it is currently under dev and not fully finished -->
-        <v-card-text>
-          <div>
-            <p>you can also use this map...</p>
-            <div style="background-image: linear-gradient(to bottom right, green, #f06d06); height:200px"></div>
-          </div>
-        </v-card-text>
-
-      </v-card>
-    </v-dialog>
+  
+  
 
     <!-- this is where the full page starts -->
     <div flex justify-center align-center column>
 
       <!-- title line -->
-      <h1 :style="{'display':'inline','font-weight':'bold','font-size':'48px'}"><span class="heading">Create a Event </span></h1>
+      
+        <h1 :style="{'display':'inline','font-weight':'700','font-size':'15px'}"><span class="heading">Friends </span></h1>
+        <div class="friendBar ">
+        <router-link to=""><span class="friendBar">| Online </span></router-link>
+        <router-link to=""><span class="friendBar">| All </span></router-link>
+        <router-link to=""><span class="friendBar">| Pending </span></router-link>
+        <router-link to="/fh_AddFriend"><span class="friendBar">| Add Friend </span></router-link>
+      </div>
       <i class="material-icons" :style="{'font-size':'36px','position':'relative','top':'5px','color':'tomato'}">whatshot</i>
+      
 
+
+      <!-- RouterPage View -->
+      <router-view/>
+      
       <!-- content section   -->
-      <v-layout column>
-
-        <!-- event name field -->
-        <v-text-field v-model="eventProp['name']" class="input" id="name" label="Event Name" color="#ff6347"></v-text-field>
-
-        <!-- both the location and date buttons. -->
-        <v-layout row style="margin-bottom:20px">
-          <v-spacer/>
-          <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="dateDialog = true;">{{eventDateString}}</v-btn>
-          <v-spacer/>
-          <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="locationDialog = true;">{{eventLocation}}</v-btn>
-          <v-spacer/>
-        </v-layout>
-
-
-        <!--
-        ______ Event style selector ________________________________________________________
-        | this is the style selector. the user will only be able to select one of the      |
-        | provided items in the Events variable.                                           |
-        | v-model = eventStyle                                                             |
-        |     -> this is what hold the value of what they select. originally set to the    |
-        |        empty string. it will be replaced with whatever value they select.        |
-        L__________________________________________________________________________________|
-      -->
-      <v-select v-model="eventProp['style']" :items="Events" filled rounded class="input" label="Event Type" color="#ff6347"></v-select>
-
-        <!-- tell us a little about section -->
-        <Span class="heading"> Tell us a little about it.</Span>
-        <v-textarea v-model="eventProp['description']" color="#ff6347" filled clearable></v-textarea>
-
-        <!--
-         ______ invite people field ________________________________________________________
-        | this is where they will be able to invite friends.                               |
-        | this is something to be implemented when friends are added to our site           |
-        | as well as our database.                                                         |
-        L__________________________________________________________________________________|
-        -->
-        <v-text-field color="#ff6347" label="Invite people" hint="Enter the username of your friend or someone you know."></v-text-field>
-
-        <!-- rsvp checkbox -->
-        <div class="d-flex flex-row align-content-space-between" >
-          <v-spacer/>
-          <v-checkbox v-model="eventProp['rsvp']" class="flex-grow-1 flex-shrink-0" label="RSVP Required" color="#ff6347"></v-checkbox>
-        </div>
-
-        <!-- submit button. the @click will trigger the submit function in the methods section -->
-        <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="createEvent">Submit</v-btn>
-
-      </v-layout>
+      
   </div>
 </v-container>
 </template>
@@ -132,7 +37,7 @@ L_______________________________________________________________________________
 <script>
 export default {
   // name of the file/component
-  name: 'eventCreator',
+  name: 'friendsHub',
 
   // all the initial data for the component.
   data () {
@@ -249,4 +154,38 @@ L_______________________________________________________________________________
     margin-bottom: 0px;
   }
 
+  /* style for friendBar class */
+  .friendBar{
+    /* sets text to center and a 24px Montserrat font*/
+    display : inline;
+    text-align: center;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    text-decoration: none;
+    
+  }
+ .friendBar a:link {
+  color: black;
+  text-decoration: none;
+}
+
+/* visited link */
+.friendBar a:visited {
+  color: black;
+  text-decoration: none;
+}
+
+/* mouse over link */
+ .friendBar a:hover {
+  color: orange;
+  text-decoration: none;
+}
+
+/* selected link */
+.friendBar a:active {
+  color: orange;
+  text-decoration: none;
+}
+  
 </style>
