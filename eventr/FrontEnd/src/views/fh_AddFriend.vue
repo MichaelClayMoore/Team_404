@@ -1,25 +1,5 @@
 <template>
   <v-container>
-
-    <!--
-    ______ date dialog _________________________________________________________________
-    | this is the date dialog. this will appear when the date button.                  |
-    | v-model = dateDialog                                                             |
-    |     -> this is what allows this to be visible. if yes, it will be visible.       |
-    |        otherwise it is hidden.                                                   |
-    L__________________________________________________________________________________|
-   -->
-    <v-dialog v-model="dateDialog" max-width="50%">
-      <v-card>
-        <v-card-title :style="{'background-color':'tomato','color':'white'}" class="title">GO FUCK YOURSELF</v-card-title>
-        <!--
-        <v-card-actions>
-          <v-date-picker landscape full-width color="#ff6347" v-model="eventProp['date']" style="font-size:15px" v-on:input="updateDateString" ></v-date-picker>
-        </v-card-actions>
-        -->
-      </v-card>
-    </v-dialog>
- 
     
     <!-- this is where the full page starts -->
     <div flex justify-center align-center column>
