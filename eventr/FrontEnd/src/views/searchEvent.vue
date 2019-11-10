@@ -69,12 +69,15 @@
           <v-spacer/>
         </v-layout>
         
+        <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="searchEvent">Submit</v-btn>
     </v-layout>
 </div>
 </v-container>
 </template>
 
 <script>
+import {mapState} from 'vuex'
+
 export default {
   // name of the file/component
   name: 'searchEvent',
@@ -125,8 +128,21 @@ export default {
   methods :{
 
     updateDateString(){
+      // hide the dialog because they have choosen now.
+      this.dateDialog = false;
 
-      return this.date.join(' ~ ')
+      // gets the new date that was chosen
+      let tempDate = new Date(this.eventProp.date);
+      tempDate.setDate( tempDate.getDate() + 1 )
+
+      // sets the display variable so the user can see what they chose
+      this.eventDateString = tempDate.toDateString();
+      
+    },
+
+    searchEvent(){
+      console.info("i am searching")
+      this.$store.dispatch('search_event', this.eventProp)
     }
   }
 }
