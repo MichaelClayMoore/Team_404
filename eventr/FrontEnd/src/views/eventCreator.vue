@@ -43,22 +43,11 @@
           </v-layout>
         </v-card-text>
 
-        <!-- this is the or... on the card -->
-        <v-card-text>
-          <div class="d-flex flex-row align-content-space-between" >
-            <v-spacer/>
-            <span class="title">or...</span>
-            <v-spacer/>
-          </div>
-        </v-card-text>
-
-        <!-- this is the container for the map. it is currently under dev and not fully finished -->
-        <v-card-text>
-          <div>
-            <p>you can also use this map...</p>
-            <div style="background-image: linear-gradient(to bottom right, green, #f06d06); height:200px"></div>
-          </div>
-        </v-card-text>
+        <v-card-actions>
+          <v-spacer/>
+          <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="submitLocation">Submit</v-btn>
+          <v-spacer/>
+        </v-card-actions>
 
       </v-card>
     </v-dialog>
@@ -206,6 +195,19 @@ export default {
 
       // sets the display variable so the user can see what they chose
       this.eventDateString = tempDate.toDateString();
+    },
+
+    submitLocation(){
+      // if they have all the Required fields.
+      if ( this.eventProp.location.address1 && this.eventProp.location.city &&
+        this.eventProp.location.state && this.eventProp.location.zip ){
+
+          // sets display string to the city they chose.
+          this.eventLocation = this.eventProp.location.city;
+
+          // closes the dialog
+          this.locationDialog = false;
+        }
     }
   }
 }
