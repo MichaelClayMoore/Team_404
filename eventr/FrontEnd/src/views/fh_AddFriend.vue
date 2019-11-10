@@ -5,7 +5,6 @@
     <div flex justify-center align-center column>
 
       <!-- title line -->
-       <!-- title line -->
       
         <h1 :style="{'display':'inline','font-weight':'700','font-size':'15px'}"><span class="heading">Friends </span></h1>
         <div class="friendBar ">
@@ -20,12 +19,12 @@
       <v-layout column>
 
         <!-- event name field -->
-        <v-text-field v-model="eventProp['name']" class="input" id="name" label="Enter a Username or ID" color="#ff6347"></v-text-field>
+        <v-text-field v-model="addFriendProp['name']" class="input" id="name" label="Enter a Username or ID" color="#ff6347"></v-text-field>
 
         <!-- both the location and date buttons. -->
         <v-layout row style="margin-bottom:20px">
           <v-spacer/>
-          <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="dateDialog = true;">{{eventDateString}}</v-btn>
+         <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="AddFriend">Add Friend</v-btn>
           <v-spacer/>
           
         </v-layout>
@@ -41,49 +40,31 @@ ______ script portion __________________________________________________________
 L__________________________________________________________________________________|
 -->
 <script>
+import {mapState} from 'vuex'
+
 export default {
   // name of the file/component
-  name: 'eventCreator',
+  name: 'fh_AddFriend',
 
   // all the initial data for the component.
   data () {
     return {
       // data that will be changed by the user
-      eventProp:{
-        'name': "",
-        'location': {
-          'address1':"",
-          'address2':"",
-          'city':"",
-          'state':"",
-          'zip':"",
-          'lat':0,
-          'long':0
-        },
-        'date': new Date().toISOString().substr(0,10),
-        'style': "",
-        'description': "",
-        'rsvp':false,
-        'attendees': []
-
+      addFriendProp:{
+        'userID': ""
       },
 
       // used for displaying the date to the user
-      eventLocation: "Invite Friend",
-      eventDateString: "Invite Friend",
+      friendID: "Invite Friend",
+      
 
       // data used to control page flow
-      locationDialog: false,
-      dateDialog: false,
-
-      // data used for the user to select from
-      Events: [
-        "Birthday",
-        "Get Together",
-        "Wedding",
-        "Formal Event"
-      ]
+      friendDialog: false
     }
+  },
+
+  mounted(){
+    this.$store.dispatch('get_test')
   },
 
   // this section is to watch variables. Anytime a variable with a corresponding
@@ -100,24 +81,13 @@ export default {
     // this function is for finalizing the event object and pushing it to the
     // store. it currently does not do anything - we need to implement the store
     // first.
-    createEvent(){
+    AddFriend(){
       console.info("i am submitting")
+      this.$store.dispatch('save_event', this.addFriendProp)
     },
 
     // this function will run when the input event is emitted from the date
     // picker. it is responsible for changing the text on the button.
-    updateDateString(){
-
-      // hide the dialog because they have choosen now.
-      this.dateDialog = false;
-
-      // gets the new date that was chosen
-      let tempDate = new Date(this.eventProp.date);
-      tempDate.setDate( tempDate.getDate() + 1 )
-
-      // sets the display variable so the user can see what they chose
-      this.eventDateString = tempDate.toDateString();
-    }
   }
 }
 </script>

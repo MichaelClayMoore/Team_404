@@ -12,3 +12,8 @@ def get_test():
 def save_event():
     print(request.get_json()['params']['event'])
     return "Success"
+
+@event_router.route("/addfriend_event", methods=['POST'])
+def addfriend_event():
+    print(request.get_json()['name'])
+    return "Success"

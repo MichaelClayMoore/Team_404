@@ -36,6 +36,19 @@ export default new Vuex.Store({
       }, (err) => {
         console.log(err)
       })
+    },
+
+    addfriend_event({commit, rootState}, payload){
+      axios.post('http://127.0.0.1:5000/addfriend_event',
+      { params:{ event: payload } }
+      )
+      .then(response => {
+        console.log("Response")
+        console.log(response.data)
+        commit('addfriend_event', payload)
+      }, (err) => {
+        console.log(err)
+      })
     }
 
   }
