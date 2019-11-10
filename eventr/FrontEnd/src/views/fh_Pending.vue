@@ -67,58 +67,22 @@
     <div flex justify-center align-center column>
 
       <!-- title line -->
-      <h1 :style="{'display':'inline','font-weight':'bold','font-size':'48px'}"><span class="heading">Create a Event </span></h1>
+       
+      
+        <h1 :style="{'display':'inline','font-weight':'700','font-size':'15px'}"><span class="heading">Friends </span></h1>
+        <div class="friendBar ">
+        <router-link to="/fh_Online"><span class="friendBar">| Online </span></router-link>
+        <router-link to="/fh_All"><span class="friendBar">| All </span></router-link>
+        <router-link to="/fh_Pending"><span class="friendBar" :style="{'color':'orange'}">| Pending </span></router-link>
+        <router-link to="/fh_AddFriend"><span class="friendBar">| Add Friend </span></router-link>
+     </div>
       <i class="material-icons" :style="{'font-size':'36px','position':'relative','top':'5px','color':'tomato'}">whatshot</i>
+      <!-- title line -->
 
       <!-- content section   -->
       <v-layout column>
 
-        <!-- event name field -->
-        <v-text-field v-model="eventProp['name']" class="input" id="name" label="Event Name" color="#ff6347"></v-text-field>
-
-        <!-- both the location and date buttons. -->
-        <v-layout row style="margin-bottom:20px">
-          <v-spacer/>
-          <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="dateDialog = true;">{{eventDateString}}</v-btn>
-          <v-spacer/>
-          <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="locationDialog = true;">{{eventLocation}}</v-btn>
-          <v-spacer/>
-        </v-layout>
-
-
-        <!--
-        ______ Event style selector ________________________________________________________
-        | this is the style selector. the user will only be able to select one of the      |
-        | provided items in the Events variable.                                           |
-        | v-model = eventStyle                                                             |
-        |     -> this is what hold the value of what they select. originally set to the    |
-        |        empty string. it will be replaced with whatever value they select.        |
-        L__________________________________________________________________________________|
-      -->
-      <v-select v-model="eventProp['style']" :items="Events" filled rounded class="input" label="Event Type" color="#ff6347"></v-select>
-
-        <!-- tell us a little about section -->
-        <Span class="heading"> Tell us a little about it.</Span>
-        <v-textarea v-model="eventProp['description']" color="#ff6347" filled clearable></v-textarea>
-
-        <!--
-         ______ invite people field ________________________________________________________
-        | this is where they will be able to invite friends.                               |
-        | this is something to be implemented when friends are added to our site           |
-        | as well as our database.                                                         |
-        L__________________________________________________________________________________|
-        -->
-        <v-text-field color="#ff6347" label="Invite people" hint="Enter the username of your friend or someone you know."></v-text-field>
-
-        <!-- rsvp checkbox -->
-        <div class="d-flex flex-row align-content-space-between" >
-          <v-spacer/>
-          <v-checkbox v-model="eventProp['rsvp']" class="flex-grow-1 flex-shrink-0" label="RSVP Required" color="#ff6347"></v-checkbox>
-        </div>
-
-        <!-- submit button. the @click will trigger the submit function in the methods section -->
-        <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="createEvent">Submit</v-btn>
-
+        
       </v-layout>
   </div>
 </v-container>
@@ -130,13 +94,9 @@ ______ script portion __________________________________________________________
 L__________________________________________________________________________________|
 -->
 <script>
-import {mapState} from 'vuex'
-
 export default {
   // name of the file/component
   name: 'eventCreator',
-
-  computed : {  },
 
   // all the initial data for the component.
   data () {
@@ -179,10 +139,6 @@ export default {
     }
   },
 
-  mounted(){
-    this.$store.dispatch('get_test')
-  },
-
   // this section is to watch variables. Anytime a variable with a corresponding
   // name changes value, the function will run. the val that is passed into
   // every function is the new value that will be set.
@@ -199,7 +155,6 @@ export default {
     // first.
     createEvent(){
       console.info("i am submitting")
-      this.$store.dispatch('save_event', this.eventProp)
     },
 
     // this function will run when the input event is emitted from the date
@@ -257,5 +212,37 @@ L_______________________________________________________________________________
     /* removes margins from the bottom */
     margin-bottom: 0px;
   }
+  .friendBar{
+    /* sets text to center and a 24px Montserrat font*/
+    display : inline;
+    text-align: center;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    text-decoration: none;
+    
+  }
+ .friendBar a:link {
+  color: black;
+  text-decoration: none;
+}
 
+/* visited link */
+.friendBar a:visited {
+  color: black;
+  text-decoration: none;
+}
+
+/* mouse over link */
+ .friendBar a:hover {
+  color: orange;
+  text-decoration: none;
+}
+
+/* selected link */
+.friendBar a:active {
+  color: orange;
+  text-decoration: none;
+}
+  
 </style>
