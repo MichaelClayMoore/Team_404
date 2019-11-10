@@ -10,6 +10,8 @@
         <router-link to="/about" :style="{'text-decoration':'none', 'color':'black'}"> | About</router-link>
         <router-link to="/eventCreator" :style="{'text-decoration':'none', 'color':'black'}"> | Create Event</router-link>
         <router-link to="/fh_AddFriend" :style="{'text-decoration':'none', 'color':'black'}"> | Friends</router-link>
+        <router-link to="/searchEvent" :style="{'text-decoration':'none', 'color':'black'}"> | Search Event</router-link>
+
       </div>
       <v-spacer></v-spacer>
     </v-app-bar>
