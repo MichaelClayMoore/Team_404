@@ -21,8 +21,10 @@ class eventController:
 
     def return_events(self):
         return json.dumps( self.events )
-
-
+        
     def geocode_location(self, location):
         latlong = self.geoCoder.getLatLong(location)
         return latlong
+
+    def search_event(self):
+        return "this works"

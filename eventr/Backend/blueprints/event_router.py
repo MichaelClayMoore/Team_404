@@ -3,7 +3,6 @@ from flask import request, Blueprint, abort , json, jsonify
 from events.eventController import eventController
 import json
 
-
 event_controller = eventController()
 event_router = Blueprint('event_router', __name__)
 
@@ -20,3 +19,10 @@ def save_event():
 @event_router.route("/get_events", methods=['GET'])
 def get_events():
     return event_controller.return_events()
+    print(request.get_json()['params']['event'])
+    return "Success"
+
+@event_router.route("/search_event", methods=['POST'])
+def search_event():
+    print(event_controller.search_event())
+    return "Success"
