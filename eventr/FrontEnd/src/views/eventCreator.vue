@@ -175,7 +175,8 @@ export default {
         "Birthday",
         "Get Together",
         "Wedding",
-        "Formal Event"
+        "Formal Event",
+        "Other"
       ]
     }
   },
