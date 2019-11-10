@@ -11,4 +11,4 @@ def get_test():
 @event_router.route("/save_event", methods=['POST'])
 def save_event():
     print(request.get_json()['params']['event'])
-    return "test"
+    return "Success"
