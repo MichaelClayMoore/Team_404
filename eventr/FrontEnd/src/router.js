@@ -28,7 +28,7 @@ export default new Router({
       component: JoinParty
     },
     {
-      path: '/eventCreator',
+      path: '/event_creator',
       name: 'eventCreator',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
