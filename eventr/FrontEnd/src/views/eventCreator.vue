@@ -59,7 +59,7 @@
             <div style="background-image: linear-gradient(to bottom right, green, #f06d06); height:200px"></div>
           </div>
         </v-card-text>
-
+        
       </v-card>
     </v-dialog>
 
@@ -95,6 +95,7 @@
         |        empty string. it will be replaced with whatever value they select.        |
         L__________________________________________________________________________________|
       -->
+
       <v-select v-model="eventProp['style']" :items="Events" filled rounded class="input" label="Event Type" color="#ff6347"></v-select>
 
         <!-- tell us a little about section -->
@@ -174,7 +175,8 @@ export default {
         "Birthday",
         "Get Together",
         "Wedding",
-        "Formal Event"
+        "Formal Event",
+        "Other"
       ]
     }
   },
