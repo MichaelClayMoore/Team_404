@@ -22,15 +22,12 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
     {
-<<<<<<< HEAD
       path: '/joinParty',
       name: 'joinParty',
 
       component: JoinParty
     },
     {
-=======
->>>>>>> ff213cdf48e1db5e1af08937889d067527429c46
       path: '/event_creator',
       name: 'eventCreator',
       // route level code-splitting
