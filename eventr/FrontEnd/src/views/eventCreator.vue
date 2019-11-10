@@ -130,9 +130,13 @@ ______ script portion __________________________________________________________
 L__________________________________________________________________________________|
 -->
 <script>
+import {mapState} from 'vuex'
+
 export default {
   // name of the file/component
   name: 'eventCreator',
+
+  computed : {  },
 
   // all the initial data for the component.
   data () {
@@ -175,6 +179,10 @@ export default {
     }
   },
 
+  mounted(){
+    this.$store.dispatch('get_test')
+  },
+
   // this section is to watch variables. Anytime a variable with a corresponding
   // name changes value, the function will run. the val that is passed into
   // every function is the new value that will be set.
@@ -191,6 +199,7 @@ export default {
     // first.
     createEvent(){
       console.info("i am submitting")
+      this.$store.dispatch('save_event', this.eventProp)
     },
 
     // this function will run when the input event is emitted from the date
