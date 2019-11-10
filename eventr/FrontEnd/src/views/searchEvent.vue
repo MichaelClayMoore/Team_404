@@ -1,7 +1,5 @@
-
 <template>
 <v-container>
-
 
     <v-dialog v-model="dateDialog" max-width="50%">
       <v-card>
@@ -71,9 +69,7 @@
           <v-spacer/>
         </v-layout>
         
-
     </v-layout>
-
 </div>
 </v-container>
 </template>
@@ -81,7 +77,7 @@
 <script>
 export default {
   // name of the file/component
-  name: 'eventCreator',
+  name: 'searchEvent',
 
   // all the initial data for the component.
   data () {
@@ -99,8 +95,6 @@ export default {
         },
       },
         'date': ['2019-09-10', '2019-09-20'],
-
-      
 
       // used for displaying the date to the user
       eventLocation: "search around your area",
@@ -124,22 +118,12 @@ export default {
   // name changes value, the function will run. the val that is passed into
   // every function is the new value that will be set.
   watch :{
-    // currently none
+
   },
 
-  // this is the methods portion. This is used to hold functions that our
-  // page will use.
+  // this is the methods portion. This is used to hold functions that our page will use.
   methods :{
 
-    // this function is for finalizing the event object and pushing it to the
-    // store. it currently does not do anything - we need to implement the store
-    // first.
-    createEvent(){
-      console.info("i am submitting")
-    },
-
-    // this function will run when the input event is emitted from the date
-    // picker. it is responsible for changing the text on the button.
     updateDateString(){
 
       return this.date.join(' ~ ')
@@ -148,41 +132,25 @@ export default {
 }
 </script>
 
-<!--
-______ style _portion ______________________________________________________________
-| this is the portion of the file that has to deal with all the defined css styles.|
-| the scoped prop says that any style defined here is only defined here.           |
-L__________________________________________________________________________________|
--->
-<style scoped>
 
-  /* style for elements that have the title clas */
+<style scoped>
   .title{
-    /* sets text to center and a bold 24px Montserrat font */
     text-align: center;
     font-family: 'Montserrat', sans-serif;
     font-size: 24px;
     font-weight: bold;
-
-    /* removes bottom margin */
     margin-bottom: 0px;
   }
 
-  /* style for imput class */
   .input{
-    /* adds 5px to left and right of element */
     margin-left: 5px;
     margin-right: 5px;
   }
 
-  /* style for heading class */
   .heading{
-    /* sets text to center and a 24px Montserrat font*/
     text-align: center;
     font-family: 'Montserrat', sans-serif;
     font-size: 24px;
-
-    /* removes margins from the bottom */
     margin-bottom: 0px;
   }
 
