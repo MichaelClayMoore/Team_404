@@ -126,6 +126,7 @@ export default {
 
     updateDateString(){
 
+      this.eventDateString = tempDate.toDateString();
       return this.date.join(' ~ ')
     }
   }
