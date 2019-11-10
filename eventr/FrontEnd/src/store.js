@@ -11,6 +11,9 @@ export default new Vuex.Store({
   mutations: {
     add_event(state, event_to_add){
       state.list_of_events.push(event_to_add);
+    },
+    set_list_of_events(state, list){
+      state.list_of_events = list;
     }
   },
   actions: {
@@ -33,6 +36,17 @@ export default new Vuex.Store({
         console.log("Response")
         console.log(response.data)
         commit('add_event', payload)
+      }, (err) => {
+        console.log(err)
+      })
+    },
+
+    get_events({commit, rootState}){
+      axios.get('http://127.0.0.1:5000/get_events')
+      .then(response => {
+        console.log("Response")
+        console.log(response.data)
+        commit('set_list_of_events', response.data)
       }, (err) => {
         console.log(err)
       })

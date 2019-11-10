@@ -189,6 +189,10 @@ export default {
     createEvent(){
       console.info("i am submitting")
       this.$store.dispatch('save_event', this.eventProp)
+      let context = this
+      setTimeout( () => {
+        context.$store.dispatch('get_events')
+      }, 2000)
     },
 
     // this function will run when the input event is emitted from the date
