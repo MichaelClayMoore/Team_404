@@ -24,7 +24,6 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
-
     save_event({commit, rootState}, payload){
       axios.post('http://127.0.0.1:5000/save_event',
       { params:{ event: payload } }
