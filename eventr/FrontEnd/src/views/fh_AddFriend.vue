@@ -19,12 +19,12 @@
       <v-layout column>
 
         <!-- event name field -->
-        <v-text-field v-model="addFriendProp['name']" class="input" id="name" label="Enter a Username or ID" color="#ff6347"></v-text-field>
+        <v-text-field v-model="addFriendProp['name']" class="input" id="name" label="Enter a Username" color="#ff6347"></v-text-field>
 
         <!-- both the location and date buttons. -->
         <v-layout row style="margin-bottom:20px">
           <v-spacer/>
-         <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="AddFriend">Add Friend</v-btn>
+         <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="AddFriend">Send Friend Request</v-btn>
           <v-spacer/>
           
         </v-layout>
