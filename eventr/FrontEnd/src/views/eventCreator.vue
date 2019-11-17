@@ -124,7 +124,7 @@ export default {
   // name of the file/component
   name: 'eventCreator',
 
-  computed : {  },
+  computed : { ...mapState(['list_of_events']) },
 
   // all the initial data for the component.
   data () {
@@ -138,8 +138,8 @@ export default {
           'city':"",
           'state':"",
           'zip':"",
-          'lat':0,
-          'long':0
+          'latitude':0,
+          'longitude':0
         },
         'date': new Date().toISOString().substr(0,10),
         'style': "",

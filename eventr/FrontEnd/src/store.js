@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     list_of_events: []
   },
+
   mutations: {
     add_event(state, event_to_add){
       state.list_of_events.push(event_to_add);
@@ -16,6 +17,7 @@ export default new Vuex.Store({
       state.list_of_events = list;
     }
   },
+
   actions: {
 
     get_test({commit, rootState}){
