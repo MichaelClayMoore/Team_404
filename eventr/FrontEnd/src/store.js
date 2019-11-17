@@ -6,7 +6,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    list_of_events: []
+    list_of_events: [],
+    currentUser: 0
   },
 
   mutations: {
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     },
     set_list_of_events(state, list){
       state.list_of_events = list;
+    },
+    set_user(state, user){
+      state.currentUser = user;
     }
   },
 
@@ -35,8 +39,7 @@ export default new Vuex.Store({
       { params:{ event: payload } }
       )
       .then(response => {
-        console.log("Response")
-        console.log(response.data)
+        console.log("Response: ", response.data)
         commit('add_event', payload)
       }, (err) => {
         console.log(err)
