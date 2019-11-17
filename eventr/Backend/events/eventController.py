@@ -16,10 +16,11 @@ class eventController:
             latlong = self.geocode_location(event['location'])
             event['location']['latitude'] = latlong['latitude']
             event['location']['longitude'] = latlong['longitude']
-            self.events.append(event);
-            return "Success"
+            addEventToDatabase = self.eventDAO.addEvent(event);
+            if addEventToDatabase: self.events.append(event);
+            return json.dumps(addEventToDatabase)
         except:
-            return "Failed"
+            return json.dumps(False)
 
     def return_events(self):
         return json.dumps( self.events )
@@ -33,7 +34,7 @@ class eventController:
         searchedEvents = []
 
         #searching through each of the events
-        for event in self.events:   
+        for event in self.events:
             if searchProp.get('name') == "" or event.get('name') == searchProp.get('name'):     #name matching
                 if searchProp.get('creator') == "" or event.get('creator') == searchProp.get('creator'):    #creator matching
                     if not len(searchProp.get('style')) == 0:     #checking if there is a style of event array to search with
@@ -51,4 +52,3 @@ class eventController:
             return json.dumps(searchedEvents)
         else:
             print("found no matching events")
-            
