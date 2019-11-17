@@ -51,10 +51,11 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
+
     search_event({commit, rootState}, payload){
-      axios.post('http://127.0.0.1:5000/search_event',
-      { params:{ event: payload } }
-      )
+      axios.post('http://127.0.0.1:5000/search_event', {
+        params: {searchProp: payload}
+      })
       .then(response => {
         console.log("Response")
         console.log(response.data)

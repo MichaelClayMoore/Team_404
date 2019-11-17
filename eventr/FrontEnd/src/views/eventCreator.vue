@@ -145,8 +145,8 @@ export default {
         'style': "",
         'description': "",
         'rsvp':false,
+        'creator': "",
         'attendees': []
-
       },
 
       // used for displaying the date to the user
