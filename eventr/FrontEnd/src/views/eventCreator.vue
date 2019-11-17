@@ -41,25 +41,12 @@
           <v-text-field v-model="eventProp['location']['state']"  class="input" label="State"></v-text-field>
           <v-text-field v-model="eventProp['location']['zip']"  class="input" label="Zip"></v-text-field>
           </v-layout>
-        </v-card-text>
-
-        <!-- this is the or... on the card -->
-        <v-card-text>
-          <div class="d-flex flex-row align-content-space-between" >
+          <v-layout row>
             <v-spacer/>
-            <span class="title">or...</span>
-            <v-spacer/>
-          </div>
-        </v-card-text>
+            <v-btn color="#ff6347"  :style="{'color':'#ffffff'}" @click="submitLocation">Save</v-btn>
+          </v-layout>
 
-        <!-- this is the container for the map. it is currently under dev and not fully finished -->
-        <v-card-text>
-          <div>
-            <p>you can also use this map...</p>
-            <div style="background-image: linear-gradient(to bottom right, green, #f06d06); height:200px"></div>
-          </div>
         </v-card-text>
-        
       </v-card>
     </v-dialog>
 
@@ -137,7 +124,7 @@ export default {
   // name of the file/component
   name: 'eventCreator',
 
-  computed : {  },
+  computed : { ...mapState(['list_of_events']) },
 
   // all the initial data for the component.
   data () {
@@ -151,15 +138,15 @@ export default {
           'city':"",
           'state':"",
           'zip':"",
-          'lat':0,
-          'long':0
+          'latitude':0,
+          'longitude':0
         },
         'date': new Date().toISOString().substr(0,10),
         'style': "",
         'description': "",
         'rsvp':false,
+        'creator': "",
         'attendees': []
-
       },
 
       // used for displaying the date to the user
@@ -202,6 +189,10 @@ export default {
     createEvent(){
       console.info("i am submitting")
       this.$store.dispatch('save_event', this.eventProp)
+      let context = this
+      setTimeout( () => {
+        context.$store.dispatch('get_events')
+      }, 2000)
     },
 
     // this function will run when the input event is emitted from the date
@@ -217,6 +208,22 @@ export default {
 
       // sets the display variable so the user can see what they chose
       this.eventDateString = tempDate.toDateString();
+    },
+
+    submitLocation(){
+
+      // if they have all the Required fields
+      if( this.eventProp.location.address1 && this.eventProp.location.city &&
+        this.eventProp.location.state && this.eventProp.location.zip){
+
+        // sets display string to the city they chose.
+        this.eventLocation = this.eventProp.location.city;
+
+        // clases the dialog
+        this.locationDialog = false;
+
+      }
+
     }
   }
 }
