@@ -6,7 +6,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    list_of_events: []
+    list_of_events: [],
+    searchedEvents: []
   },
 
   mutations: {
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     },
     set_list_of_events(state, list){
       state.list_of_events = list;
+    },
+    set_searched_events(state, event_to_add){
+      state.searchedEvents = event_to_add;
     }
   },
 
@@ -59,13 +63,12 @@ export default new Vuex.Store({
         params: {searchProp: payload}
       })
       .then(response => {
-        console.log("Response")
-        console.log(response.data)
-        commit('add_event', payload)
+        console.log("Response: ", response.data)
+        commit('set_searched_events', response.data)
+        //resolve(response.data)
       }, (err) => {
         console.log(err)
       })
     }
-
   }
 })

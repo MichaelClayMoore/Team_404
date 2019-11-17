@@ -29,7 +29,6 @@ class eventController:
         return latlong
 
 
-
     def search_event(self, searchProp):
         searchedEvents = []
 
@@ -48,7 +47,8 @@ class eventController:
             print("returning found events")
             for event2 in searchedEvents:
                 print(event2)
-            return searchedEvents
+                
+            return json.dumps(searchedEvents)
         else:
             print("found no matching events")
             

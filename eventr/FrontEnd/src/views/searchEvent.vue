@@ -1,11 +1,18 @@
 <template>
 <v-container>
 
+
+    <v-dialog v-model="testDialog" max-width="50%">
+      <v-card>
+        <v-card-title :style="{'background-color':'tomato','color':'white'}" class="title">{{searchedEvents}}</v-card-title>
+      </v-card>
+    </v-dialog>
+
     <v-dialog v-model="dateDialog" max-width="50%">
       <v-card>
         <v-card-title :style="{'background-color':'tomato','color':'white'}" class="title">When is it?</v-card-title>
         <v-card-actions>
-          <v-date-picker range landscape full-width color="#ff6347" v-model="searchProp['date']" style="font-size:15px" v-on:input="updateDateString" ></v-date-picker>
+          <v-date-picker landscape multiple full-width color="#ff6347" v-model="searchProp['date']" style="font-size:15px" v-on:input="updateDateString" ></v-date-picker>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -83,6 +90,8 @@ export default {
   // name of the file/component
   name: 'searchEvent',
 
+  computed : { ...mapState(['searchedEvents']) },
+
   // all the initial data for the component.
   data () {
     return {
@@ -98,7 +107,7 @@ export default {
           'lat':0,
           'long':0
         },
-        'date': "",
+        'date': [],
         'style': [],
         'description': "",
         'rsvp': false,
@@ -113,6 +122,7 @@ export default {
       // data used to control page flow
       locationDialog: false,
       dateDialog: false,
+      testDialog: false,
 
       // data used for the user to select from
       Events: [
@@ -135,12 +145,16 @@ export default {
   methods :{
 
     updateDateString(){
-      // hide the dialog because they have choosen now.
-      this.dateDialog = false;
+      let i;
+      let eventsAmu = 0;
+
+      for (i = 0; i < this.searchProp.date.length; i++){
+        eventsAmu++;
+      }
 
       // gets the new date that was chosen
       let tempDate = new Date(this.searchProp.date);
-      tempDate.setDate( tempDate.getDate() + 1 )
+      tempDate.setDate( tempDate.getDate() + 1 );
 
       // sets the display variable so the user can see what they chose
       this.eventDateString = tempDate.toDateString();
@@ -149,7 +163,10 @@ export default {
 
     searchEvent(){
       console.info("i am searching")
-      this.$store.dispatch('search_event', this.searchProp)
+      this.$store.dispatch('search_event', this.searchProp); 
+      //console.log("response: ", this.returnedEvents)
+      this.searchedEvents;
+      this.testDialog = true;
 
     }
   }
