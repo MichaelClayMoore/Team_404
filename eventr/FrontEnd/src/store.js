@@ -10,72 +10,84 @@ export default new Vuex.Store({
   },
 
   mutations: {
-    add_event(state, event_to_add){
+    add_event(state, event_to_add) {
       state.list_of_events.push(event_to_add);
     },
-    set_list_of_events(state, list){
+    set_list_of_events(state, list) {
       state.list_of_events = list;
     }
   },
 
   actions: {
 
-    get_test({commit, rootState}){
+    get_test({ commit, rootState }) {
       axios.get('http://127.0.0.1:5000/get_test')
-      .then(response => {
-        console.log("Response")
-        console.log(response.data)
-      }, (err) => {
-        console.log(err)
-      })
+        .then(response => {
+          console.log("Response")
+          console.log(response.data)
+        }, (err) => {
+          console.log(err)
+        })
     },
 
-    save_event({commit, rootState}, payload){
+    save_event({ commit, rootState }, payload) {
       axios.post('http://127.0.0.1:5000/save_event',
-      { params:{ event: payload } }
+        { params: { event: payload } }
       )
-      .then(response => {
-        console.log("Response")
-        console.log(response.data)
-        commit('add_event', payload)
-      }, (err) => {
-        console.log(err)
-      })
+        .then(response => {
+          console.log("Response")
+          console.log(response.data)
+          commit('add_event', payload)
+        }, (err) => {
+          console.log(err)
+        })
     },
 
-<<<<<<< HEAD
-    addfriend_event({commit, rootState}, payload){
+    addfriend_event({ commit, rootState }, payload) {
       axios.post('http://127.0.0.1:5000/addfriend_event',
-      { params:{ event: payload } }
+        { params: { name: payload } }
       )
-      .then(response => {
-        console.log("Response")
-        console.log(response.data)
-        commit('addfriend_event', payload)
-=======
-    get_events({commit, rootState}){
-      axios.get('http://127.0.0.1:5000/get_events')
-      .then(response => {
-        console.log("Response")
-        console.log(response.data)
-        commit('set_list_of_events', response.data)
-      }, (err) => {
-        console.log(err)
-      })
+        .then(response => {
+          console.log("Response")
+          console.log(response.data)
+          commit('addfriend_event', payload)
+        })
     },
 
-    search_event({commit, rootState}, payload){
+    savefriend_event({ commit, rootState }, payload) {
+      axios.post('http://127.0.0.1:5000/savefriend_event',
+        { params: { friend: payload } }
+      )
+        .then(response => {
+          console.log("Response")
+          console.log(response.data)
+          commit('savefriend_event', payload)
+        })
+    },
+
+
+    get_events({ commit, rootState }) {
+      axios.get('http://127.0.0.1:5000/get_events')
+        .then(response => {
+          console.log("Response")
+          console.log(response.data)
+          commit('set_list_of_events', response.data)
+        }, (err) => {
+          console.log(err)
+        })
+    },
+
+    search_event({ commit, rootState }, payload) {
       axios.post('http://127.0.0.1:5000/search_event', {
-        params: {searchProp: payload}
+        params: { searchProp: payload }
       })
-      .then(response => {
-        console.log("Response")
-        console.log(response.data)
-        commit('add_event', payload)
->>>>>>> ab07f88b96b8a10e057c38d5ee92b18d1fc849d7
-      }, (err) => {
-        console.log(err)
-      })
+        .then(response => {
+          console.log("Response")
+          console.log(response.data)
+          commit('add_event', payload)
+        }, (err) => {
+          console.log(err)
+        })
     }
 
   }

@@ -7,6 +7,7 @@ class eventController:
         self.events = []
         self.geoCoder = geocodeUtility();
         self.eventDAO = eventDAO();
+      
 
     def test(self):
         return self.eventDAO.testConnection();
