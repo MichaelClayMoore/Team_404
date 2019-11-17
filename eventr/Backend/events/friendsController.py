@@ -30,12 +30,12 @@ class friendController:
 
 
     def search_friends(self, searchProp):
-        searchedFriends = []
+        searchedFriends = [] #this is a list that will contain all of the matching users
 
-        #searching through each of the events
+        #searching through each of the friends in the fake database
         for friend in self.friends:   
             if friend.get('userID2') == searchProp.get('userID'):     #name matching
-                searchedFriends.append(friend)
+                searchedFriends.append(friend) 
 
         if searchedFriends:      #if searchedEvents conatins events return the list, else return no results found
             print("returning found friends")
