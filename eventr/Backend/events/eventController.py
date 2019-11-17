@@ -26,7 +26,7 @@ class eventController:
         latlong = self.geoCoder.getLatLong(location)
         return latlong
 
-<<<<<<< HEAD
+
 
     def search_event(self, searchProp):
         searchedEvents = []
