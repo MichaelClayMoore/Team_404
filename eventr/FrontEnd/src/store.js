@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     list_of_events: []
   },
+
   mutations: {
     add_event(state, event_to_add){
       state.list_of_events.push(event_to_add);
@@ -16,6 +17,7 @@ export default new Vuex.Store({
       state.list_of_events = list;
     }
   },
+
   actions: {
 
     get_test({commit, rootState}){
@@ -47,6 +49,19 @@ export default new Vuex.Store({
         console.log("Response")
         console.log(response.data)
         commit('set_list_of_events', response.data)
+      }, (err) => {
+        console.log(err)
+      })
+    },
+
+    search_event({commit, rootState}, payload){
+      axios.post('http://127.0.0.1:5000/search_event', {
+        params: {searchProp: payload}
+      })
+      .then(response => {
+        console.log("Response")
+        console.log(response.data)
+        commit('add_event', payload)
       }, (err) => {
         console.log(err)
       })

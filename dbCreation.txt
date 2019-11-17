@@ -1,0 +1,38 @@
+CREATE DATABASE EventrDb;
+CREATE EXTENSION postgis;
+
+create table Events ( 
+	id serial PRIMARY KEY,
+	name text,
+	address1 text,
+	address2 text, 
+	city text,
+	state text,
+	zip text,
+	latitude DOUBLE PRECISION,
+	longitude DOUBLE PRECISION,
+	date DATE NOT NULL DEFAULT CURRENT_DATE,
+	style text,
+	description text,
+	rsvp BOOL,
+	attendees integer[] DEFAULT '{}'::integer[]
+);
+
+CREATE TABLE users (
+	id serial PRIMARY KEY,
+	username text NOT NULL,
+	email text NOT NULL,
+	password text NOT NULL
+);
+
+CREATE TABLE pending_friends (
+	id serial PRIMARY KEY,
+	sender integer REFERENCES users(id) ON DELETE CASCADE,
+	reciever integer REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE pending_events (
+	id serial PRIMARY KEY,
+	event_id integer REFERENCES Events(id) ON DELETE CASCADE,
+	reciever integer REFERENCES users(id) ON DELETE CASCADE
+);
