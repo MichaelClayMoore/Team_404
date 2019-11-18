@@ -14,13 +14,21 @@ class eventController:
     def save_event(self, event ):
         try:
             latlong = self.geocode_location(event['location'])
-            event['location']['latitude'] = latlong['latitude']
-            event['location']['longitude'] = latlong['longitude']
-            addEventToDatabase = self.eventDAO.addEvent(event);
-            if addEventToDatabase: self.events.append(event);
-            return json.dumps(addEventToDatabase)
+            if latlong:
+                event['location']['latitude'] = latlong['latitude']
+                event['location']['longitude'] = latlong['longitude']
+                addEventToDatabase = self.eventDAO.addEvent(event);
+                if addEventToDatabase:
+                    event['id'] = addEventToDatabase
+                    self.events.append(event);
+                return json.dumps(event)
+            else:
+                return json.dumps(False)
         except:
             return json.dumps(False)
+
+    def removeEvent( self, eventId ):
+        return json.dumps( self.eventDAO.removeEvent(eventId) );
 
     def return_events(self):
         return json.dumps( self.events )
@@ -29,7 +37,13 @@ class eventController:
         latlong = self.geoCoder.getLatLong(location)
         return latlong
 
-
+    def getEvents(self):
+        self.events = self.eventDAO.getEvents();
+        for event in self.events:
+            print("date: ", event['date'].strftime("%m-%d-%Y") )
+            event['date'] = event['date'].strftime("%m-%d-%Y")
+            print("date: ", type(event['date']))
+        return json.dumps( self.events )
 
     def search_event(self, searchProp):
         searchedEvents = []
