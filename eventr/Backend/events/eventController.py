@@ -12,6 +12,7 @@ class eventController:
         return self.eventDAO.testConnection();
 
     def save_event(self, event ):
+        self.events.append(event)       #need this so that way my search events still works with the local event list (beacuse I dont have DB fully set up the try doesn't go through)
         try:
             latlong = self.geocode_location(event['location'])
             event['location']['latitude'] = latlong['latitude']
