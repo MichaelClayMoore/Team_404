@@ -85,9 +85,6 @@ export default {
     mounted(){
         console.log("I am mounted!")
     },
-<<<<<<< HEAD
-    methods: {}
-=======
     
        dataDialog () {
       return {
@@ -139,7 +136,6 @@ export default {
       },
     }
 
->>>>>>> f826002d2b68ca02ae70ec41dceb10449b729b07
 }
 </script>
 

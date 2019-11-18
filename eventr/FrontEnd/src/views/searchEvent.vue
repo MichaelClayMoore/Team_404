@@ -8,6 +8,32 @@
       </v-card>
     </v-dialog>
 
+  <v-dialog v-model="eventDialog" scrollable max-width="3000px">  
+      <v-card>
+        <v-card-title :style = "{'background-color':'tomato','color':'white'}">Searched Parties</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 3000px;">
+
+          <v-radio-group v-model="dialogm1" column>    
+            <v-radio label="Bahamas, The" value="bahamas"></v-radio>     
+                <v-data-table
+                  :headers="headers"
+                  :items="Event"
+                  :items-per-page="3"
+                  class="elevation-1"
+                > </v-data-table>
+          
+          </v-radio-group>
+
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" text @click="eventDialog = false">Close</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+
     <v-dialog v-model="dateDialog" max-width="50%">
       <v-card>
         <v-card-title :style="{'background-color':'tomato','color':'white'}" class="title">When is it?</v-card-title>
@@ -114,7 +140,23 @@ export default {
         'creator': "",
         'attendees': []
       },
-
+      headers: [
+          {
+            text: 'Current Events',
+            align: 'left',
+            sortable: false,
+            value: 'name',
+          },
+          { text: 'Location', value: 'location' },
+          { text: 'Name', value: 'name' },
+          { text: 'Type', value: 'creator' },
+          { text: 'Date', value: 'date' },
+        
+        ],
+        Events: [
+         
+        ],
+  
       // used for displaying the date to the user
       eventLocation: "search around your area",
       eventDateString: "choose a date range",
@@ -123,6 +165,7 @@ export default {
       locationDialog: false,
       dateDialog: false,
       testDialog: false,
+      eventDialog: false,
 
       // data used for the user to select from
       Events: [
@@ -167,6 +210,7 @@ export default {
       //console.log("response: ", this.returnedEvents)
       this.searchedEvents;
       this.testDialog = true;
+      this.eventDialog = true;
 
     }
   }
