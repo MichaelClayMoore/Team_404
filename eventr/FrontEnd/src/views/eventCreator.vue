@@ -106,7 +106,6 @@
 
         <!-- submit button. the @click will trigger the submit function in the methods section -->
         <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="createEvent">Submit</v-btn>
-        <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="deleteEvent">delete</v-btn>
 
       </v-layout>
   </div>
@@ -155,8 +154,6 @@ export default {
       eventLocation: "choose a location",
       eventDateString: "choose a date",
 
-      testid: 6,
-
       // data used to control page flow
       locationDialog: false,
       dateDialog: false,
@@ -198,11 +195,6 @@ export default {
       setTimeout( () => {
         context.$store.dispatch('get_events')
       }, 2000)
-    },
-
-    deleteEvent(){
-      console.log("deleting: ", this.testid)
-      this.$store.dispatch('delete_event', this.testid)
     },
 
     // this function will run when the input event is emitted from the date
