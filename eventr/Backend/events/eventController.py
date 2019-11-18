@@ -12,6 +12,7 @@ class eventController:
         return self.eventDAO.testConnection();
 
     def save_event(self, event ):
+        self.events.append(event)       #need this so that way my search events still works with the local event list (beacuse I dont have DB fully set up the try doesn't go through)
         try:
             latlong = self.geocode_location(event['location'])
             if latlong:
@@ -40,9 +41,7 @@ class eventController:
     def getEvents(self):
         self.events = self.eventDAO.getEvents();
         for event in self.events:
-            print("date: ", event['date'].strftime("%m-%d-%Y") )
             event['date'] = event['date'].strftime("%m-%d-%Y")
-            print("date: ", type(event['date']))
         return json.dumps( self.events )
 
     def search_event(self, searchProp):
@@ -63,6 +62,7 @@ class eventController:
             print("returning found events")
             for event2 in searchedEvents:
                 print(event2)
-            return searchedEvents
+
+            return json.dumps(searchedEvents)
         else:
             print("found no matching events")

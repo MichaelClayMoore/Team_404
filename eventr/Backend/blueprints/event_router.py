@@ -28,7 +28,6 @@ def get_events():
 @event_router.route("/search_event", methods=['POST'])
 def search_event():
     searchProp = request.get_json()['params']['searchProp']
-
     event_controller.search_event( searchProp )
 
-    return "Success"
+    return event_controller.search_event( searchProp )
