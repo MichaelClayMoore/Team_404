@@ -124,7 +124,7 @@ export default {
   // name of the file/component
   name: 'eventCreator',
 
-  computed : { ...mapState(['list_of_events', 'currentUser']) },
+  computed : {  },
 
   // all the initial data for the component.
   data () {
@@ -138,16 +138,15 @@ export default {
           'city':"",
           'state':"",
           'zip':"",
-          'latitude':0,
-          'longitude':0
+          'lat':0,
+          'long':0
         },
         'date': new Date().toISOString().substr(0,10),
         'style': "",
-        'host': 0,
         'description': "",
         'rsvp':false,
-        'creator': "",
         'attendees': []
+
       },
 
       // used for displaying the date to the user
@@ -171,7 +170,6 @@ export default {
 
   mounted(){
     this.$store.dispatch('get_test')
-    this.eventProp['creator'] = this.currentUser;
   },
 
   // this section is to watch variables. Anytime a variable with a corresponding
@@ -189,7 +187,7 @@ export default {
     // store. it currently does not do anything - we need to implement the store
     // first.
     createEvent(){
-      console.info("i am submitting: ", this.eventProp)
+      console.info("i am submitting")
       this.$store.dispatch('save_event', this.eventProp)
       let context = this
       setTimeout( () => {
