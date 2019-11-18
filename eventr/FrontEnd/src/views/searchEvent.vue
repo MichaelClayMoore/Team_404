@@ -1,11 +1,18 @@
 <template>
 <v-container>
 
+
+    <v-dialog v-model="testDialog" max-width="50%">
+      <v-card>
+        <v-card-title :style="{'background-color':'tomato','color':'white'}" class="title">{{searchedEvents}}</v-card-title>
+      </v-card>
+    </v-dialog>
+
     <v-dialog v-model="dateDialog" max-width="50%">
       <v-card>
         <v-card-title :style="{'background-color':'tomato','color':'white'}" class="title">When is it?</v-card-title>
         <v-card-actions>
-          <v-date-picker range landscape full-width color="#ff6347" v-model="eventProp['date']" style="font-size:15px" v-on:input="updateDateString" ></v-date-picker>
+          <v-date-picker landscape multiple full-width color="#ff6347" v-model="searchProp['date']" style="font-size:15px" v-on:input="updateDateString" ></v-date-picker>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -19,9 +26,9 @@
         <!-- input for the address -->
         <v-card-text>
           <v-layout row>
-          <v-text-field v-model="eventProp['location']['city']"  class="input" label="City"></v-text-field>
-          <v-text-field v-model="eventProp['location']['state']"  class="input" label="State"></v-text-field>
-          <v-text-field v-model="eventProp['location']['zip']"  class="input" label="Zip"></v-text-field>
+          <v-text-field v-model="searchProp['location']['city']"  class="input" label="City"></v-text-field>
+          <v-text-field v-model="searchProp['location']['state']"  class="input" label="State"></v-text-field>
+          <v-text-field v-model="searchProp['location']['zip']"  class="input" label="Zip"></v-text-field>
           </v-layout>
         </v-card-text>
 
@@ -55,10 +62,10 @@
     <!-- content section   -->
     <v-layout column>
         <!-- event name field -->
-        <v-text-field v-model="eventProp['name']" class="input" id="name" label="Event Name" outlined color="#ff6347"></v-text-field>
-        <v-text-field v-model="eventProp['creator']" class="input" id="creator" label="Event Creator" outlined color="#ff6347"></v-text-field>
+        <v-text-field v-model="searchProp['name']" class="input" id="name" label="Event Name" outlined color="#ff6347"></v-text-field>
+        <v-text-field v-model="searchProp['creator']" class="input" id="creator" label="Event Creator" outlined color="#ff6347"></v-text-field>
 
-        <v-select v-model="eventProp['style']" :items="Events" multiple outlined class="input" label="Event Type" color="#ff6347"></v-select>
+        <v-select v-model="searchProp['style']" :items="Events" multiple outlined class="input" label="Event Type" color="#ff6347"></v-select>
 
         <!-- Buttons -->
         <v-layout row style="margin-bottom:20px">
@@ -69,32 +76,44 @@
           <v-spacer/>
         </v-layout>
         
+        <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="searchEvent">Submit</v-btn>
     </v-layout>
 </div>
 </v-container>
 </template>
 
+
 <script>
+import {mapState} from 'vuex'
+
 export default {
   // name of the file/component
   name: 'searchEvent',
+
+  computed : { ...mapState(['searchedEvents']) },
 
   // all the initial data for the component.
   data () {
     return {
       // data that will be changed by the user
-      eventProp:{
+      searchProp:{
         'name': "",
-        'creator': "",
         'location': {
+          'address1':"",
+          'address2':"",
           'city':"",
           'state':"",
           'zip':"",
           'lat':0,
           'long':0
         },
+        'date': [],
+        'style': [],
+        'description': "",
+        'rsvp': false,
+        'creator': "",
+        'attendees': []
       },
-        'date': ['2019-09-10', '2019-09-20'],
 
       // used for displaying the date to the user
       eventLocation: "search around your area",
@@ -103,6 +122,7 @@ export default {
       // data used to control page flow
       locationDialog: false,
       dateDialog: false,
+      testDialog: false,
 
       // data used for the user to select from
       Events: [
@@ -125,8 +145,29 @@ export default {
   methods :{
 
     updateDateString(){
+      let i;
+      let eventsAmu = 0;
 
-      return this.date.join(' ~ ')
+      for (i = 0; i < this.searchProp.date.length; i++){
+        eventsAmu++;
+      }
+
+      // gets the new date that was chosen
+      let tempDate = new Date(this.searchProp.date);
+      tempDate.setDate( tempDate.getDate() + 1 );
+
+      // sets the display variable so the user can see what they chose
+      this.eventDateString = tempDate.toDateString();
+      
+    },
+
+    searchEvent(){
+      console.info("i am searching")
+      this.$store.dispatch('search_event', this.searchProp); 
+      //console.log("response: ", this.returnedEvents)
+      this.searchedEvents;
+      this.testDialog = true;
+
     }
   }
 }
