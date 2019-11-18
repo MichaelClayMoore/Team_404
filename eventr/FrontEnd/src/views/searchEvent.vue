@@ -154,7 +154,7 @@ export default {
         
         ],
         Events: [
-         
+         searchedEvents
         ],
   
       // used for displaying the date to the user
