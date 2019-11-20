@@ -23,7 +23,7 @@ def delete_event():
 
 @event_router.route("/get_events", methods=['GET'])
 def get_events():
-    return event_controller.getEvents()
+    return json.dumps( event_controller.getEvents() )
 
 @event_router.route("/search_event", methods=['POST'])
 def search_event():

@@ -4,15 +4,13 @@ from .eventDAO import eventDAO
 
 class eventController:
     def __init__(self):
-        self.events = []
         self.geoCoder = geocodeUtility();
         self.eventDAO = eventDAO();
 
     def test(self):
-        return self.eventDAO.testConnection();
+        return self.eventDAO.testConnection()
 
-    def save_event(self, event ):
-        self.events.append(event)       #need this so that way my search events still works with the local event list (beacuse I dont have DB fully set up the try doesn't go through)
+    def save_event(self, event):
         try:
             latlong = self.geocode_location(event['location'])
             if latlong:
@@ -21,7 +19,6 @@ class eventController:
                 addEventToDatabase = self.eventDAO.addEvent(event);
                 if addEventToDatabase:
                     event['id'] = addEventToDatabase
-                    self.events.append(event);
                 return json.dumps(event)
             else:
                 return json.dumps(False)
@@ -29,33 +26,33 @@ class eventController:
             return json.dumps(False)
 
     def removeEvent( self, eventId ):
-        return json.dumps( self.eventDAO.removeEvent(eventId) );
-
-    def return_events(self):
-        return json.dumps( self.events )
+        return json.dumps( self.eventDAO.removeEvent(eventId) )
 
     def geocode_location(self, location):
         latlong = self.geoCoder.getLatLong(location)
         return latlong
 
     def getEvents(self):
-        self.events = self.eventDAO.getEvents();
-        for event in self.events:
+        events = self.eventDAO.getEvents()
+        for event in events:
             event['date'] = event['date'].strftime("%m-%d-%Y")
-        return json.dumps( self.events )
+        return events
 
     def search_event(self, searchProp):
+        events = self.eventDAO.getEvents()
         searchedEvents = []
 
         #searching through each of the events
-        for event in self.events:
+        for event in events:
             if searchProp.get('name') == "" or event.get('name') == searchProp.get('name'):     #name matching
                 if searchProp.get('creator') == "" or event.get('creator') == searchProp.get('creator'):    #creator matching
                     if not len(searchProp.get('style')) == 0:     #checking if there is a style of event array to search with
                         for style in searchProp.get('style'):
                             if style == event.get('style'):
+                                event['date'] = event['date'].strftime("%m-%d-%Y")
                                 searchedEvents.append(event)
                     else:    #the style list is empty
+                        event['date'] = event['date'].strftime("%m-%d-%Y")
                         searchedEvents.append(event)
 
         if searchedEvents:      #if searchedEvents conatins events return the list, else return no results found
