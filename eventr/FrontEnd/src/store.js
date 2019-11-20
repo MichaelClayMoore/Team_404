@@ -93,6 +93,19 @@ export default new Vuex.Store({
       }, (err) => {
         console.log(err)
       })
+    },
+
+    validate_user({commit, rootState}, payload){
+      axios.post('http://127.0.0.1:5000/search_event', {
+        params: {searchProp: payload}
+      })
+      .then(response => {
+        console.log("Response: ", response.data)
+        commit('authenticated_user', response.data)
+        //resolve(response.data)
+      }, (err) => {
+        console.log(err)
+      })
     }
   }
 })

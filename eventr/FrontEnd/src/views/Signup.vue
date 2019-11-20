@@ -10,13 +10,13 @@
         <!-- input for the address -->
         <v-card-text>
           <v-layout row>
-           <v-text-field v-model="eventProp['userinfo']['email']" class="input" label="email"></v-text-field>
+           <v-text-field v-model="signupProp['userinfo']['email']" class="input" label="email"></v-text-field>
           </v-layout>
           <v-layout row>
-            <v-text-field v-model="eventProp['userinfo']['username']"  class="input" label="username"></v-text-field>
+            <v-text-field v-model="signupProp['userinfo']['username']"  class="input" label="username"></v-text-field>
           </v-layout>
           <v-layout row>
-            <v-text-field v-model="eventProp['userinfo']['password']"  class="input" label="password"></v-text-field>
+            <v-text-field v-model="signupProp['userinfo']['password']"  class="input" label="password"></v-text-field>
           </v-layout>
           <v-layout row justify-center>
             <v-spacer/>
@@ -31,9 +31,9 @@
         <v-card color="cream">
           <div class="login">
           <v-card-title> Welcome to EventR </v-card-title>
-          <v-text-field v-model="username" class="input" id="username" label="username" color="#ff6347"></v-text-field>
+          <v-text-field v-model="loginProp[username]" class="input" id="username" label="username" color="#ff6347"></v-text-field>
           <v-spacer/>
-          <v-text-field  v-model="password" class="input" id="password" label="password" color="#ff6347"></v-text-field>
+          <v-text-field  v-model="loginProp[password]" class="input" id="password" label="password" color="#ff6347"></v-text-field>
           <v-layout justify-center align-center>
             <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="login()">Login</v-btn>
           </v-layout>
@@ -49,9 +49,11 @@
     name: 'Signup',
     data() {
       return {
-          username: "",
-          password: "",
-          eventProp:{
+          loginProp:{
+            username: "",
+            password: ""
+          },
+          signupProp:{
             'userinfo':{
               'email': "",
               'username': "",
@@ -66,9 +68,7 @@
     methods: {
       login() {
         if(this.username != ""  && this.password != ""){
-          if(this.username == this.username ){
-            
-          }
+          this.$store.dispatch('validate_user', this.loginProp); 
         } 
       }
     }
