@@ -14,16 +14,15 @@
         <v-divider></v-divider>
         <v-card-text style="height: 3000px;">
 
-          <v-radio-group v-model="dialogm1" column>    
-            <v-radio label="Bahamas, The" value="bahamas"></v-radio>     
-                <v-data-table
+                <v-data-table 
                   :headers="headers"
-                  :items="Event"
+                  :items="searchedEvents"
                   :items-per-page="3"
-                  class="elevation-1"
+                  class="elevation-3"
+                  
                 > </v-data-table>
+ 
           
-          </v-radio-group>
 
         </v-card-text>
         <v-divider></v-divider>
@@ -147,14 +146,15 @@ export default {
             sortable: false,
             value: 'name',
           },
-          { text: 'Location', value: 'location' },
-          { text: 'Name', value: 'name' },
-          { text: 'Type', value: 'creator' },
+          { text: 'Location', value: 'location.address1' },
+          { text: 'State', value: 'location.state' },
           { text: 'Date', value: 'date' },
+          { text: 'Description', value: 'description'},
+          { text: 'Style', value: 'style'},
         
         ],
         Events: [
-         searchedEvents
+         
         ],
   
       // used for displaying the date to the user
@@ -164,7 +164,7 @@ export default {
       // data used to control page flow
       locationDialog: false,
       dateDialog: false,
-      testDialog: false,
+      //testDialog: false,
       eventDialog: false,
 
       // data used for the user to select from
