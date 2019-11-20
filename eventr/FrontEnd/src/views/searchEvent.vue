@@ -8,6 +8,31 @@
       </v-card>
     </v-dialog>
 
+  <v-dialog v-model="eventDialog" scrollable max-width="3000px">  
+      <v-card>
+        <v-card-title :style = "{'background-color':'tomato','color':'white'}">Searched Parties</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 3000px;">
+
+                <v-data-table 
+                  :headers="headers"
+                  :items="searchedEvents"
+                  :items-per-page="3"
+                  class="elevation-3"
+                  
+                > </v-data-table>
+ 
+          
+
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" text @click="eventDialog = false">Close</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+
     <v-dialog v-model="dateDialog" max-width="50%">
       <v-card>
         <v-card-title :style="{'background-color':'tomato','color':'white'}" class="title">When is it?</v-card-title>
@@ -114,7 +139,24 @@ export default {
         'creator': "",
         'attendees': []
       },
-
+      headers: [
+          {
+            text: 'Current Events',
+            align: 'left',
+            sortable: false,
+            value: 'name',
+          },
+          { text: 'Location', value: 'location.address1' },
+          { text: 'State', value: 'location.state' },
+          { text: 'Date', value: 'date' },
+          { text: 'Description', value: 'description'},
+          { text: 'Style', value: 'style'},
+        
+        ],
+        Events: [
+         
+        ],
+  
       // used for displaying the date to the user
       eventLocation: "search around your area",
       eventDateString: "select multiple dates",
@@ -123,6 +165,7 @@ export default {
       locationDialog: false,
       dateDialog: false,
       testDialog: false,
+      eventDialog: false,
 
       // data used for the user to select from
       Events: [
@@ -162,7 +205,8 @@ export default {
       this.$store.dispatch('search_event', this.searchProp); 
       //console.log("response: ", this.returnedEvents)
       this.searchedEvents;
-      this.testDialog = true;
+      this.testDialog = false;
+      this.eventDialog = true;
 
     }
   }
