@@ -88,7 +88,7 @@
     <v-layout column>
         <!-- event name field -->
         <v-text-field v-model="searchProp['name']" class="input" id="name" label="Event Name" outlined color="#ff6347"></v-text-field>
-        <v-text-field v-model="searchProp['creator']" class="input" id="creator" label="Event Creator" outlined color="#ff6347"></v-text-field>
+        <v-text-field v-model="searchProp['creator']" class="input" id="creator" label="Event Host" outlined color="#ff6347"></v-text-field>
 
         <v-select v-model="searchProp['style']" :items="Events" multiple outlined class="input" label="Event Type" color="#ff6347"></v-select>
 
@@ -159,7 +159,7 @@ export default {
   
       // used for displaying the date to the user
       eventLocation: "search around your area",
-      eventDateString: "choose a date range",
+      eventDateString: "select multiple dates",
 
       // data used to control page flow
       locationDialog: false,
@@ -195,12 +195,8 @@ export default {
         eventsAmu++;
       }
 
-      // gets the new date that was chosen
-      let tempDate = new Date(this.searchProp.date);
-      tempDate.setDate( tempDate.getDate() + 1 );
-
       // sets the display variable so the user can see what they chose
-      this.eventDateString = tempDate.toDateString();
+      this.eventDateString = eventsAmu + " Dates Selected"
       
     },
 
