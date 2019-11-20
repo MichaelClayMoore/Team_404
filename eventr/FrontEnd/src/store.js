@@ -15,14 +15,19 @@ export default new Vuex.Store({
     add_event(state, event_to_add){
       state.list_of_events.push(event_to_add);
     },
+    remove_event(state, eventId){
+      let location = state.list_of_events.findIndex( event => event['id'] == eventId );
+      if ( location >= 0 ) { state.list_of_events.splice(location, 1); }
+      console.log(state.list_of_events)
+    },
     set_list_of_events(state, list){
       state.list_of_events = list;
     },
-    set_user(state, user){
-      state.currentUser = user;
-    },
     set_searched_events(state, event_to_add){
       state.searchedEvents = event_to_add;
+    },
+    set_user(state, user){
+      state.currentUser = user;
     }
   },
 
@@ -37,13 +42,26 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
+
     save_event({commit, rootState}, payload){
       axios.post('http://127.0.0.1:5000/save_event',
       { params:{ event: payload } }
       )
       .then(response => {
         console.log("Response: ", response.data)
-        commit('add_event', payload)
+        commit('add_event', response.data)
+      }, (err) => {
+        console.log(err)
+      })
+    },
+
+    delete_event({commit, rootState}, payload){
+      axios.post('http://127.0.0.1:5000/delete_event',
+      { params:{ eventId: payload } }
+      )
+      .then(response => {
+        console.log("Response: ", response.data)
+        commit('remove_event', payload)
       }, (err) => {
         console.log(err)
       })
