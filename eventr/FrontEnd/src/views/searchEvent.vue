@@ -164,7 +164,7 @@ export default {
       // data used to control page flow
       locationDialog: false,
       dateDialog: false,
-      //testDialog: false,
+      testDialog: false,
       eventDialog: false,
 
       // data used for the user to select from
@@ -209,7 +209,7 @@ export default {
       this.$store.dispatch('search_event', this.searchProp); 
       //console.log("response: ", this.returnedEvents)
       this.searchedEvents;
-      this.testDialog = true;
+      this.testDialog = false;
       this.eventDialog = true;
 
     }
