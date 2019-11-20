@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     list_of_events: [],
     searchedEvents: [],
-    currentUser: 0
+    currentUser: 0,
+    check_authentication: false
   },
 
   mutations: {
@@ -25,6 +26,9 @@ export default new Vuex.Store({
     },
     set_searched_events(state, event_to_add){
       state.searchedEvents = event_to_add;
+    },
+    autenticated_user(state, bool_check){
+      state.check_authentication = bool_check;
     },
     set_user(state, user){
       state.currentUser = user;
