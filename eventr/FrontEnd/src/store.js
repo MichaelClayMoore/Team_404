@@ -34,7 +34,7 @@ export default new Vuex.Store({
   actions: {
 
     get_test({commit, rootState}){
-      axios.get('http://127.0.0.1:5000/get_test')
+      return axios.get('http://127.0.0.1:5000/get_test')
       .then(response => {
         console.log("Response")
         console.log(response.data)
@@ -44,7 +44,7 @@ export default new Vuex.Store({
     },
 
     save_event({commit, rootState}, payload){
-      axios.post('http://127.0.0.1:5000/save_event',
+      return axios.post('http://127.0.0.1:5000/save_event',
       { params:{ event: payload } }
       )
       .then(response => {
@@ -56,7 +56,7 @@ export default new Vuex.Store({
     },
 
     delete_event({commit, rootState}, payload){
-      axios.post('http://127.0.0.1:5000/delete_event',
+      return axios.post('http://127.0.0.1:5000/delete_event',
       { params:{ eventId: payload } }
       )
       .then(response => {
@@ -68,7 +68,7 @@ export default new Vuex.Store({
     },
 
     get_events({commit, rootState}){
-      axios.get('http://127.0.0.1:5000/get_events')
+      return axios.get('http://127.0.0.1:5000/get_events')
       .then(response => {
         console.log("Response")
         console.log(response.data)
@@ -79,7 +79,7 @@ export default new Vuex.Store({
     },
 
     search_event({commit, rootState}, payload){
-      axios.post('http://127.0.0.1:5000/search_event', {
+      return axios.post('http://127.0.0.1:5000/search_event', {
         params: {searchProp: payload}
       })
       .then(response => {
