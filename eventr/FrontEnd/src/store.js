@@ -97,7 +97,7 @@ export default new Vuex.Store({
 
     validate_user({commit, rootState}, payload){
       axios.post('http://127.0.0.1:5000/validate_user', {
-        params: {searchProp: payload}
+        params: {loginProp: payload}
       })
       .then(response => {
         console.log("Response: ", response.data)
