@@ -8,14 +8,12 @@ class userController:
     def test(self):
         return self.userDAO.testConnection()
 
-    def save_event(self, user):
-        try:
-            event['location']['latitude'] = latlong['latitude']
-            event['location']['longitude'] = latlong['longitude']
-            addEventToDatabase = self.eventDAO.addEvent(event);
-            if addEventToDatabase:
-                event['id'] = addEventToDatabase
-            return json.dumps(event)
+    def save_user(self, user):
+        try
+            addUserToDatabase = self.userDAO.addUser(user);
+            if addUserToDatabase:
+                user['id'] = addUserToDatabase
+            return json.dumps(user)
             return json.dumps(False)
         except:
             return json.dumps(False)

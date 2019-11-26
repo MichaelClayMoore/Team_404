@@ -1,6 +1,7 @@
 ##  START File !!
 from flask import request, Blueprint, abort , json, jsonify
 from events.eventController import eventController
+from users.userController import userController
 import json
 
 event_controller = eventController()
@@ -31,3 +32,9 @@ def search_event():
     event_controller.search_event( searchProp )
 
     return event_controller.search_event( searchProp )
+
+@event_router.route("/save_user", methods=['POST'])
+def save_user():
+    event = request.get_json()['params']['signupProp']
+    # print(event)
+    return user_controller.save_user( user )
