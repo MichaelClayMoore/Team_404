@@ -1,7 +1,7 @@
 import json
 from .userDAO import userDAO
 
-class userController:
+class userController():
     def __init__(self):
         self.userDAO = userDAO();
 
@@ -9,11 +9,11 @@ class userController:
         return self.userDAO.testConnection()
 
     def save_user(self, user):
-        try
+        try:
             addUserToDatabase = self.userDAO.addUser(user);
             if addUserToDatabase:
                 user['id'] = addUserToDatabase
             return json.dumps( user )
-            return json.dumps(False)
+            #return json.dumps(False)
         except:
             return json.dumps(False)

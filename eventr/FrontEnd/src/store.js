@@ -106,6 +106,19 @@ export default new Vuex.Store({
       }, (err) => {
         console.log(err)
       })
+    },
+
+    save_user({commit, rootState}, payload){
+      axios.post('http://127.0.0.1:5000/save_user', {
+        params: {signupProp: payload}
+      })
+      .then(response => {
+        console.log("Response: ", response.data)
+        commit('authenticated_user', response.data)
+        //resolve(response.data)
+      }, (err) => {
+        console.log(err)
+      })
     }
   }
 })

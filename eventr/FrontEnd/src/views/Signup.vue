@@ -31,9 +31,9 @@
         <v-card color="cream">
           <div class="login">
           <v-card-title> Welcome to EventR </v-card-title>
-          <v-text-field v-model="loginProp[username]" class="input" id="username" label="username" color="#ff6347"></v-text-field>
+          <v-text-field v-model="loginProp['username']" class="input" id="username" label="username" color="#ff6347"></v-text-field>
           <v-spacer/>
-          <v-text-field  v-model="loginProp[password]" class="input" id="password" label="password" color="#ff6347"></v-text-field>
+          <v-text-field  v-model="loginProp['password']" class="input" id="password" label="password" color="#ff6347"></v-text-field>
           <v-layout justify-center align-center>
             <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="login()">Login</v-btn>
           </v-layout>
@@ -50,8 +50,8 @@
     data() {
       return {
           loginProp:{
-            username: "",
-            password: ""
+            'username': "",
+            'password': ""
           },
           signupProp:{
             'userinfo':{
@@ -67,9 +67,14 @@
     },
     methods: {
       login() {
-        if(this.username != ""  && this.password != ""){
+        if(this.loginProp.username != ""  && this.loginProp.password != ""){
           this.$store.dispatch('validate_user', this.loginProp); 
         } 
+      },
+      submitSignup() {
+        if(this.signupProp.userinfo.username != ""  && this.signupProp.userinfo.password != "" && this.signupProp.userinfo.email != ""){
+          this.$store.dispatch('save_user', this.signupProp); 
+        }
       }
     }
 }
