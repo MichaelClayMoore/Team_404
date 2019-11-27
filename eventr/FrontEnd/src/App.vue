@@ -6,7 +6,7 @@
 
       </v-toolbar-title>
       <div id="nav" class="ml-0 pl-4">
-        <router-link to="/home" :style="{'text-decoration':'none', 'color':'black'}"><span>Home</span></router-link>
+        <router-link to="/" :style="{'text-decoration':'none', 'color':'black'}"><span>Home</span></router-link>
         <router-link to="/about" :style="{'text-decoration':'none', 'color':'black'}"> | About</router-link>
         <router-link to="/event_creator" :style="{'text-decoration':'none', 'color':'black'}"> | Create Event</router-link>
         <router-link to="/fh_AddFriend" :style="{'text-decoration':'none', 'color':'black'}"> | Friends</router-link>
@@ -15,11 +15,8 @@
       </div>
       <v-spacer></v-spacer>
     </v-app-bar>
-    <v-content>
-
-
+    <v-content style="overflow-y:hidden;">
       <router-view/>
-
     </v-content>
   </v-app>
 </template>
