@@ -62,4 +62,5 @@ class eventController:
 
             return json.dumps(searchedEvents)
         else:
-            print("found no matching events")
+            print("Nothing found")
+            return json.dumps(searchedEvents)

@@ -1,6 +1,6 @@
 postgres:
   host: localhost
   user: postgres
-  password: postgresql
+  password: postgres
   db: EventrDb
-  port: 5432
+  port: 5433

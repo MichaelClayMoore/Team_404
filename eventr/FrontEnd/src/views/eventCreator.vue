@@ -17,7 +17,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-
     <!--
     ______ location dialog _____________________________________________________________
     | this is the location dialog. this will appear when the location button.          |
