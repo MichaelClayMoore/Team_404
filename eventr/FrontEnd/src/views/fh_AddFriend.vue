@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    
     <!-- this is where the full page starts -->
     <div flex justify-center align-center column>
       <!-- title line -->
@@ -27,42 +28,74 @@
       >whatshot</i>
 
       <!-- content section   -->
-      <v-layout column>
-        <!-- event name field -->
-        <v-text-field
-          v-model="addFriendProp['userID']"
-          class="input"
-          id="userID"
-          label="Enter a Username"
-          color="#ff6347"
-        ></v-text-field>
+      <v-row dense>
+        <v-card class="mx-auto" max-width="400">
+          <v-img
+            class="white--text align-end"
+            height="200px"
+            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+          >
+            <v-card-title>Send a Friend Request</v-card-title>
+          </v-img>
 
-        <!-- both the location and date buttons. -->
-        <v-layout row style="margin-bottom:20px">
-          <v-spacer />
-          <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="AddFriend">Send Friend Request</v-btn>
-          <v-spacer />
-        </v-layout>
-      </v-layout>
+          <v-card-text class="text--primary">
+            <v-layout column>
+              <!-- event name field -->
+              <v-text-field
+                v-model="addFriendProp['userID']"
+                class="input"
+                id="userID"
+                label="Enter a Username"
+                color="#ff6347"
+              ></v-text-field>
 
-      <v-layout column>
-        <!-- event name field -->
-        <v-text-field
-          v-model="addUserProp['userID2']"
-          class="input"
-          id="userID2"
-          label="Enter a Username to add to database"
-          color="#ff6347"
-        ></v-text-field>
+              <!-- both the location and date buttons. -->
+              <v-layout row style="margin-bottom:40px"></v-layout>
+            </v-layout>
+          </v-card-text>
 
-        <!-- both the location and date buttons. -->
-        <v-layout row style="margin-bottom:20px">
-          <v-spacer />
-          <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="AddUser">Add User to Fake Database</v-btn>
-          <v-spacer />
-        </v-layout>
-      </v-layout>
+          <v-card-actions>
+            <v-btn
+              color="#ff6347"
+              :style="{'color':'#ffffff'}"
+              @click="AddFriend"
+            >Send Friend Request</v-btn>
+          </v-card-actions>
+        </v-card>
+        <v-card class="mx-auto" max-width="400">
+          <v-img
+            class="white--text align-end"
+            height="200px"
+            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+          >
+            <v-card-title>ADD USER TO FAKE DATA BASE</v-card-title>
+          </v-img>
 
+          <v-card-text class="text--primary">
+            <v-layout column>
+              <!-- event name field -->
+              <v-text-field
+                v-model="addUserProp['userID2']"
+                class="input"
+                id="userID2"
+                label="Enter a Username to add to database"
+                color="#ff6347"
+              ></v-text-field>
+
+              <!-- both the location and date buttons. -->
+              <v-layout row style="margin-bottom:40px"></v-layout>
+            </v-layout>
+          </v-card-text>
+
+          <v-card-actions>
+            <v-btn
+              color="#ff6347"
+              :style="{'color':'#ffffff'}"
+              @click="AddUser"
+            >Add User to Fake Database</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-row>
     </div>
   </v-container>
 </template>
