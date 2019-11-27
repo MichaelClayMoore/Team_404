@@ -26,8 +26,8 @@ class userDAO:
         trans = conn.begin()
         cursor = conn.connection.cursor()
         query = "INSERT into users(username,email,password) VALUES('"
-        query += str(user['username']) + "','" + str(user['email']) + "', "
-        query += "crypt('" + str(user['password']) + "', gen_salt('md5')), md5('password'));"
+        query += str(user['userinfo']['username']) + "','" + str(user['userinfo']['email']) + "', "
+        query += "crypt( '" + str(user['userinfo']['password']) + "', gen_salt('md5') ) );"
 
         print('\nquery is: ', query, '\n')
         try:
@@ -81,29 +81,23 @@ class userDAO:
         conn = self.connection.connectToDb()
         trans = conn.begin()
         cursor = conn.connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        query = "SELECT username\nFROM users\nWHERE username = '" 
+        query = "SELECT id\nFROM users\nWHERE username = '"
         query += str(user['username']) + "' AND password = crypt('"
         query += str(user['password']) + "',  password);"
         print('\nquery is: ', query, '\n')
         try:
             cursor.execute(query)
-            usersGiven = cursor.fetchall()
-            print("user: ", usersGiven)
-            users = []
-            for user in usersGiven:
-                temp = {'username':user[0], 'email':user[1], 'password':user[2]};
-                events.append(temp)
-            print(usersGiven)
-            print(users)
+            user = cursor.fetchone()
+            print("user: ", user)
             trans.commit()
             cursor.close()
-            return users
+            return user if user else False
 
 
         except psycopg2.Error as error:
             trans.rollback()
             print(error.pgerror)
-            return []
+            return False
 
         finally:
             conn.close()

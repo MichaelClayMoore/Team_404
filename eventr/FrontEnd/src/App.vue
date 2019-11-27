@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app>
+    <v-app-bar app v-if="currentUser">
       <v-toolbar-title class="headline text-uppercase">
         <span>Eventr</span>
 
@@ -24,14 +24,21 @@
 <script>
 import HelloWorld from './components/HelloWorld';
 import friendsHub from './views/friendsHub';
+import {mapState} from 'vuex'
+
 export default {
   name: 'App',
+  computed : { ...mapState(['currentUser']) },
   components: {
     HelloWorld, friendsHub,
   },
   data: () => ({
     //
   }),
+
+  beforeMount(){
+    if(!this.currentUser){this.$router.push('/signUp')}
+  }
 };
 </script>
 

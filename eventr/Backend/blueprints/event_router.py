@@ -37,9 +37,12 @@ def search_event():
 @event_router.route("/save_user", methods=['POST'])
 def save_user():
     user = request.get_json()['params']['signupProp']
-    # print(event)
     return user_controller.save_user( user )
 
+@event_router.route("/validate_user", methods=['POST'])
+def validate_user():
+    user = request.get_json()['params']['loginProp']
+    return user_controller.validate_user( user )
 #@event_router.route("/_user", methods=['POST'])
 #def signup_user():
  #   event = request.get_json()['params']['signupProp']

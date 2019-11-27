@@ -9,7 +9,7 @@ import {mapState} from 'vuex'
 import L from 'leaflet'
 
 export default {
- computed : { ...mapState(['list_of_events']) },
+ computed : { ...mapState(['currentUser', 'list_of_events']) },
 
  data () {
     return {
@@ -17,6 +17,9 @@ export default {
       eventMarkers: [],
       testButtons: []
     }
+ },
+ beforeMount(){
+   if (!this.currentUser){this.$router.push('/signUp')}
  },
  mounted(){
   this.initMap();

@@ -8,7 +8,7 @@ export default new Vuex.Store({
   state: {
     list_of_events: [],
     searchedEvents: [],
-    currentUser: 0,
+    currentUser: null,
     check_authentication: false,
     current_Event: {}
   },
@@ -27,9 +27,6 @@ export default new Vuex.Store({
     },
     set_searched_events(state, event_to_add){
       state.searchedEvents = event_to_add;
-    },
-    autenticated_user(state, bool_check){
-      state.check_authentication = bool_check;
     },
     set_user(state, user){
       state.currentUser = user;
@@ -101,26 +98,31 @@ export default new Vuex.Store({
     },
 
     validate_user({commit, rootState}, payload){
-      axios.post('http://127.0.0.1:5000/validate_user', {
+      return axios.post('http://127.0.0.1:5000/validate_user', {
         params: {loginProp: payload}
       })
       .then(response => {
         console.log("Response: ", response.data)
-        commit('authenticated_user', response.data)
-        //resolve(response.data)
+        if (response.data){
+          commit('set_user', response.data)
+        }
+
       }, (err) => {
         console.log(err)
       })
     },
 
     save_user({commit, rootState}, payload){
-      axios.post('http://127.0.0.1:5000/save_user', {
+      return axios.post('http://127.0.0.1:5000/save_user', {
         params: {signupProp: payload}
       })
       .then(response => {
         console.log("Response: ", response.data)
-        commit('authenticated_user', response.data)
-        //resolve(response.data)
+
+        if (response.data){
+          commit('set_user', response.data)
+        }
+
       }, (err) => {
         console.log(err)
       })
