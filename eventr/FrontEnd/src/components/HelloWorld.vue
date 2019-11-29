@@ -1,50 +1,62 @@
 <template>
-  <div class="mapcontainer">
-    <div class="mapbox" id="map" :style="{'height':'93vh', 'width':'100%', 'z-index':'0', 'overflow-y':'hidden'}"></div>
-  </div>
+  <v-container>
+    
+  </v-container>
 </template>
 
 <script>
-import L from 'leaflet'
-
 export default {
- data () {
-    return {
-      map: null
-    }
- },
- mounted(){
-   console.log("I am mounted")
-   this.initMap();
- },
- methods: {
-    initMap(){
-     console.log("I am called")
-     this.map = L.map('map').setView([38.63, -90.23], 12);
-
-    let context = this
-    navigator.geolocation.getCurrentPosition(function(location) {
-      context.map.panTo([location.coords.latitude,location.coords.longitude])
-    });
-    this.tileLayer = L.tileLayer(
-      'https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png',
+  data: () => ({
+    ecosystem: [
       {
-        maxZoom: 18,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution">CARTO</a>',
-      }
-    );
-    this.tileLayer.addTo(this.map);
-    }
-  }
- }
+        text: 'vuetify-loader',
+        href: 'https://github.com/vuetifyjs/vuetify-loader',
+      },
+      {
+        text: 'github',
+        href: 'https://github.com/vuetifyjs/vuetify',
+      },
+      {
+        text: 'awesome-vuetify',
+        href: 'https://github.com/vuetifyjs/awesome-vuetify',
+      },
+    ],
+    importantLinks: [
+      {
+        text: 'Documentation',
+        href: 'https://vuetifyjs.com',
+      },
+      {
+        text: 'Chat',
+        href: 'https://community.vuetifyjs.com',
+      },
+      {
+        text: 'Made with Vuetify',
+        href: 'https://madewithvuejs.com/vuetify',
+      },
+      {
+        text: 'Twitter',
+        href: 'https://twitter.com/vuetifyjs',
+      },
+      {
+        text: 'Articles',
+        href: 'https://medium.com/vuetify',
+      },
+    ],
+    whatsNext: [
+      {
+        text: 'Explore components',
+        href: 'https://vuetifyjs.com/components/api-explorer',
+      },
+      {
+        text: 'Select a layout',
+        href: 'https://vuetifyjs.com/layout/pre-defined',
+      },
+      {
+        text: 'Frequently Asked Questions',
+        href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
+      },
+    ],
+  }),
+};
 </script>
-
-<style scoped>
-  .mapcontainer{
-    background-color: red;
-    width: 100%;
-    margin-left: 0px;
-    margin-right: 0px;
-    overflow-y: hidden
-  }
-</style>
