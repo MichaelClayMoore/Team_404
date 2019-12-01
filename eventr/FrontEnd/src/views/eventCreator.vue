@@ -168,9 +168,12 @@ export default {
     }
   },
 
+  beforeMount(){
+    if (!this.currentUser){this.$router.push('/signUp')}
+  },
+
   mounted(){
-    this.$store.dispatch('get_test')
-    this.eventProp['creator'] = this.currentUser;
+    this.eventProp['creator'] = this.currentUser; 
   },
 
   // this section is to watch variables. Anytime a variable with a corresponding
