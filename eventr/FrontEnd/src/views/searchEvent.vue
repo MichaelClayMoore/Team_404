@@ -1,11 +1,43 @@
 <template>
 <v-container>
 
+
+    <v-dialog v-model="testDialog" max-width="50%">
+      <v-card>
+        <v-card-title :style="{'background-color':'tomato','color':'white'}" class="title">{{searchedEvents}}</v-card-title>
+      </v-card>
+    </v-dialog>
+
+  <v-dialog v-model="eventDialog" scrollable max-width="3000px">  
+      <v-card>
+        <v-card-title :style = "{'background-color':'tomato','color':'white'}">Searched Parties</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 3000px;">
+
+                <v-data-table 
+                  :headers="headers"
+                  :items="searchedEvents"
+                  :items-per-page="3"
+                  class="elevation-3"
+                  
+                > </v-data-table>
+ 
+          
+
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" text @click="eventDialog = false">Close</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+
     <v-dialog v-model="dateDialog" max-width="50%">
       <v-card>
         <v-card-title :style="{'background-color':'tomato','color':'white'}" class="title">When is it?</v-card-title>
         <v-card-actions>
-          <v-date-picker range landscape full-width color="#ff6347" v-model="searchProp['date']" style="font-size:15px" v-on:input="updateDateString" ></v-date-picker>
+          <v-date-picker landscape multiple full-width color="#ff6347" v-model="searchProp['date']" style="font-size:15px" v-on:input="updateDateString" ></v-date-picker>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -56,7 +88,7 @@
     <v-layout column>
         <!-- event name field -->
         <v-text-field v-model="searchProp['name']" class="input" id="name" label="Event Name" outlined color="#ff6347"></v-text-field>
-        <v-text-field v-model="searchProp['creator']" class="input" id="creator" label="Event Creator" outlined color="#ff6347"></v-text-field>
+        <v-text-field v-model="searchProp['creator']" class="input" id="creator" label="Event Host" outlined color="#ff6347"></v-text-field>
 
         <v-select v-model="searchProp['style']" :items="Events" multiple outlined class="input" label="Event Type" color="#ff6347"></v-select>
 
@@ -83,6 +115,8 @@ export default {
   // name of the file/component
   name: 'searchEvent',
 
+  computed : { ...mapState(['searchedEvents']) },
+
   // all the initial data for the component.
   data () {
     return {
@@ -98,21 +132,40 @@ export default {
           'lat':0,
           'long':0
         },
-        'date': "",
+        'date': [],
         'style': [],
         'description': "",
         'rsvp': false,
         'creator': "",
         'attendees': []
       },
-
+      headers: [
+          {
+            text: 'Current Events',
+            align: 'left',
+            sortable: false,
+            value: 'name',
+          },
+          { text: 'Location', value: 'location.address1' },
+          { text: 'State', value: 'location.state' },
+          { text: 'Date', value: 'date' },
+          { text: 'Description', value: 'description'},
+          { text: 'Style', value: 'style'},
+        
+        ],
+        Events: [
+         
+        ],
+  
       // used for displaying the date to the user
       eventLocation: "search around your area",
-      eventDateString: "choose a date range",
+      eventDateString: "select multiple dates",
 
       // data used to control page flow
       locationDialog: false,
       dateDialog: false,
+      testDialog: false,
+      eventDialog: false,
 
       // data used for the user to select from
       Events: [
@@ -135,21 +188,25 @@ export default {
   methods :{
 
     updateDateString(){
-      // hide the dialog because they have choosen now.
-      this.dateDialog = false;
+      let i;
+      let eventsAmu = 0;
 
-      // gets the new date that was chosen
-      let tempDate = new Date(this.searchProp.date);
-      tempDate.setDate( tempDate.getDate() + 1 )
+      for (i = 0; i < this.searchProp.date.length; i++){
+        eventsAmu++;
+      }
 
       // sets the display variable so the user can see what they chose
-      this.eventDateString = tempDate.toDateString();
+      this.eventDateString = eventsAmu + " Dates Selected"
       
     },
 
     searchEvent(){
       console.info("i am searching")
-      this.$store.dispatch('search_event', this.searchProp)
+      this.$store.dispatch('search_event', this.searchProp); 
+      //console.log("response: ", this.returnedEvents)
+      this.searchedEvents;
+      this.testDialog = false;
+      this.eventDialog = true;
 
     }
   }
