@@ -8,21 +8,23 @@
       </v-card>
     </v-dialog>
 
-  <v-dialog v-model="eventDialog" scrollable max-width="3000px">
+  <v-dialog v-model="eventDialog" scrollable max-width="3000px">  
       <v-card>
         <v-card-title :style = "{'background-color':'tomato','color':'white'}">Searched Parties</v-card-title>
         <v-divider></v-divider>
         <v-card-text style="height: 3000px;">
 
-                <v-data-table
+                <v-data-table 
                   :headers="headers"
                   :items="searchedEvents"
-                  :items-per-page="3"
+                  :items-per-page="10"
                   class="elevation-3"
-
-                > </v-data-table>
-
-
+                  @click:row="eventPage"
+                  
+                > 
+                </v-data-table>
+ 
+          
 
         </v-card-text>
         <v-divider></v-divider>
@@ -73,7 +75,7 @@
             <div style="background-image: linear-gradient(to bottom right, green, #f06d06); height:200px"></div>
           </div>
         </v-card-text>
-
+        
       </v-card>
     </v-dialog>
 
@@ -100,7 +102,7 @@
           <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="locationDialog = true;">{{eventLocation}}</v-btn>
           <v-spacer/>
         </v-layout>
-
+        
         <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="searchEvent">Submit</v-btn>
     </v-layout>
 </div>
@@ -115,7 +117,7 @@ export default {
   // name of the file/component
   name: 'searchEvent',
 
-  computed : { ...mapState(['currentUser','searchedEvents']) },
+  computed : { ...mapState(['searchedEvents']) },
 
   // all the initial data for the component.
   data () {
@@ -151,12 +153,12 @@ export default {
           { text: 'Date', value: 'date' },
           { text: 'Description', value: 'description'},
           { text: 'Style', value: 'style'},
-
+        
         ],
         Events: [
-
+         
         ],
-
+  
       // used for displaying the date to the user
       eventLocation: "search around your area",
       eventDateString: "select multiple dates",
@@ -175,10 +177,6 @@ export default {
         "Formal Event"
       ]
     }
-  },
-
-  beforeMount(){
-    if (!this.currentUser){this.$router.push('/signUp')}
   },
 
   // this section is to watch variables. Anytime a variable with a corresponding
@@ -201,12 +199,16 @@ export default {
 
       // sets the display variable so the user can see what they chose
       this.eventDateString = eventsAmu + " Dates Selected"
+      
+    },
 
+    eventPage(e){
+      console.log("works: ", e)
     },
 
     searchEvent(){
       console.info("i am searching")
-      this.$store.dispatch('search_event', this.searchProp);
+      this.$store.dispatch('search_event', this.searchProp); 
       //console.log("response: ", this.returnedEvents)
       this.searchedEvents;
       this.testDialog = false;
