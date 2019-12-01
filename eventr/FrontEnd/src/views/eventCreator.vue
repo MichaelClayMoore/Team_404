@@ -169,8 +169,11 @@ export default {
     }
   },
 
+  beforeMount(){
+    if (!this.currentUser){this.$router.push('/signUp')}
+  },
+
   mounted(){
-    this.$store.dispatch('get_test')
     this.eventProp['creator'] = this.currentUser;
   },
 
