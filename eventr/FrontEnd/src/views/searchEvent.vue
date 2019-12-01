@@ -19,9 +19,10 @@
                   :items="searchedEvents"
                   :items-per-page="10"
                   class="elevation-3"
-                  @click:row = "eventPage"
+                  @click:row="eventPage"
                   
-                > </v-data-table>
+                > 
+                </v-data-table>
  
           
 
@@ -201,8 +202,8 @@ export default {
       
     },
 
-    eventPage(){
-      
+    eventPage(e){
+      console.log("works: ", e)
     },
 
     searchEvent(){
