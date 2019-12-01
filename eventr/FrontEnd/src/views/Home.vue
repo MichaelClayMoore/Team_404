@@ -73,6 +73,7 @@ export default {
         }
       } )
     },
+    
     sendToEventPages(){
       let btns = document.querySelector('.event_page_button')
       let data = btns.getAttribute("data")

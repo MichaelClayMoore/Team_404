@@ -23,8 +23,6 @@
 
                 > </v-data-table>
 
-
-
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
@@ -207,6 +205,8 @@ export default {
 
      eventPage(e){
       console.log("works: ", e)
+      this.$store.commit('set_current_event', e)
+      this.$router.push('/eventPage')
     },
 
     searchEvent(){
