@@ -1,6 +1,7 @@
 import json
 from Utility.geocodeUtility import geocodeUtility
 from .eventDAO import eventDAO
+from .userDAO import userDAO
 
 class friendController:
     def __init__(self):
@@ -29,7 +30,7 @@ class friendController:
 
 
 
-    def search_friends(self, searchProp):
+    def add_friends(self, searchProp):
         searchedFriends = [] #this is a list that will contain all of the matching users
 
         #searching through each of the friends in the fake database

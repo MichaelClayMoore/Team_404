@@ -8,8 +8,9 @@ export default new Vuex.Store({
   state: {
     list_of_events: [],
     searchedEvents: [],
-    currentUser: 0,
-    check_authentication: false
+    currentUser: null,
+    check_authentication: false,
+    current_Event: {}
   },
 
   mutations: {
@@ -27,29 +28,30 @@ export default new Vuex.Store({
     set_searched_events(state, event_to_add){
       state.searchedEvents = event_to_add;
     },
-    autenticated_user(state, bool_check){
-      state.check_authentication = bool_check;
-    },
     set_user(state, user){
       state.currentUser = user;
+    },
+    set_current_event(state, event){
+      console.log("event is: ", event)
+      state.current_Event = event
     }
   },
 
   actions: {
 
-    get_test({ commit, rootState }) {
-      axios.get('http://127.0.0.1:5000/get_test')
-        .then(response => {
-          console.log("Response")
-          console.log(response.data)
-        }, (err) => {
-          console.log(err)
-        })
+    get_test({commit, rootState}){
+      return axios.get('http://127.0.0.1:5000/get_test')
+      .then(response => {
+        console.log("Response")
+        console.log(response.data)
+      }, (err) => {
+        console.log(err)
+      })
     },
 
-    save_event({ commit, rootState }, payload) {
-      axios.post('http://127.0.0.1:5000/save_event',
-        { params: { event: payload } }
+    save_event({commit, rootState}, payload){
+      return axios.post('http://127.0.0.1:5000/save_event',
+      { params:{ event: payload } }
       )
         .then(response => {
           console.log("Response")
@@ -68,17 +70,13 @@ export default new Vuex.Store({
           console.log("Response")
           console.log(response.data)
           commit('addfriend_event', payload)
-        })
-      .then(response => {
-        console.log("Response: ", response.data)
-        commit('add_event', response.data)
-      }, (err) => {
+        }, (err) => {
         console.log(err)
       })
     },
 
     delete_event({commit, rootState}, payload){
-      axios.post('http://127.0.0.1:5000/delete_event',
+      return axios.post('http://127.0.0.1:5000/delete_event',
       { params:{ eventId: payload } }
       )
       .then(response => {
@@ -89,31 +87,19 @@ export default new Vuex.Store({
       })
     },
 
-    savefriend_event({ commit, rootState }, payload) {
-      axios.post('http://127.0.0.1:5000/savefriend_event',
-        { params: { friend: payload } }
-      )
-        .then(response => {
-          console.log("Response")
-          console.log(response.data)
-          commit('savefriend_event', payload)
-        })
+    get_events({commit, rootState}){
+      return axios.get('http://127.0.0.1:5000/get_events')
+      .then(response => {
+        console.log("Response")
+        console.log(response.data)
+        commit('set_list_of_events', response.data)
+      }, (err) => {
+        console.log(err)
+      })
     },
 
-
-    get_events({ commit, rootState }) {
-      axios.get('http://127.0.0.1:5000/get_events')
-        .then(response => {
-          console.log("Response")
-          console.log(response.data)
-          commit('set_list_of_events', response.data)
-        }, (err) => {
-          console.log(err)
-        })
-    },
-
-    search_event({ commit, rootState }, payload) {
-      axios.post('http://127.0.0.1:5000/search_event', {
+    search_event({commit, rootState}, payload){
+      return axios.post('http://127.0.0.1:5000/search_event', {
         params: {searchProp: payload}
       })
       .then(response => {
@@ -126,13 +112,31 @@ export default new Vuex.Store({
     },
 
     validate_user({commit, rootState}, payload){
-      axios.post('http://127.0.0.1:5000/validate_user', {
-        params: {searchProp: payload}
+      return axios.post('http://127.0.0.1:5000/validate_user', {
+        params: {loginProp: payload}
       })
       .then(response => {
         console.log("Response: ", response.data)
-        commit('authenticated_user', response.data)
-        //resolve(response.data)
+        if (response.data){
+          commit('set_user', response.data)
+        }
+
+      }, (err) => {
+        console.log(err)
+      })
+    },
+
+    save_user({commit, rootState}, payload){
+      return axios.post('http://127.0.0.1:5000/save_user', {
+        params: {signupProp: payload}
+      })
+      .then(response => {
+        console.log("Response: ", response.data)
+
+        if (response.data){
+          commit('set_user', response.data)
+        }
+
       }, (err) => {
         console.log(err)
       })

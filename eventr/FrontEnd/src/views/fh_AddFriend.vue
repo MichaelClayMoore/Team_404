@@ -1,10 +1,34 @@
 <template>
   <v-container>
-    
+
+    <v-dialog v-model="addfriendDialog" scrollable max-width="3000px">
+      <v-card>
+        <v-card-title :style = "{'background-color':'tomato','color':'white'}">Searched Parties</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 3000px;">
+
+                <v-data-table
+                  :headers="headers"
+                  :items="searchedEvents"
+                  :items-per-page="3"
+                  class="elevation-3"
+
+                > </v-data-table>
+
+
+
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" text @click="eventDialog = false">Close</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <!-- this is where the full page starts -->
     <div flex justify-center align-center column>
       <!-- title line -->
-
+      
       <h1 :style="{'display':'inline','font-weight':'700','font-size':'15px'}">
         <span class="heading">Friends </span>
       </h1>
@@ -152,6 +176,7 @@ export default {
     AddFriend() {
       console.info("i am submitting");
       this.$store.dispatch("addfriend_event", this.addFriendProp);
+      this.addfriendDialog = true;
     },
 
     AddUser() {

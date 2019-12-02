@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Home from './views/Home.vue'
+import EventPage from './views/eventPage.vue'
 
 Vue.use(Router)
 
@@ -82,8 +84,16 @@ export default new Router({
       name: 'signup',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited. 
+      // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/Signup.vue')
+    },
+    {
+      path: '/eventPage',
+      name: 'eventPage',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: EventPage
     }
   ]
 })
