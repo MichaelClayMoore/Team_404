@@ -24,6 +24,13 @@ export default new Vuex.Store({
     },
     set_list_of_events(state, list){
       state.list_of_events = list;
+
+      state.list_of_events.forEach( event => {
+        let decider = ( Math.random() >= 0.5) ? 1 : -1;
+        event.location.showLatitude = event.location.latitude + (decider * ( Math.random() * 0.007 ) );
+        decider = ( Math.random() >= 0.5) ? 1 : -1;
+        event.location.showLongitude = event.location.longitude + (decider * ( Math.random() * 0.007 ) );
+      } )
     },
     set_searched_events(state, event_to_add){
       state.searchedEvents = event_to_add;
