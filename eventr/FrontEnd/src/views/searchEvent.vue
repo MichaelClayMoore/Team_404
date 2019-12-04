@@ -1,33 +1,18 @@
 <template>
 <v-container>
 
-
     <v-dialog v-model="testDialog" max-width="50%">
       <v-card>
         <v-card-title :style="{'background-color':'tomato','color':'white'}" class="title">{{searchedEvents}}</v-card-title>
       </v-card>
     </v-dialog>
 
-<<<<<<< HEAD
-<!-- returns all events as pushed into the searchedEvents list of objects -->
-  <v-dialog v-model="eventDialog" scrollable max-width="3000px">  
-=======
   <v-dialog v-model="eventDialog" scrollable max-width="3000px">
->>>>>>> 14d2b06c448678f1f7dcef455d1c90e8c4ef6c8c
       <v-card>
         <v-card-title :style = "{'background-color':'tomato','color':'white'}">Searched Parties</v-card-title>
         <v-divider></v-divider>
         <v-card-text style="height: 3000px;">
 
-<<<<<<< HEAD
-                <v-data-table v-hover=true
-                  :headers="headers"
-                  :items="searchedEvents"
-                  :items-per-page="5"
-                  class="elevation-3"
-                > </v-data-table>
- 
-=======
                 <v-data-table
                   :headers="headers"
                   :items="searchedEvents"
@@ -37,7 +22,6 @@
 
                 > </v-data-table>
 
->>>>>>> 14d2b06c448678f1f7dcef455d1c90e8c4ef6c8c
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
@@ -114,10 +98,6 @@
           <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="locationDialog = true;">{{eventLocation}}</v-btn>
           <v-spacer/>
         </v-layout>
-<<<<<<< HEAD
-=======
-
->>>>>>> 14d2b06c448678f1f7dcef455d1c90e8c4ef6c8c
         <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="searchEvent">Submit</v-btn>
     </v-layout>
 <!-- 

@@ -52,8 +52,8 @@ export default {
       this.list_of_events.forEach( event => {
         console.log(event);
         var customPopup = "<p>Click on this card to learn more about the following event:</p>";
-        customPopup += "<p>name: " + event.name + "</p>";
-        customPopup += "<p>style: " + event.style + "</p>"
+        customPopup += "<p>Name: " + event.name + "</p>";
+        customPopup += "<p>Style: " + event.style + "</p>"
         customPopup += "<button class='event_page_button' style='background-color:tomato; align-self:center; justify-self:center; margin:auto;display:flex;color:white; font-weight: 500; font-size: 0.875rem; cursor:porinter; text-transform:uppercase;border-radius: 4px; padding:8px; box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);' data=" + event.id +"> click for more details</button>"
         // specify popup options
         var customOptions = {

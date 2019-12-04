@@ -29,7 +29,9 @@ export default new Vuex.Store({
       state.searchedEvents = event_to_add;
     },
     set_user(state, user){
-      state.currentUser = user;
+      console.log(state)
+      state.currentUser = user[0];
+      console.log("The user is now:::: ", state.currentUser)
     },
     set_current_event(state, event){
       console.log("event is: ", event)
@@ -56,6 +58,18 @@ export default new Vuex.Store({
       .then(response => {
         console.log("Response: ", response.data)
         commit('add_event', response.data)
+      }, (err) => {
+        console.log(err)
+      })
+    },
+
+    join_event({commit, rootState}, payload){
+      return axios.post('http://127.0.0.1:5000/join_event',
+      { params:{ event: payload } }
+      )
+      .then(response =>{
+        console.log("Response: ", response.data)
+        commit('join_Event', payload)
       }, (err) => {
         console.log(err)
       })
@@ -104,6 +118,8 @@ export default new Vuex.Store({
       .then(response => {
         console.log("Response: ", response.data)
         if (response.data){
+          console.log("i am saving: ", response.data)
+
           commit('set_user', response.data)
         }
 
@@ -120,6 +136,7 @@ export default new Vuex.Store({
         console.log("Response: ", response.data)
 
         if (response.data){
+          console.log("i am saving: ", response.data)
           commit('set_user', response.data)
         }
 

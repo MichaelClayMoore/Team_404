@@ -61,6 +61,36 @@ class eventDAO:
         finally:
             conn.close()
 
+    def joinEvent(self, event):
+        conn = self.connection.connectToDb()
+        trans = conn.begin()
+        cursor = conn.connection.cursor()
+        """
+        This Will get append ints to the list 
+
+            update events
+            set attendees[cardinality(attendees)] = userID
+            where id = eventID;
+
+        #superior version:
+
+            update events
+            set attendees = attendees || 7
+            where (id = 3) and (not attendees @> ARRAY[7]);
+        """
+        query = "UPDATE events set attendees = attendees || " + str(event['user']) + " WHERE (id = " +str(event['eventId'])+ ") and (not attendees @> ARRAY[ " +str(event['user']) +"]);"
+        try:
+            cursor.execute(query)
+            trans.commit()
+            cursor.close()
+            return True
+        except psycopg2.Error as error:
+            trans.rollback()
+            print(error.pgerror)
+            return False
+        finally:
+            conn.close()
+
     def removeEvent(self, eventId):
         conn = self.connection.connectToDb()
         trans = conn.begin()

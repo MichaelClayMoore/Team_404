@@ -10,6 +10,9 @@ class eventController:
     def test(self):
         return self.eventDAO.testConnection()
 
+    def join_event(self, event):
+        return json.dumps(self.eventDAO.joinEvent(event))
+        
     def save_event(self, event):
         try:
             latlong = self.geocode_location(event['location'])

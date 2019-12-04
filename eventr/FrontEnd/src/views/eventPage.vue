@@ -2,14 +2,51 @@
   <v-container>
     <div flex justify-center align-center column>
 
-      <!-- title line -->
-      <h1 :style="{'display':'inline','font-weight':'bold','font-size':'48px'}"><span class="heading">{{ current_Event.name }}</span></h1>
-      <i class="material-icons" :style="{'font-size':'36px','position':'relative','top':'5px','color':'tomato'}">whatshot</i>
+      
+     <v-card class="d-inline-block mx-auto">
+    <v-container>
+      <v-row >
+        <v-col cols="auto">
+          <v-img
+            height="400"
+            width="400"
+            src="https://www.sxsw.com/wp-content/uploads/2019/06/SXSW-Party-photo-by-aaron-rogosin.png"
+          ></v-img>
+        </v-col>
+        <v-col
+          cols="auto"
+          class="text-center pl-0"
+        >
+          <v-row
+            class="flex-column ma-0 fill-height"
+            justify="right"
+          >
+            <v-col class = "px-0">
+              <h1 :style="{'display':'inline','font-weight':'bold','font-size':'50px'}"><span class="heading">{{ current_Event.name }}</span></h1>
+              <i class="material-icons" :style="{'font-size':'36px','position':'relative','top':'5px','color':'tomato'}">whatshot</i>
+            </v-col>
+            
+            <v-col class="px-0">
+              <v-card-title> Location: {{current_Event.location.address1}} {{current_Event.location.city}}, {{current_Event.location.state}} </v-card-title>
+            </v-col>
+            
+            <v-col class ="px-0">
+              <v-card-title>Date: {{current_Event.date}} </v-card-title>
+            </v-col>
+          
+            <v-col class ="px-0">
+              <v-card-title>Description : {{current_Event.description}} </v-card-title>
+            </v-col>
+            
+            <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="joinEvent">JOIN</v-btn>
+            
+           </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
 
-      <v-card>
-        
-        <v-card-title>Location: {{current_Event.location.address1}} {{current_Event.location.city}}, {{current_Event.location.state}} </v-card-title>
-      </v-card>
+  </v-card>
+      
     </div>
 
   </v-container>
@@ -83,7 +120,11 @@ export default {
   // this is the methods portion. This is used to hold functions that our
   // page will use.
   methods :{
-
+    joinEvent(){
+      console.info("i am adding user num to party list", this.eventProp)
+      let payload = { 'eventId':this.eventProp.id, 'user':this.currentUser}
+      this.$store.dispatch('join_event', payload )
+    }
     
   }
 }
