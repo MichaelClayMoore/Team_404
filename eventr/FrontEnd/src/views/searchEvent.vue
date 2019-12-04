@@ -17,12 +17,11 @@
                 <v-data-table
                   :headers="headers"
                   :items="searchedEvents"
-                  :items-per-page="3"
+                  :items-per-page="10"
                   class="elevation-3"
+                  @click:row="eventPage"
 
                 > </v-data-table>
-
-
 
         </v-card-text>
         <v-divider></v-divider>
@@ -202,6 +201,12 @@ export default {
       // sets the display variable so the user can see what they chose
       this.eventDateString = eventsAmu + " Dates Selected"
 
+    },
+
+     eventPage(e){
+      console.log("works: ", e)
+      this.$store.commit('set_current_event', e)
+      this.$router.push('/eventPage')
     },
 
     searchEvent(){
