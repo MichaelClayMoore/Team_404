@@ -55,7 +55,6 @@ export default {
     },
     addEventsToMap(){
       this.list_of_events.forEach( event => {
-        console.log(event);
         var customPopup = "<p>Click on this card to learn more about the following event:</p>";
         customPopup += "<p>name: " + event.name + "</p>";
         customPopup += "<p>style: " + event.style + "</p>"

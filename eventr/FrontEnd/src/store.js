@@ -27,7 +27,6 @@ export default new Vuex.Store({
 
       state.list_of_events.forEach( event => {
         let decider = ( Math.random() >= 0.5) ? 1 : -1;
-        console.log("decider is: ", decider)
         event.location.showLatitude = event.location.latitude + (decider * ( Math.random() * 0.007 ) );
         decider = ( Math.random() >= 0.5) ? 1 : -1;
         event.location.showLongitude = event.location.longitude + (decider * ( Math.random() * 0.007 ) );
