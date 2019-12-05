@@ -103,7 +103,7 @@ class userDAO:
         try:
             cursor.execute(query)
             cursor.execute(query2)
-            print("UGHHHHH")
+            print("Query Submission: SUCCESS")
             trans.commit()
             cursor.close()
             return True
