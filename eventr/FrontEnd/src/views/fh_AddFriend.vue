@@ -11,7 +11,7 @@
    -->
     <v-dialog v-model="dateDialog" max-width="50%">
       <v-card>
-        <v-card-title :style="{'background-color':'tomato','color':'white'}" class="title">GO FUCK YOURSELF</v-card-title>
+        <v-card-title :style="{'background-color':'tomato','color':'white'}" class="title">Not submitted</v-card-title>
         <!--
         <v-card-actions>
           <v-date-picker landscape full-width color="#ff6347" v-model="eventProp['date']" style="font-size:15px" v-on:input="updateDateString" ></v-date-picker>

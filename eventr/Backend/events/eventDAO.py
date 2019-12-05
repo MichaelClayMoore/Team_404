@@ -73,12 +73,14 @@ class eventDAO:
             where id = eventID;
 
         #superior version:
-
             update events
             set attendees = attendees || 7
             where (id = 3) and (not attendees @> ARRAY[7]);
         """
+        print(event)
+        print( type(event))
         query = "UPDATE events set attendees = attendees || " + str(event['user']) + " WHERE (id = " +str(event['eventId'])+ ") and (not attendees @> ARRAY[ " +str(event['user']) +"]);"
+        
         try:
             cursor.execute(query)
             trans.commit()
