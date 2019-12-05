@@ -53,6 +53,7 @@ export default {
       );
       this.tileLayer.addTo(this.map);
     },
+    
     addEventsToMap(){
       this.list_of_events.forEach( event => {
         var customPopup = "<p>Click on this card to learn more about the following event:</p>";

@@ -51,7 +51,7 @@ class eventController:
                 if searchProp.get('creator') == "" or event.get('creator') == searchProp.get('creator'):    #creator matching
                     if not len(searchProp.get('style')) == 0:     #checking if there is a style of event array to search with
                         for style in searchProp.get('style'):
-                            if style == event.get('style'):
+                            if style.lower() == event.get('style'):
                                 event['date'] = event['date'].strftime("%m-%d-%Y")
                                 searchedEvents.append(event)
                     else:    #the style list is empty
