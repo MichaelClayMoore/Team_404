@@ -1,9 +1,9 @@
 <template>
 <v-container>
 
-    <v-dialog v-model="testDialog" max-width="50%">
+    <v-dialog v-model="notFoundDialog" max-width="50%">
       <v-card>
-        <v-card-title :style="{'background-color':'tomato','color':'white'}" class="title">{{searchedEvents}}</v-card-title>
+        <v-card-title :style="{'background-color':'tomato','color':'white'}" class="justify-center">No Events Found</v-card-title>
       </v-card>
     </v-dialog>
 
@@ -155,7 +155,7 @@ export default {
   // name of the file/component
   name: 'searchEvent',
 
-  computed : { ...mapState(['currentUser','searchedEvents']) },
+  computed : { ...mapState(['currentUser', 'searchedEvents']) },
 
   // all the initial data for the component.
   data () {
@@ -204,7 +204,7 @@ export default {
       // data used to control page flow
       locationDialog: false,
       dateDialog: false,
-      testDialog: false,
+      notFoundDialog: false,
       eventDialog: false,
 
       // data used for the user to select from
@@ -244,7 +244,7 @@ export default {
 
     },
 
-     eventPage(e){
+    eventPage(e){
       console.log("works: ", e)
       this.$store.commit('set_current_event', e)
       this.$router.push('/eventPage')
@@ -252,12 +252,17 @@ export default {
 
     searchEvent(){
       console.info("i am searching")
-      this.$store.dispatch('search_event', this.searchProp);
+      this.$store.dispatch('search_event', this.searchProp)
       //console.log("response: ", this.returnedEvents)
-      this.searchedEvents;
-      this.testDialog = false;
-      this.eventDialog = true;
-
+      
+      .then(response => {
+      
+        if(this.searchedEvents == undefined || this.searchedEvents.length < 1){
+          this.notFoundDialog = true;
+        }else{
+          this.eventDialog = true;
+        }
+      })
     }
   }
 }
