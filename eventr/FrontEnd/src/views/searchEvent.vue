@@ -102,45 +102,6 @@
     </v-layout>
 <!-- 
 
-  <template>
-  <v-container class="pa-4 text-center">
-    <v-row class="fill-height" align="center" justify="center">
-      <template v-for="(item, i) in searchedEtems">
-        <v-col
-          :key="i"
-          cols="12"
-          md="4"
-        >
-          <v-hover v-slot:default="{ hover }">
-            <v-card
-              :elevation="hover ? 12 : 2"
-              :class="{ 'on-hover': hover }"
-            >
-                <v-card-title class="title white--text">
-                  <v-row
-                    class="fill-height flex-column"
-                    justify="space-between"
-                  >
-                    <p class="mt-4 subheading text-left">{{ searchedEvents.name }}</p>
-
-                    <div>
-                      <p class="ma-0 body-1 font-weight-bold font-italic text-left">
-                        {{ searchedEvents.location.state }}
-                      </p>
-                      <p class="caption font-weight-medium font-italic text-left">
-                        {{ searchedEvents.data }}
-                      </p>
-                    </div>
-                  </v-row>
-                </v-card-title>
-              
-            </v-card>
-          </v-hover>
-        </v-col>
-      </template>
-    </v-row>
-  </v-container>
-</template>
 
 -->
 </div>

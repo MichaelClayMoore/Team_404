@@ -125,7 +125,7 @@ export default {
   methods :{
     joinEvent(){
       console.info("i am adding user num to party list", this.eventProp)
-      let payload = { 'eventId':this.current_Event.id, 'user':this.currentUser.name}
+      let payload = { 'eventId':this.current_Event.id, 'user':this.currentUser}
       console.log(payload)
       this.$store.dispatch('join_event', payload )
       
