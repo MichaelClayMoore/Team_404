@@ -12,6 +12,11 @@ event_router = Blueprint('event_router', __name__)
 def get_test():
     return event_controller.test()
 
+@event_router.route("/join_event", methods=['POST'])
+def join_event():
+    event = request.get_json()['params']['event']
+    return event_controller.join_event(event)
+
 @event_router.route("/save_event", methods=['POST'])
 def save_event():
     event = request.get_json()['params']['event']

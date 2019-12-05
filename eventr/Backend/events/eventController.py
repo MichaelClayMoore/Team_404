@@ -11,7 +11,8 @@ class eventController:
         return self.eventDAO.testConnection()
 
     def join_event(self, event):
-        return json.dumps(self.eventDAO.joinEvent(event))
+        print("event is: ", event)
+        return json.dumps(self.eventDAO.joinEvent(event) )
         
     def save_event(self, event):
         try:

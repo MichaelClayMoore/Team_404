@@ -35,7 +35,10 @@
             </v-col>
           
             <v-col class ="px-0">
-              <v-card-title>Description : {{current_Event.description}} </v-card-title>
+              <v-card-title>Description : {{current_Event.description}}</v-card-title>
+            </v-col>
+            <v-col class ="px-0">
+              <v-card-title>Attendees : {{current_Event.attendees}}</v-card-title>
             </v-col>
             
             <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="joinEvent">JOIN</v-btn>
@@ -122,8 +125,10 @@ export default {
   methods :{
     joinEvent(){
       console.info("i am adding user num to party list", this.eventProp)
-      let payload = { 'eventId':this.eventProp.id, 'user':this.currentUser}
+      let payload = { 'eventId':this.current_Event.id, 'user':this.currentUser.name}
+      console.log(payload)
       this.$store.dispatch('join_event', payload )
+      
     }
     
   }

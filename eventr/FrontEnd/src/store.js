@@ -76,7 +76,6 @@ export default new Vuex.Store({
       )
       .then(response =>{
         console.log("Response: ", response.data)
-        commit('join_Event', payload)
       }, (err) => {
         console.log(err)
       })
