@@ -138,6 +138,7 @@ export default {
     }
   },
 
+  
   // this section is to watch variables. Anytime a variable with a corresponding
   // name changes value, the function will run. the val that is passed into
   // every function is the new value that will be set.
