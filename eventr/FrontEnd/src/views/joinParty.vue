@@ -9,7 +9,7 @@
 
         </div>
         <v-row justify="center">
-
+          
 
     <v-dialog v-model="dialog" scrollable max-width="3000px">
       <template v-slot:activator="{ on }">

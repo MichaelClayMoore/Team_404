@@ -11,6 +11,10 @@ class eventController:
     def test(self):
         return self.eventDAO.testConnection()
 
+    def join_event(self, event):
+        print("event is: ", event)
+        return json.dumps(self.eventDAO.joinEvent(event) )
+        
     def save_event(self, event):
         try:
             latlong = self.geocode_location(event['location'])
@@ -63,4 +67,5 @@ class eventController:
 
             return json.dumps(searchedEvents)
         else:
-            print("found no matching events")
+            print("Nothing found")
+            return json.dumps(searchedEvents)

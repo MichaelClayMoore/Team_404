@@ -8,10 +8,7 @@
         <v-card-text style="height: 3000px;">
 
                 <v-data-table
-                  :headers="headers"
-                  :items="searchedEvents"
-                  :items-per-page="3"
-                  class="elevation-3"
+                 
 
                 > </v-data-table>
 
@@ -86,39 +83,6 @@
             >Send Friend Request</v-btn>
           </v-card-actions>
         </v-card>
-        <v-card class="mx-auto" max-width="400">
-          <v-img
-            class="white--text align-end"
-            height="200px"
-            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-          >
-            <v-card-title>ADD USER TO FAKE DATA BASE</v-card-title>
-          </v-img>
-
-          <v-card-text class="text--primary">
-            <v-layout column>
-              <!-- event name field -->
-              <v-text-field
-                v-model="addUserProp['userID2']"
-                class="input"
-                id="userID2"
-                label="Enter a Username to add to database"
-                color="#ff6347"
-              ></v-text-field>
-
-              <!-- both the location and date buttons. -->
-              <v-layout row style="margin-bottom:40px"></v-layout>
-            </v-layout>
-          </v-card-text>
-
-          <v-card-actions>
-            <v-btn
-              color="#ff6347"
-              :style="{'color':'#ffffff'}"
-              @click="AddUser"
-            >Add User to Fake Database</v-btn>
-          </v-card-actions>
-        </v-card>
       </v-row>
     </div>
   </v-container>
@@ -152,7 +116,7 @@ export default {
       friendID: "Invite Friend",
 
       // data used to control page flow
-      friendDialog: false
+      addfriendDialog: false
     };
   },
 
@@ -174,16 +138,10 @@ export default {
     // store. it currently does not do anything - we need to implement the store
     // first.
     AddFriend() {
-      console.info("i am submitting");
+      console.info("Vue adding friend function flag");
       this.$store.dispatch("addfriend_event", this.addFriendProp);
-      this.addfriendDialog = true;
-    },
-
-    AddUser() {
-      console.info("i am adding user");
-      this.$store.dispatch("savefriend_event", this.addUserProp);
+      this.addfriendDialog = false;
     }
-
     // this function will run when the input event is emitted from the date
     // picker. it is responsible for changing the text on the button.
   }

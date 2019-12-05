@@ -17,7 +17,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-
     <!--
     ______ location dialog _____________________________________________________________
     | this is the location dialog. this will appear when the location button.          |
@@ -174,7 +173,7 @@ export default {
   },
 
   mounted(){
-    this.eventProp['creator'] = this.currentUser;
+    this.eventProp['creator'] = this.currentUser; 
   },
 
   // this section is to watch variables. Anytime a variable with a corresponding

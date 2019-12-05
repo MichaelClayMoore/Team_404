@@ -1,21 +1,22 @@
 ##  START File !!
 from flask import request, Blueprint, abort , json, jsonify
 from events.eventController import eventController
-from events.friendsController import friendController
-import json
-
-event_controller = eventController()
-friends_controller = friendController()
 from events.userController import userController
 import json
 
 event_controller = eventController()
 user_controller = userController()
+
 event_router = Blueprint('event_router', __name__)
 
 @event_router.route("/get_test", methods=['GET'])
 def get_test():
     return event_controller.test()
+
+@event_router.route("/join_event", methods=['POST'])
+def join_event():
+    event = request.get_json()['params']['event']
+    return event_controller.join_event(event)
 
 @event_router.route("/save_event", methods=['POST'])
 def save_event():
@@ -32,17 +33,12 @@ def delete_event():
 def get_events():
     return json.dumps( event_controller.getEvents() )
 
-@event_router.route("/savefriend_event", methods=['POST'])
-def save_friend():
-    friend = request.get_json()['params']['friend']
-    print('added User')
-    return friends_controller.save_friend( friend )
-
-@event_router.route("/search_users", methods=['POST'])
+@event_router.route("/addfriend_event", methods=['POST'])
 def addfriend_event():
-    user = request.get_json()['params']['addFriendProp']
-
-    return user_controller.search_users( user )
+    print("made it inside of event_router.py ")
+    user = request.get_json()['params']['name']
+    cUser= request.get_json()['params']['cUser']
+    return user_controller.add_friend( user, cUser )
 
 @event_router.route("/search_event", methods=['POST'])
 def search_event():

@@ -24,11 +24,16 @@ export default {
  mounted(){
   this.initMap();
 
-  this.$store.dispatch('get_events')
+  if ( this.list_of_events.length == 0 ){
+    this.$store.dispatch('get_events')
     .then( (response) => {
       console.log("in then: ", this.list_of_events)
       this.addEventsToMap();
     } )
+  }
+  else{
+    this.addEventsToMap();
+  }
 
  },
  watch: {
@@ -50,17 +55,17 @@ export default {
     },
     addEventsToMap(){
       this.list_of_events.forEach( event => {
-        console.log(event);
         var customPopup = "<p>Click on this card to learn more about the following event:</p>";
-        customPopup += "<p>name: " + event.name + "</p>";
-        customPopup += "<p>style: " + event.style + "</p>"
+        customPopup += "<p>Name: " + event.name + "</p>";
+        customPopup += "<p>Style: " + event.style + "</p>"
         customPopup += "<button class='event_page_button' style='background-color:tomato; align-self:center; justify-self:center; margin:auto;display:flex;color:white; font-weight: 500; font-size: 0.875rem; cursor:porinter; text-transform:uppercase;border-radius: 4px; padding:8px; box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);' data=" + event.id +"> click for more details</button>"
         // specify popup options
         var customOptions = {
         'maxWidth': '500',
         'className' : 'custom'
         }
-        var marker = L.marker([event.location.latitude, event.location.longitude])
+
+        var marker = L.circle([event.location.showLatitude, event.location.showLongitude], 1000, {color:'tomato'})
           .bindPopup(customPopup,customOptions).openPopup().addTo(this.map).on('click', this.updateOnclick)
         this.eventMarkers.push( marker )
       } );
@@ -73,12 +78,13 @@ export default {
         }
       } )
     },
+    
     sendToEventPages(){
       let btns = document.querySelector('.event_page_button')
       let data = btns.getAttribute("data")
       this.$store.commit('set_current_event',this.list_of_events.find( event => event.id == data ))
       this.$router.push('/eventPage')
-    }
+    },
   }
  }
 </script>

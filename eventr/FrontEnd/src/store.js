@@ -24,17 +24,27 @@ export default new Vuex.Store({
     },
     set_list_of_events(state, list){
       state.list_of_events = list;
+
+      state.list_of_events.forEach( event => {
+        let decider = ( Math.random() >= 0.5) ? 1 : -1;
+        event.location.showLatitude = event.location.latitude + (decider * ( Math.random() * 0.007 ) );
+        decider = ( Math.random() >= 0.5) ? 1 : -1;
+        event.location.showLongitude = event.location.longitude + (decider * ( Math.random() * 0.007 ) );
+      } )
     },
     set_searched_events(state, event_to_add){
       state.searchedEvents = event_to_add;
     },
     set_user(state, user){
-      state.currentUser = user;
+      console.log(state)
+      state.currentUser = user[0];
+      console.log("The user is now:::: ", state.currentUser)
     },
     set_current_event(state, event){
       console.log("event is: ", event)
       state.current_Event = event
     }
+    
   },
 
   actions: {
@@ -63,14 +73,24 @@ export default new Vuex.Store({
     },
 
     addfriend_event({ commit, rootState }, payload) {
+      console.log("before axios call")
       axios.post('http://127.0.0.1:5000/addfriend_event',
-        { params: { name: payload } }
+        { params: { name: payload, cUser: rootState.currentUser } }
       )
         .then(response => {
-          console.log("Response")
-          console.log(response.data)
-          commit('addfriend_event', payload)
+          console.log("AXIOS Response", response.data )
         }, (err) => {
+        console.log("err", err)
+      })
+    },
+
+    join_event({commit, rootState}, payload){
+      return axios.post('http://127.0.0.1:5000/join_event',
+      { params:{ event: payload } }
+      )
+      .then(response =>{
+        console.log("Response: ", response.data)
+      }, (err) => {
         console.log(err)
       })
     },
@@ -118,6 +138,8 @@ export default new Vuex.Store({
       .then(response => {
         console.log("Response: ", response.data)
         if (response.data){
+          console.log("i am saving: ", response.data)
+
           commit('set_user', response.data)
         }
 
@@ -134,6 +156,7 @@ export default new Vuex.Store({
         console.log("Response: ", response.data)
 
         if (response.data){
+          console.log("i am saving: ", response.data)
           commit('set_user', response.data)
         }
 

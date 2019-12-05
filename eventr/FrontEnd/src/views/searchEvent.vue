@@ -1,7 +1,6 @@
 <template>
 <v-container>
 
-
     <v-dialog v-model="testDialog" max-width="50%">
       <v-card>
         <v-card-title :style="{'background-color':'tomato','color':'white'}" class="title">{{searchedEvents}}</v-card-title>
@@ -17,12 +16,11 @@
                 <v-data-table
                   :headers="headers"
                   :items="searchedEvents"
-                  :items-per-page="3"
+                  :items-per-page="10"
                   class="elevation-3"
+                  @click:row="eventPage"
 
                 > </v-data-table>
-
-
 
         </v-card-text>
         <v-divider></v-divider>
@@ -32,7 +30,7 @@
       </v-card>
     </v-dialog>
 
-
+<!-- select date from the prop given-->
     <v-dialog v-model="dateDialog" max-width="50%">
       <v-card>
         <v-card-title :style="{'background-color':'tomato','color':'white'}" class="title">When is it?</v-card-title>
@@ -100,9 +98,51 @@
           <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="locationDialog = true;">{{eventLocation}}</v-btn>
           <v-spacer/>
         </v-layout>
-
         <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="searchEvent">Submit</v-btn>
     </v-layout>
+<!-- 
+
+  <template>
+  <v-container class="pa-4 text-center">
+    <v-row class="fill-height" align="center" justify="center">
+      <template v-for="(item, i) in searchedEtems">
+        <v-col
+          :key="i"
+          cols="12"
+          md="4"
+        >
+          <v-hover v-slot:default="{ hover }">
+            <v-card
+              :elevation="hover ? 12 : 2"
+              :class="{ 'on-hover': hover }"
+            >
+                <v-card-title class="title white--text">
+                  <v-row
+                    class="fill-height flex-column"
+                    justify="space-between"
+                  >
+                    <p class="mt-4 subheading text-left">{{ searchedEvents.name }}</p>
+
+                    <div>
+                      <p class="ma-0 body-1 font-weight-bold font-italic text-left">
+                        {{ searchedEvents.location.state }}
+                      </p>
+                      <p class="caption font-weight-medium font-italic text-left">
+                        {{ searchedEvents.data }}
+                      </p>
+                    </div>
+                  </v-row>
+                </v-card-title>
+              
+            </v-card>
+          </v-hover>
+        </v-col>
+      </template>
+    </v-row>
+  </v-container>
+</template>
+
+-->
 </div>
 </v-container>
 </template>
@@ -202,6 +242,12 @@ export default {
       // sets the display variable so the user can see what they chose
       this.eventDateString = eventsAmu + " Dates Selected"
 
+    },
+
+     eventPage(e){
+      console.log("works: ", e)
+      this.$store.commit('set_current_event', e)
+      this.$router.push('/eventPage')
     },
 
     searchEvent(){
