@@ -39,7 +39,7 @@
             </v-col>
 
             <v-col class ="px-0">
-              <v-card-title>Attendees : {{listAtt}}</v-card-title>
+              <v-card-title>list : {{attend}}</v-card-title>
             </v-col>
             <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="joinEvent">JOIN</v-btn>
 
@@ -69,7 +69,7 @@ export default {
   // name of the file/component
   name: 'eventPage',
 
-  computed : { ...mapState(['currentUser', 'current_Event']) },
+  computed : { ...mapState(['currentUser', 'current_Event' , 'attend']) },
 
   // all the initial data for the component.
   data () {
@@ -96,7 +96,6 @@ export default {
       },
 
       comment: "",
-      listAtt: [],
       // used for displaying the date to the user
       eventLocation: "choose a location",
       eventDateString: "choose a date",
@@ -115,7 +114,9 @@ export default {
       ]
     }
   },
-
+  beforeMount(){
+    this.getAttendList();
+  },
   mounted(){
     this.$store.dispatch('get_test')
     this.eventProp['creator'] = this.currentUser;
@@ -142,15 +143,16 @@ export default {
       let payload = { 'eventId':this.current_Event.id, 'comment':this.comment}
       this.$store.dispatch( 'submit_comment', payload )
       this.comment = ""
-    }
-
-  },
-  getAttendList(){
+    },
+    getAttendList(){
     console.info("fetching data from attend list", this.eventProp)
     let payload = { 'eventId':this.current_Event.id}
     console.log(payload)
     this.$store.dispatch('get_A_List', payload)
   }
+
+  },
+  
 }
 </script>
 

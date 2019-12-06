@@ -18,11 +18,10 @@ def join_event():
     event = request.get_json()['params']['event']
     return event_controller.join_event(event)
 
-@event_router.route("/get_A_List", methods=['GET'])
+@event_router.route("/get_A_List", methods=['POST'])
 def getAttendList():
     event = request.get_json()['params']['event']
-    event_controller.get_A_List( event )
-    return event_controller.get_A_list(event)
+    return event_controller.get_A_List(event)
 
 @event_router.route("/submit_comment", methods=['POST'])
 def submit_comment():
