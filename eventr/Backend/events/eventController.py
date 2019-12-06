@@ -18,6 +18,11 @@ class eventController:
         print("event is: ", event)
         return json.dumps(self.eventDAO.joinEvent(event) )
 
+    def get_A_List(self, event):
+        print("List is: ", event)
+        return json.dumps(self.eventDAO.getAttendList(event) )
+
+
     def save_event(self, event):
         try:
             latlong = self.geocode_location(event['location'])
