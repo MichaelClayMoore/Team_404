@@ -79,9 +79,7 @@ class userDAO:
 
     def add_friend(self, user, cUser):
         """
-        update users
-        set friends = friends || 3
-        where (id = 1) and (not friends @> ARRAY[()]);
+        UPDATE users set friends = friends || 20 where ( id = 16 ) and ( (select id from users where id = 20) is not null ) and (not friends @> ARRAY[20]);
 
         
         """
@@ -92,14 +90,15 @@ class userDAO:
         cursor = conn.connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
         query = "update users set friends = friends || (SELECT id FROM users WHERE username = '"
         query += str(user['userID']) + "') where (id = "
-        query += str(cUser) + " and (not friends @> ARRAY[(SELECT id FROM users WHERE username ='" + str(user['userID']) +"')]));"
-
+        query += str(cUser) + ") and ( (select id FROM users where username = '" + str(user['userID']) + "') is not null ) and (not friends @> ARRAY[(SELECT id FROM users WHERE username ='" + str(user['userID']) +"')]);"
+        print('\nquery1 is: ', query, '\n')
         #user2 adds user1
         query2 = "update users set friends = friends || ( "
         query2 += str(cUser) + ") where (id = (SELECT id FROM users WHERE username ='" + str(user['userID'])
-        query2 += "') and (not friends @> ARRAY[" + str(cUser) +"]));"
+        query2 += "')) and ( (select id FROM users where id = " + str(cUser) + ") is not null ) and (not friends @> ARRAY[" + str(cUser) +"]);"
         print('\naddfriendprop is: ', user, '\n')
-        print('\ncUser is: ', query, '\n')
+        print('\nquery2 is: ', query2, '\n')
+        
         try:
             cursor.execute(query)
             cursor.execute(query2)
