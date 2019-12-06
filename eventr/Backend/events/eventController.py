@@ -6,15 +6,18 @@ class eventController:
     def __init__(self):
         self.geoCoder = geocodeUtility();
         self.eventDAO = eventDAO();
-      
+
 
     def test(self):
         return self.eventDAO.testConnection()
 
+    def submit_comment(self, comment):
+        return json.dumps( self.eventDAO.submit_comment(comment) )
+
     def join_event(self, event):
         print("event is: ", event)
         return json.dumps(self.eventDAO.joinEvent(event) )
-        
+
     def save_event(self, event):
         try:
             latlong = self.geocode_location(event['location'])

@@ -1,9 +1,6 @@
 <template>
-  <v-container>
-    <div flex justify-center align-center column>
-
-
-     <v-card class="d-inline-block mx-auto">
+  <v-container fluid>
+   <v-card>
     <v-container>
       <v-row >
         <v-col cols="auto">
@@ -49,8 +46,14 @@
     </v-container>
 
   </v-card>
-
-    </div>
+      <div style="margin-top:25px">
+        <h1 class="heading" :style="{'font-weight':'bold','font-size':'25px'}">Comments:</h1>
+        <v-textarea v-model="comment" filled></v-textarea>
+        <v-btn color="#ff6347" :style="{'color':'#ffffff', 'width':'100%', 'margin-bottom':'10px'}" @click="submit_comment"> Submit Comment</v-btn>
+        <v-card style="margin-bottom:10px" v-for="c in current_Event.comments">
+          <v-card-text style="color:black">{{c}}</v-card-text>
+        </v-card>
+      </div>
 
   </v-container>
 </template>
@@ -88,6 +91,8 @@ export default {
         'creator': "",
         'attendees': []
       },
+
+      comment: "",
 
       // used for displaying the date to the user
       eventLocation: "choose a location",
@@ -129,6 +134,12 @@ export default {
       console.log(payload)
       this.$store.dispatch('join_event', payload )
 
+    },
+
+    submit_comment(){
+      let payload = { 'eventId':this.current_Event.id, 'comment':this.comment}
+      this.$store.dispatch( 'submit_comment', payload )
+      this.comment = ""
     }
 
   }

@@ -21,6 +21,27 @@ class eventDAO:
         else:
             return json.dumps(False)
 
+    def submit_comment(self, comment):
+        conn = self.connection.connectToDb()
+        trans = conn.begin()
+        cursor = conn.connection.cursor()
+        query = "Update events set comments = array_append( comments, '" + comment['comment'] + "'::text) where id = " + str(comment['eventId']) + ";"
+        print('\nquery is: ', query, '\n')
+        try:
+            cursor.execute(query)
+            trans.commit()
+            cursor.close()
+            return True
+
+
+        except psycopg2.Error as error:
+            trans.rollback()
+            print(error.pgerror)
+            return False
+
+        finally:
+            conn.close()
+
     def addEvent(self, event):
         conn = self.connection.connectToDb()
         trans = conn.begin()
@@ -66,7 +87,7 @@ class eventDAO:
         trans = conn.begin()
         cursor = conn.connection.cursor()
         """
-        This Will get append ints to the list 
+        This Will get append ints to the list
 
             update events
             set attendees[cardinality(attendees)] = userID
@@ -80,7 +101,7 @@ class eventDAO:
         print(event)
         print( type(event))
         query = "UPDATE events set attendees = attendees || " + str(event['user']) + " WHERE (id = " +str(event['eventId'])+ ") and (not attendees @> ARRAY[ " +str(event['user']) +"]);"
-        
+
         try:
             cursor.execute(query)
             trans.commit()
@@ -118,7 +139,7 @@ class eventDAO:
         conn = self.connection.connectToDb()
         trans = conn.begin()
         cursor = conn.connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        query = "SELECT name, address1, address2, city, state, zip, latitude, longitude, date, host, style, description, rsvp, attendees, id from events;"
+        query = "SELECT name, address1, address2, city, state, zip, latitude, longitude, date, host, style, description, rsvp, attendees, id, comments from events;"
         print('\nquery is: ', query, '\n')
         try:
             cursor.execute(query)
@@ -126,7 +147,7 @@ class eventDAO:
             print("events: ", eventsGiven)
             events = []
             for event in eventsGiven:
-                temp = {'name':event[0], 'location': {'address1':event[1], 'address2':event[2], 'city':event[3], 'state':event[4], 'zip':event[5], 'latitude':event[6], 'longitude':event[7]}, 'date': event[8], 'creator':event[9], 'style':event[10], 'description': event[11], 'rsvp':event[12],'attendees':event[13], 'id':event[14]};
+                temp = {'name':event[0], 'location': {'address1':event[1], 'address2':event[2], 'city':event[3], 'state':event[4], 'zip':event[5], 'latitude':event[6], 'longitude':event[7]}, 'date': event[8], 'creator':event[9], 'style':event[10], 'description': event[11], 'rsvp':event[12],'attendees':event[13], 'id':event[14], 'comments':event[15]};
                 events.append(temp)
             print(eventsGiven)
             print(events)

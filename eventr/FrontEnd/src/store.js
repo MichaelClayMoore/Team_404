@@ -22,6 +22,10 @@ export default new Vuex.Store({
       if ( location >= 0 ) { state.list_of_events.splice(location, 1); }
       console.log(state.list_of_events)
     },
+    add_comment_to_event(state, payload){
+      let location = state.list_of_events.findIndex( event => event['id'] == payload['eventId'] );
+      if ( location >= 0 ) { state.list_of_events[location].comments.push( payload['comment'] ); }
+    },
     set_list_of_events(state, list){
       state.list_of_events = list;
 
@@ -44,7 +48,7 @@ export default new Vuex.Store({
       console.log("event is: ", event)
       state.current_Event = event
     }
-    
+
   },
 
   actions: {
@@ -57,6 +61,18 @@ export default new Vuex.Store({
       }, (err) => {
         console.log(err)
       })
+    },
+
+    submit_comment({commit, rootState}, payload){
+      return axios.post('http://127.0.0.1:5000/submit_comment',
+        { params:{ comment: payload } } )
+        .then(response => {
+          console.log("Response")
+          console.log(response.data)
+          commit('add_comment_to_event', payload)
+        }, (err) => {
+          console.log(err)
+        })
     },
 
     save_event({commit, rootState}, payload){
