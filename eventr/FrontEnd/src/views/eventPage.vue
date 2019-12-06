@@ -2,7 +2,7 @@
   <v-container>
     <div flex justify-center align-center column>
 
-      
+
      <v-card class="d-inline-block mx-auto">
     <v-container>
       <v-row >
@@ -25,31 +25,31 @@
               <h1 :style="{'display':'inline','font-weight':'bold','font-size':'50px'}"><span class="heading">{{ current_Event.name }}</span></h1>
               <i class="material-icons" :style="{'font-size':'36px','position':'relative','top':'5px','color':'tomato'}">whatshot</i>
             </v-col>
-            
+
             <v-col class="px-0">
               <v-card-title> Location: {{current_Event.location.address1}} {{current_Event.location.city}}, {{current_Event.location.state}} </v-card-title>
             </v-col>
-            
+
             <v-col class ="px-0">
               <v-card-title>Date: {{current_Event.date}} </v-card-title>
             </v-col>
-          
+
             <v-col class ="px-0">
               <v-card-title>Description : {{current_Event.description}}</v-card-title>
             </v-col>
             <v-col class ="px-0">
               <v-card-title>Attendees : {{current_Event.attendees}}</v-card-title>
             </v-col>
-            
+
             <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="joinEvent">JOIN</v-btn>
-            
+
            </v-row>
         </v-col>
       </v-row>
     </v-container>
 
   </v-card>
-      
+
     </div>
 
   </v-container>
@@ -128,9 +128,9 @@ export default {
       let payload = { 'eventId':this.current_Event.id, 'user':this.currentUser}
       console.log(payload)
       this.$store.dispatch('join_event', payload )
-      
+
     }
-    
+
   }
 }
 </script>

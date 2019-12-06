@@ -53,7 +53,7 @@ export default {
       );
       this.tileLayer.addTo(this.map);
     },
-    
+
     addEventsToMap(){
       this.list_of_events.forEach( event => {
         var customPopup = "<p>Click on this card to learn more about the following event:</p>";
@@ -79,7 +79,7 @@ export default {
         }
       } )
     },
-    
+
     sendToEventPages(){
       let btns = document.querySelector('.event_page_button')
       let data = btns.getAttribute("data")
