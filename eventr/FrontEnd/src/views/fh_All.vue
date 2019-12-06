@@ -37,13 +37,9 @@
       <v-card>
         <v-card-title :style="{'background-color':'tomato','color':'white'}">All My Friends</v-card-title>
         <v-divider></v-divider>
-        <v-card-text style="height: 3000px;">
-          <v-data-table
-            :headers="headers"
-            :items="searchedMyFriendsList"
-            :items-per-page="10"
-            class="elevation-3"
-          ></v-data-table>
+        <v-card-text style="height: 1000px;">
+          
+          {{searchedMyFriendsList}}</v-data-table>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
@@ -51,7 +47,7 @@
         </v-card-actions>
       </v-card>
       <div>
-        {{searchedMyFriendsList}}
+       
       </div>
 
       <!-- content section   -->
