@@ -18,6 +18,12 @@ def join_event():
     event = request.get_json()['params']['event']
     return event_controller.join_event(event)
 
+@event_router.route("/getName", methods=['POST'])
+def getName():
+    id = request.get_json()['params']['id']
+    return event_controller.getName(id)
+
+
 @event_router.route("/get_A_List", methods=['POST'])
 def getAttendList():
     event = request.get_json()['params']['event']

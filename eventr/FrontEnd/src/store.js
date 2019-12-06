@@ -13,7 +13,8 @@ export default new Vuex.Store({
     currentUser: null,
     attend: [],
     check_authentication: false,
-    current_Event: {}
+    current_Event: {},
+    name: ""
   },
 
   mutations: {
@@ -23,13 +24,18 @@ export default new Vuex.Store({
     add_to_friend_list(state, friend_to_add) {
       state.list_of_friends.push(friend_to_add);
     },
+    set_name(state, name){
+      state.name = name;
+    },
     remove_event(state, eventId){
       let location = state.list_of_events.findIndex( event => event['id'] == eventId );
       if ( location >= 0 ) { state.list_of_events.splice(location, 1); }
       console.log(state.list_of_events)
     },
     add_comment_to_event(state, payload){
+      console.log("payload: ", payload)
       let location = state.list_of_events.findIndex( event => event['id'] == payload['eventId'] );
+      console.log(state.list_of_events[location])
       if ( location >= 0 ) { state.list_of_events[location].comments.push( payload['comment'] ); }
     },
     set_list_of_events(state, list){
@@ -195,6 +201,23 @@ export default new Vuex.Store({
           console.log("i am saving: ", response.data)
 
           commit('set_user', response.data)
+        }
+
+      }, (err) => {
+        console.log(err)
+      })
+    },
+
+    getName({commit, rootState}, id){
+      return axios.post('http://127.0.0.1:5000/getName', {
+        params: {id: id}
+      })
+      .then(response => {
+        console.log("Response: ", response.data)
+        if (response.data){
+          console.log("i am saving: ", response.data)
+
+          commit('set_name', response.data)
         }
 
       }, (err) => {

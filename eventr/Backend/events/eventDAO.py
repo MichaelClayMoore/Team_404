@@ -21,11 +21,34 @@ class eventDAO:
         else:
             return json.dumps(False)
 
+    def getName(self, id):
+        conn = self.connection.connectToDb()
+        trans = conn.begin()
+        cursor = conn.connection.cursor()
+        query = "select username from users where id = " + str(id) + ";"
+        print('\nquery is: ', query, '\n')
+        try:
+            cursor.execute(query)
+            name = cursor.fetchone();
+            trans.commit()
+            cursor.close()
+            return name
+
+
+        except psycopg2.Error as error:
+            trans.rollback()
+            print(error.pgerror)
+            return False
+
+        finally:
+            conn.close()
+
     def submit_comment(self, comment):
         conn = self.connection.connectToDb()
         trans = conn.begin()
         cursor = conn.connection.cursor()
-        query = "Update events set comments = array_append( comments, '" + comment['comment'] + "'::text) where id = " + str(comment['eventId']) + ";"
+        comment['comment'] = comment['comment'].replace("'", "\\'")
+        query = "Update events set comments = array_append( comments, E'" + comment['comment'] + "'::text) where id = " + str(comment['eventId']) + ";"
         print('\nquery is: ', query, '\n')
         try:
             cursor.execute(query)
@@ -192,5 +215,3 @@ class eventDAO:
 
         finally:
             conn.close()
-
-    

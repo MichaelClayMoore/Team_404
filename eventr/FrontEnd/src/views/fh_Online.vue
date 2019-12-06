@@ -46,7 +46,7 @@
             <v-avatar color="#ff6347" size="62">
                 <v-icon dark>mdi-account-circle</v-icon>
             </v-avatar>
-            <v-card-title  >{{currentUser}}</v-card-title>
+            <v-card-title  >{{name[0]}}</v-card-title>
             <v-layout row justify-center>
               <div class="friends">
 
@@ -58,15 +58,14 @@
                   <v-layout justify-center>
                     <v-list>
                       <v-list-item
-                        v-for="item in events"
-                        :key="item.title"
+                        v-for="item in searchedMyFriendsList"
                       >
                         <v-list-item-icon>
-                          <v-icon v-if="item.icon" color="pink">mdi-star</v-icon>
+                          <v-icon color="pink">mdi-star</v-icon>
                         </v-list-item-icon>
 
                         <v-list-item-content>
-                          <v-list-item-title v-text="item.title"></v-list-item-title>
+                          <v-list-item-title v-text="item"></v-list-item-title>
                         </v-list-item-content>
 
                         <v-list-item-avatar>
@@ -128,7 +127,7 @@ export default {
   // name of the file/component
   name: 'userProfile',
 
-  computed : { ...mapState(['currentUser', 'searchedEvents']) },
+  computed : { ...mapState(['currentUser', 'searchedEvents','searchedMyFriendsList','name']) },
   // all the initial data for the component.
   data () {
     return {
@@ -172,6 +171,9 @@ export default {
   beforeMount(){
     if (!this.currentUser){this.$router.push('/signUp')}
     this.searchEvent();
+    this.searchMyFriendList();
+    this.getUsername(this.currentUser);
+
   },
 
   // this is the methods portion. This is used to hold functions that our
@@ -208,6 +210,16 @@ export default {
           console.log("atendees", this.currentUser);
         }
       })
+    },
+    searchMyFriendList() {
+      console.info("i am searching my friends list");
+      this.$store.dispatch("search_my_friends", this.currentUser);
+      //console.log("response: ", this.returnedEvents)
+    },
+    getUsername( id ){
+      console.log("id: ", id)
+      this.$store.dispatch('getName', id);
+
     }
   }
 }

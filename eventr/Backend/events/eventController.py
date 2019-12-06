@@ -38,6 +38,9 @@ class eventController:
         except:
             return json.dumps(False)
 
+    def getName(self, id):
+         return json.dumps( self.eventDAO.getName(id) )
+
     def removeEvent( self, eventId ):
         return json.dumps( self.eventDAO.removeEvent(eventId) )
 

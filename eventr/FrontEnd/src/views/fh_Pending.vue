@@ -74,6 +74,7 @@ export default {
   beforeMount(){
     if (!this.currentUser){this.$router.push('/signUp')}
     this.searchEvent();
+    this.searchMyFriendList();
   },
 
   watch :{
@@ -92,7 +93,7 @@ export default {
       console.info("i am searching")
       this.$store.dispatch('search_event', this.searchProp)
       //console.log("response: ", this.returnedEvents)
-      
+
       .then(response => {
         for(var i = 0; i < this.searchedEvents.length; i++){
           if(this.currentUser == this.searchedEvents[i].attendees){
@@ -103,6 +104,11 @@ export default {
           console.log("atendees", this.currentUser);
         }
       })
+    },
+    searchMyFriendList() {
+      console.info("i am searching my friends list");
+      this.$store.dispatch("search_my_friends", this.currentUser);
+      //console.log("response: ", this.returnedEvents)
     }
   }
 }
