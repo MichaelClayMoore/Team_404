@@ -12,22 +12,12 @@
     <!-- this is where the full page starts -->
     <div flex justify-center align-center column>
       <!-- title line -->
-      <h1 :style="{'display':'inline','font-weight':'700','font-size':'15px'}">
-        <span class="heading">Friends</span>
-      </h1>
-      <div class="friendBar">
-        <router-link to="/fh_Online">
-          <span class="friendBar">| Online</span>
-        </router-link>
-        <router-link to="/fh_All">
-          <span class="friendBar" :style="{'color':'orange'}">| All</span>
-        </router-link>
-        <router-link to="/fh_Pending">
-          <span class="friendBar">| Pending</span>
-        </router-link>
-        <router-link to="/fh_AddFriend">
-          <span class="friendBar">| Add Friend</span>
-        </router-link>
+        <h1 :style="{'display':'inline','font-weight':'700','font-size':'15px'}"><span class="heading">Friends </span></h1>
+        <div class="friendBar ">
+        <router-link to="/fh_Online"><span class="friendBar">| Profile </span></router-link>
+        <router-link to="/fh_All"><span class="friendBar" :style="{'color':'orange'}">| All </span></router-link>
+        <router-link to="/fh_Pending"><span class="friendBar">| Pending </span></router-link>
+        <router-link to="/fh_AddFriend"><span class="friendBar">| Add Friend </span></router-link>
       </div>
       <i
         class="material-icons"
