@@ -16,7 +16,7 @@
             <v-text-field v-model="signupProp['userinfo']['username']"  class="input" label="username"></v-text-field>
           </v-layout>
           <v-layout row>
-            <v-text-field v-model="signupProp['userinfo']['password']"  class="input" label="password"></v-text-field>
+            <v-text-field type="password" v-model="signupProp['userinfo']['password']"  class="input" label="password"></v-text-field>
           </v-layout>
           <v-layout row justify-center>
             <v-spacer/>
@@ -33,7 +33,7 @@
           <v-card-title> Welcome to EventR </v-card-title>
           <v-text-field v-model="loginProp['username']" class="input" id="username" label="username" color="#ff6347"></v-text-field>
           <v-spacer/>
-          <v-text-field  v-model="loginProp['password']" class="input" id="password" label="password" color="#ff6347"></v-text-field>
+          <v-text-field type="password" v-model="loginProp['password']" class="input" id="password" label="password" color="#ff6347"></v-text-field>
           <v-layout justify-center align-center>
             <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="login()">Login</v-btn>
           </v-layout>
