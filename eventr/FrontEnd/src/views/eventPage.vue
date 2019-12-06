@@ -1,6 +1,9 @@
 <template>
-  <v-container fluid>
-   <v-card>
+  <v-container>
+    <div flex justify-center align-center column>
+
+
+     <v-card class="d-inline-block mx-auto">
     <v-container>
       <v-row >
         <v-col cols="auto">
@@ -38,9 +41,6 @@
               <v-card-title>Attendees : {{current_Event.attendees}}</v-card-title>
             </v-col>
 
-            <v-col class ="px-0">
-              <v-card-title>list : {{attend}}</v-card-title>
-            </v-col>
             <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="joinEvent">JOIN</v-btn>
 
            </v-row>
@@ -49,14 +49,8 @@
     </v-container>
 
   </v-card>
-      <div style="margin-top:25px">
-        <h1 class="heading" :style="{'font-weight':'bold','font-size':'25px'}">Comments:</h1>
-        <v-textarea v-model="comment" filled></v-textarea>
-        <v-btn color="#ff6347" :style="{'color':'#ffffff', 'width':'100%', 'margin-bottom':'10px'}" @click="submit_comment"> Submit Comment</v-btn>
-        <v-card style="margin-bottom:10px" v-for="c in current_Event.comments">
-          <v-card-text style="color:black">{{c}}</v-card-text>
-        </v-card>
-      </div>
+
+    </div>
 
   </v-container>
 </template>
@@ -69,7 +63,7 @@ export default {
   // name of the file/component
   name: 'eventPage',
 
-  computed : { ...mapState(['currentUser', 'current_Event' , 'attend']) },
+  computed : { ...mapState(['currentUser', 'current_Event']) },
 
   // all the initial data for the component.
   data () {
@@ -95,7 +89,6 @@ export default {
         'attendees': []
       },
 
-      comment: "",
       // used for displaying the date to the user
       eventLocation: "choose a location",
       eventDateString: "choose a date",
@@ -114,9 +107,7 @@ export default {
       ]
     }
   },
-  beforeMount(){
-    this.getAttendList();
-  },
+
   mounted(){
     this.$store.dispatch('get_test')
     this.eventProp['creator'] = this.currentUser;
@@ -137,22 +128,10 @@ export default {
       let payload = { 'eventId':this.current_Event.id, 'user':this.currentUser}
       console.log(payload)
       this.$store.dispatch('join_event', payload )
-     },
 
-    submit_comment(){
-      let payload = { 'eventId':this.current_Event.id, 'comment':this.comment}
-      this.$store.dispatch( 'submit_comment', payload )
-      this.comment = ""
-    },
-    getAttendList(){
-    console.info("fetching data from attend list", this.eventProp)
-    let payload = { 'eventId':this.current_Event.id}
-    console.log(payload)
-    this.$store.dispatch('get_A_List', payload)
+    }
+
   }
-
-  },
-  
 }
 </script>
 
