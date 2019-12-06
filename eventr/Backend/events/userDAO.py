@@ -79,9 +79,7 @@ class userDAO:
 
     def add_friend(self, user, cUser):
         """
-        update users
-        set friends = friends || 3
-        where (id = 1) and (not friends @> ARRAY[()]);
+        UPDATE users set friends = friends || 20 where ( id = 16 ) and ( (select id from users where id = 20) is not null ) and (not friends @> ARRAY[20]);
 
         
         """
@@ -92,14 +90,15 @@ class userDAO:
         cursor = conn.connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
         query = "update users set friends = friends || (SELECT id FROM users WHERE username = '"
         query += str(user['userID']) + "') where (id = "
-        query += str(cUser) + " and (not friends @> ARRAY[(SELECT id FROM users WHERE username ='" + str(user['userID']) +"')]));"
-
+        query += str(cUser) + ") and ( (select id FROM users where username = '" + str(user['userID']) + "') is not null ) and (not friends @> ARRAY[(SELECT id FROM users WHERE username ='" + str(user['userID']) +"')]);"
+        print('\nquery1 is: ', query, '\n')
         #user2 adds user1
         query2 = "update users set friends = friends || ( "
         query2 += str(cUser) + ") where (id = (SELECT id FROM users WHERE username ='" + str(user['userID'])
-        query2 += "') and (not friends @> ARRAY[" + str(cUser) +"]));"
+        query2 += "')) and ( (select id FROM users where id = " + str(cUser) + ") is not null ) and (not friends @> ARRAY[" + str(cUser) +"]);"
         print('\naddfriendprop is: ', user, '\n')
-        print('\ncUser is: ', query, '\n')
+        print('\nquery2 is: ', query2, '\n')
+        
         try:
             cursor.execute(query)
             cursor.execute(query2)
@@ -141,3 +140,56 @@ class userDAO:
 
         finally:
             conn.close()
+
+    def getFriends(self, cUserID):
+        conn = self.connection.connectToDb()
+        trans = conn.begin()
+        cursor = conn.connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        query = "SELECT friends from users where id = " + str(cUserID)  + ";"
+        print('\ncUserID within getFriends is: ', cUserID, '\n')
+        try:
+            cursor.execute(query)
+            friendsGiven = cursor.fetchone()    
+            print("friends within try: ", friendsGiven)
+            trans.commit()
+            cursor.close()
+            return friendsGiven
+
+
+        except psycopg2.Error as error:
+            trans.rollback()
+            print(error.pgerror)
+            return []
+
+        finally:
+            conn.close()
+
+
+
+    def getUsername(self, UserID):
+            conn = self.connection.connectToDb()
+            trans = conn.begin()
+            cursor = conn.connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            query = "SELECT username from users where id = " + str(UserID)
+            query += ";"
+            print('\nquery within getUsername: ', query, '\n')
+            
+            try:
+                cursor.execute(query)
+                username = cursor.fetchone()
+                stringusername = ""
+                for x in username:
+                    stringusername += x
+                print("friends within try in getUsername: ", stringusername)
+                trans.commit()
+                cursor.close()
+                return stringusername
+
+
+            except psycopg2.Error as error:
+                trans.rollback()
+                print(error.pgerror)
+                return []
+
+            finally:
+                conn.close()

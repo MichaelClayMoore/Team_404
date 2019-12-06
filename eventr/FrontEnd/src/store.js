@@ -7,7 +7,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     list_of_events: [],
+    list_of_friends: [],
     searchedEvents: [],
+    searchedMyFriendsList: [],
     currentUser: null,
     attend: [],
     check_authentication: false,
@@ -17,6 +19,9 @@ export default new Vuex.Store({
   mutations: {
     add_event(state, event_to_add) {
       state.list_of_events.push(event_to_add);
+    },
+    add_to_friend_list(state, friend_to_add) {
+      state.list_of_friends.push(friend_to_add);
     },
     remove_event(state, eventId){
       let location = state.list_of_events.findIndex( event => event['id'] == eventId );
@@ -39,6 +44,9 @@ export default new Vuex.Store({
     },
     set_searched_events(state, event_to_add){
       state.searchedEvents = event_to_add;
+    },
+    set_searched_friends(state, friend_to_add){
+      state.searchedMyFriendsList = friend_to_add;
     },
     set_user(state, user){
       console.log(state)
@@ -158,6 +166,19 @@ export default new Vuex.Store({
       .then(response => {
         console.log("Response: ", response.data)
         commit('set_searched_events', response.data)
+        //resolve(response.data)
+      }, (err) => {
+        console.log(err)
+      })
+    },
+
+    search_my_friends({commit, rootState}, payload){
+      return axios.post('http://127.0.0.1:5000/search_my_friends', {
+        params: {friendProp: payload}
+      })
+      .then(response => {
+        console.log("Response: ", response.data)
+        commit('set_searched_friends', response.data)
         //resolve(response.data)
       }, (err) => {
         console.log(err)
