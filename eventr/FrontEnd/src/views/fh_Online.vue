@@ -1,6 +1,47 @@
 <template>
 <v-container>
-  <div flex justify-center align-center column>
+
+    <v-dialog v-model="addfriendDialog" max-width="500px" style='width:500px' >
+      <!-- this is where the full page starts -->
+        <!-- title line -->
+
+        <!-- content section   -->
+          <v-card>
+            <v-img
+              class="white--text align-end"
+              height="200px"
+              src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+            >
+              <v-card-title>Send a Friend Request</v-card-title>
+            </v-img>
+
+            <v-card-text class="text--primary">
+              <v-layout column>
+                <!-- event name field -->
+                <v-text-field
+                  v-model="addFriendProp['userID']"
+                  class="input"
+                  id="userID"
+                  label="Enter a Username"
+                  color="#ff6347"
+                ></v-text-field>
+
+                <!-- both the location and date buttons. -->
+                <v-layout row style="margin-bottom:40px"></v-layout>
+              </v-layout>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-btn
+                color="#ff6347"
+                :style="{'color':'#ffffff'}"
+                @click="AddFriendThing"
+              >Send Friend Request</v-btn>
+            </v-card-actions>
+          </v-card>
+    </v-dialog>
+
+    <div flex justify-center align-center column>
     <v-card color="transparent">
             <v-avatar color="#ff6347" size="62">
                 <v-icon dark>mdi-account-circle</v-icon>
@@ -8,7 +49,7 @@
             <v-card-title  >{{currentUser}}</v-card-title>
             <v-layout row justify-center>
               <div class="friends">
-                
+
                 <v-card >
                 <v-layout justify-center>
                 <v-card-title justify-center>Friends</v-card-title>
@@ -17,9 +58,8 @@
                   <v-layout justify-center>
                     <v-list>
                       <v-list-item
-                        v-for="item in items"
+                        v-for="item in events"
                         :key="item.title"
-                        @click=""
                       >
                         <v-list-item-icon>
                           <v-icon v-if="item.icon" color="pink">mdi-star</v-icon>
@@ -36,13 +76,13 @@
                     </v-list>
                   </v-layout>
                   <v-layout row justify-center>
-                     <v-btn text small color="#ff6347" @click="addFriend()">Add Friend</v-btn>
+                     <v-btn text small color="#ff6347" @click="addFriend">Add Friend</v-btn>
                   </v-layout>
                   </div>
                 </v-card>
               </div>
               <div class="friends">
-                
+
                 <v-card scrollable>
                   <v-layout justify-center>
                 <v-card-title justify-center>Events</v-card-title>
@@ -51,7 +91,7 @@
                   <v-layout justify-center>
                     <v-list>
                       <v-list-item
-                        v-for="item in searchedEvents"
+                        v-for="item in events"
                         :key="item.name"
                         @click="eventPage(item)"
                       >
@@ -92,9 +132,32 @@ export default {
   // all the initial data for the component.
   data () {
     return {
+      searchProp:{
+        'name': "",
+        'location': {
+          'address1':"",
+          'address2':"",
+          'city':"",
+          'state':"",
+          'zip':"",
+          'lat':0,
+          'long':0
+        },
+        'date': [],
+        'style': [],
+        'description': "",
+        'rsvp': false,
+        'creator': "",
+        'attendees': []
+      },
+      addFriendProp: {
+        userID: ""
+      },
       userProp:[
         { text: 'username', value: 'user.username' }
-      ]
+      ],
+      events: [],
+      addfriendDialog: false
 
     }
   },
@@ -106,11 +169,21 @@ export default {
     // currently none
   },
 
+  beforeMount(){
+    if (!this.currentUser){this.$router.push('/signUp')}
+    this.searchEvent();
+  },
+
   // this is the methods portion. This is used to hold functions that our
   // page will use.
   methods :{
     addFriend(){
-      this.$router.push('/fh_AddFriend')
+      this.addfriendDialog = true
+    },
+    AddFriendThing() {
+      console.info("Vue adding friend function flag");
+      this.$store.dispatch("addfriend_event", this.addFriendProp);
+      this.addfriendDialog = false;
     },
     addEvent(){
       this.$router.push('/event_Creator')
@@ -119,6 +192,22 @@ export default {
       console.log("works: ", e)
       this.$store.commit('set_current_event', e)
       this.$router.push('/eventPage')
+    },
+    searchEvent(){
+      console.info("i am searching")
+      this.$store.dispatch('search_event', this.searchProp)
+      //console.log("response: ", this.returnedEvents)
+
+      .then(response => {
+        for(var i = 0; i < this.searchedEvents.length; i++){
+          if(this.currentUser == this.searchedEvents[i].attendees){
+            this.events.push(this.searchedEvents[i])
+          }
+
+          var hey = parseInt(this.searchedEvents[i].attendees);
+          console.log("atendees", this.currentUser);
+        }
+      })
     }
   }
 }
