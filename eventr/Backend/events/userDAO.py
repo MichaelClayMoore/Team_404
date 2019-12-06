@@ -77,6 +77,46 @@ class userDAO:
         finally:
             conn.close()
 
+    def add_friend(self, user, cUser):
+        """
+        update users
+        set friends = friends || 3
+        where (id = 1) and (not friends @> ARRAY[()]);
+
+        
+        """
+
+        #user 1 adds user2
+        conn = self.connection.connectToDb()
+        trans = conn.begin()
+        cursor = conn.connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        query = "update users set friends = friends || (SELECT id FROM users WHERE username = '"
+        query += str(user['userID']) + "') where (id = "
+        query += str(cUser) + " and (not friends @> ARRAY[(SELECT id FROM users WHERE username ='" + str(user['userID']) +"')]));"
+
+        #user2 adds user1
+        query2 = "update users set friends = friends || ( "
+        query2 += str(cUser) + ") where (id = (SELECT id FROM users WHERE username ='" + str(user['userID'])
+        query2 += "') and (not friends @> ARRAY[" + str(cUser) +"]));"
+        print('\naddfriendprop is: ', user, '\n')
+        print('\ncUser is: ', query, '\n')
+        try:
+            cursor.execute(query)
+            cursor.execute(query2)
+            print("Query Submission: SUCCESS")
+            trans.commit()
+            cursor.close()
+            return True
+
+
+        except psycopg2.Error as error:
+            trans.rollback()
+            print(error.pgerror)
+            return False
+
+        finally:
+            conn.close()
+
     def getUser(self, user):
         conn = self.connection.connectToDb()
         trans = conn.begin()

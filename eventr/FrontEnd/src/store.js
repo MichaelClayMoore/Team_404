@@ -14,7 +14,7 @@ export default new Vuex.Store({
   },
 
   mutations: {
-    add_event(state, event_to_add){
+    add_event(state, event_to_add) {
       state.list_of_events.push(event_to_add);
     },
     remove_event(state, eventId){
@@ -44,6 +44,7 @@ export default new Vuex.Store({
       console.log("event is: ", event)
       state.current_Event = event
     }
+    
   },
 
   actions: {
@@ -62,11 +63,24 @@ export default new Vuex.Store({
       return axios.post('http://127.0.0.1:5000/save_event',
       { params:{ event: payload } }
       )
-      .then(response => {
-        console.log("Response: ", response.data)
-        commit('add_event', response.data)
-      }, (err) => {
-        console.log(err)
+        .then(response => {
+          console.log("Response")
+          console.log(response.data)
+          commit('add_event', payload)
+        }, (err) => {
+          console.log(err)
+        })
+    },
+
+    addfriend_event({ commit, rootState }, payload) {
+      console.log("before axios call")
+      axios.post('http://127.0.0.1:5000/addfriend_event',
+        { params: { name: payload, cUser: rootState.currentUser } }
+      )
+        .then(response => {
+          console.log("AXIOS Response", response.data )
+        }, (err) => {
+        console.log("err", err)
       })
     },
 

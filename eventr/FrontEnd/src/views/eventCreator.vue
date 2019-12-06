@@ -104,7 +104,7 @@
         </div>
 
         <!-- submit button. the @click will trigger the submit function in the methods section -->
-        <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="createEvent">Submit</v-btn>
+        <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="createEvent(); eventPage()">Submit</v-btn>
 
       </v-layout>
   </div>
@@ -197,6 +197,12 @@ export default {
       setTimeout( () => {
         context.$store.dispatch('get_events')
       }, 2000)
+    },
+
+    eventPage(){
+      console.log("works: ", this.eventProp)
+      this.$store.commit('set_current_event', this.eventProp)
+      this.$router.push('/eventPage')
     },
 
     // this function will run when the input event is emitted from the date

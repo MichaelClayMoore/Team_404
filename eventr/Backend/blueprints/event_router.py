@@ -6,6 +6,7 @@ import json
 
 event_controller = eventController()
 user_controller = userController()
+
 event_router = Blueprint('event_router', __name__)
 
 @event_router.route("/get_test", methods=['GET'])
@@ -31,6 +32,13 @@ def delete_event():
 @event_router.route("/get_events", methods=['GET'])
 def get_events():
     return json.dumps( event_controller.getEvents() )
+
+@event_router.route("/addfriend_event", methods=['POST'])
+def addfriend_event():
+    print("made it inside of event_router.py ")
+    user = request.get_json()['params']['name']
+    cUser= request.get_json()['params']['cUser']
+    return user_controller.add_friend( user, cUser )
 
 @event_router.route("/search_event", methods=['POST'])
 def search_event():
