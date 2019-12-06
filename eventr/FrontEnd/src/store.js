@@ -74,6 +74,16 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
+    get_A_List({commit, rootState}, payload){
+      return axios.get('http://127.0.0.1:5000/get_A_List',
+      { params:{ event: payload } }
+      )
+      .then(response =>{
+        console.log("Response: ", response.data)
+      }, (err) => {
+        console.log(err)
+      })
+    },
 
     save_event({commit, rootState}, payload){
       return axios.post('http://127.0.0.1:5000/save_event',

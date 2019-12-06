@@ -114,6 +114,32 @@ class eventDAO:
         finally:
             conn.close()
 
+    def getAttendList(self, event):
+        conn = self.connection.connectToDb()
+        trans = conn.begin()
+        cursor = conn.connection.cursor()
+        print(event)
+
+        query = "with a as (select attendees from events where id = "+ str('eventId')+ ") select username from users as u, a where attendees @> ARRAY[u.id];"
+        try:
+            cursor.execute(query)
+            row = cursor.fetchone()
+            #eventsGiven = cursor.fetchall()
+            return row[0] if row else None
+            #return eventsGiven
+
+        except psycopg2.Error as error:
+                trans.rollback()
+                print(error.pgerror)
+                return False
+
+                trans.commit()
+                cursor.close()
+
+        finally:
+            conn.close()
+
+
     def removeEvent(self, eventId):
         conn = self.connection.connectToDb()
         trans = conn.begin()

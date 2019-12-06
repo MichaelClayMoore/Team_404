@@ -38,6 +38,9 @@
               <v-card-title>Attendees : {{current_Event.attendees}}</v-card-title>
             </v-col>
 
+            <v-col class ="px-0">
+              <v-card-title>Attendees : {{listAtt}}</v-card-title>
+            </v-col>
             <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="joinEvent">JOIN</v-btn>
 
            </v-row>
@@ -93,7 +96,7 @@ export default {
       },
 
       comment: "",
-
+      listAtt: [],
       // used for displaying the date to the user
       eventLocation: "choose a location",
       eventDateString: "choose a date",
@@ -133,8 +136,7 @@ export default {
       let payload = { 'eventId':this.current_Event.id, 'user':this.currentUser}
       console.log(payload)
       this.$store.dispatch('join_event', payload )
-
-    },
+     },
 
     submit_comment(){
       let payload = { 'eventId':this.current_Event.id, 'comment':this.comment}
@@ -142,6 +144,12 @@ export default {
       this.comment = ""
     }
 
+  },
+  getAttendList(){
+    console.info("fetching data from attend list", this.eventProp)
+    let payload = { 'eventId':this.current_Event.id}
+    console.log(payload)
+    this.$store.dispatch('get_A_List', payload)
   }
 }
 </script>
