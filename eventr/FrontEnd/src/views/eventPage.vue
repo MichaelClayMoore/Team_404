@@ -16,7 +16,6 @@
         >
           <v-row
             class="flex-column ma-0 fill-height"
-            justify="right"
           >
             <v-col class = "px-0">
               <h1 :style="{'display':'inline','font-weight':'bold','font-size':'50px'}"><span class="heading">{{ current_Event.name }}</span></h1>
@@ -34,12 +33,15 @@
             <v-col class ="px-0">
               <v-card-title>Description : {{current_Event.description}}</v-card-title>
             </v-col>
+
             <v-col class ="px-0">
-              <v-card-title>Attendees : {{current_Event.attendees}}</v-card-title>
+              <v-card-title>Attending :</v-card-title>
             </v-col>
 
             <v-col class ="px-0">
-              <v-card-title>list : {{attend}}</v-card-title>
+                      <v-card style v-for="data in attend">
+               <v-card-text style="color:black">{{data[0]}}</v-card-text>
+               </v-card>
             </v-col>
             <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="joinEvent">JOIN</v-btn>
 
@@ -147,7 +149,7 @@ export default {
     getAttendList(){
     console.info("fetching data from attend list", this.eventProp)
     let payload = { 'eventId':this.current_Event.id}
-    console.log(payload)
+    console.log(this.attend)
     this.$store.dispatch('get_A_List', payload)
   }
 
