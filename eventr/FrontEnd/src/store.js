@@ -9,6 +9,7 @@ export default new Vuex.Store({
     list_of_events: [],
     searchedEvents: [],
     currentUser: null,
+    attend: [],
     check_authentication: false,
     current_Event: {}
   },
@@ -47,6 +48,11 @@ export default new Vuex.Store({
     set_current_event(state, event){
       console.log("event is: ", event)
       state.current_Event = event
+    },
+
+    set_Attend(state, list){
+      console.log("in set")
+      state.attend = list
     }
 
   },
@@ -73,6 +79,17 @@ export default new Vuex.Store({
         }, (err) => {
           console.log(err)
         })
+    },
+    get_A_List({commit, rootState}, payload){
+      return axios.post('http://127.0.0.1:5000/get_A_List',
+      { params:{ event: payload } }
+      )
+      .then(response =>{
+        console.log("Response from the store when attentd: ", response.data)
+        commit('set_Attend', response.data)
+      }, (err) => {
+        console.log(err)
+      })
     },
 
     save_event({commit, rootState}, payload){

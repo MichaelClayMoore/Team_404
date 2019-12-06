@@ -3,4 +3,4 @@ postgres:
   user: postgres
   password: postgresql
   db: EventrDb
-  port: 5432
+  port: 5433
