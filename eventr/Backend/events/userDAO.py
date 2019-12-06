@@ -141,3 +141,56 @@ class userDAO:
 
         finally:
             conn.close()
+
+    def getFriends(self, cUserID):
+        conn = self.connection.connectToDb()
+        trans = conn.begin()
+        cursor = conn.connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        query = "SELECT friends from users where id = " + str(cUserID)  + ";"
+        print('\ncUserID within getFriends is: ', cUserID, '\n')
+        try:
+            cursor.execute(query)
+            friendsGiven = cursor.fetchone()    
+            print("friends within try: ", friendsGiven)
+            trans.commit()
+            cursor.close()
+            return friendsGiven
+
+
+        except psycopg2.Error as error:
+            trans.rollback()
+            print(error.pgerror)
+            return []
+
+        finally:
+            conn.close()
+
+
+
+    def getUsername(self, UserID):
+            conn = self.connection.connectToDb()
+            trans = conn.begin()
+            cursor = conn.connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            query = "SELECT username from users where id = " + str(UserID)
+            query += ";"
+            print('\nquery within getUsername: ', query, '\n')
+            
+            try:
+                cursor.execute(query)
+                username = cursor.fetchone()
+                stringusername = ""
+                for x in username:
+                    stringusername += x
+                print("friends within try in getUsername: ", stringusername)
+                trans.commit()
+                cursor.close()
+                return stringusername
+
+
+            except psycopg2.Error as error:
+                trans.rollback()
+                print(error.pgerror)
+                return []
+
+            finally:
+                conn.close()

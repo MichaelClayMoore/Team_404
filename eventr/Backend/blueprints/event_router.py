@@ -47,6 +47,11 @@ def search_event():
 
     return event_controller.search_event( searchProp )
 
+@event_router.route("/search_my_friends", methods=['POST'])
+def search_my_friends():
+    friendProp = request.get_json()['params']['friendProp']
+    return user_controller.search_friends( friendProp )
+
 @event_router.route("/save_user", methods=['POST'])
 def save_user():
     user = request.get_json()['params']['signupProp']

@@ -217,7 +217,8 @@ export default {
       //console.log("response: ", this.returnedEvents)
       
       .then(response => {
-      
+        
+        console.log(".then", response);
         if(this.searchedEvents == undefined || this.searchedEvents.length < 1){
           this.notFoundDialog = true;
         }else{
