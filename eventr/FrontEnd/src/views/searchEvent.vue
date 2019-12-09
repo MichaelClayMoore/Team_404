@@ -86,7 +86,7 @@
     <v-layout column>
         <!-- event name field -->
         <v-text-field v-model="searchProp['name']" class="input" id="name" label="Event Name" outlined color="#ff6347"></v-text-field>
-        <v-text-field v-model="searchProp['creator']" class="input" id="creator" label="Event Host" outlined color="#ff6347"></v-text-field>
+        <!-- <v-text-field v-model="searchProp['creator']" class="input" id="creator" label="Event Host" outlined color="#ff6347"></v-text-field> -->
 
         <v-select v-model="searchProp['style']" :items="Events" multiple outlined class="input" label="Event Type" color="#ff6347"></v-select>
 
@@ -94,13 +94,13 @@
         <v-layout row style="margin-bottom:20px">
           <v-spacer/>
           <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="dateDialog = true;">{{eventDateString}}</v-btn>
-          <v-spacer/>
-          <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="locationDialog = true;">{{eventLocation}}</v-btn>
+          <!-- <v-spacer/> -->
+          <!-- <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="locationDialog = true;">{{eventLocation}}</v-btn> -->
           <v-spacer/>
         </v-layout>
         <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="searchEvent">Submit</v-btn>
     </v-layout>
-<!-- 
+<!--
 
 
 -->
@@ -215,9 +215,9 @@ export default {
       console.info("i am searching")
       this.$store.dispatch('search_event', this.searchProp)
       //console.log("response: ", this.returnedEvents)
-      
+
       .then(response => {
-        
+
         console.log(".then", response);
         if(this.searchedEvents == undefined || this.searchedEvents.length < 1){
           this.notFoundDialog = true;

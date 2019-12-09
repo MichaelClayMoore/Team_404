@@ -12,7 +12,7 @@
               height="200px"
               src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
             >
-              <v-card-title>Send a Friend Request</v-card-title>
+              <v-card-title>Add Friend</v-card-title>
             </v-img>
 
             <v-card-text class="text--primary">
@@ -36,7 +36,7 @@
                 color="#ff6347"
                 :style="{'color':'#ffffff'}"
                 @click="AddFriendThing"
-              >Send Friend Request</v-btn>
+              >Add Friend</v-btn>
             </v-card-actions>
           </v-card>
     </v-dialog>

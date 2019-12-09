@@ -8,7 +8,7 @@
         <v-card-text style="height: 3000px;">
 
                 <v-data-table
-                 
+
 
                 > </v-data-table>
 
@@ -25,7 +25,7 @@
     <!-- this is where the full page starts -->
     <div flex justify-center align-center column>
       <!-- title line -->
-      
+
       <h1 :style="{'display':'inline','font-weight':'700','font-size':'15px'}">
         <span class="heading">Friends </span>
       </h1>
@@ -80,7 +80,7 @@
               color="#ff6347"
               :style="{'color':'#ffffff'}"
               @click="AddFriend"
-            >Send Friend Request</v-btn>
+            >Add Friend</v-btn>
           </v-card-actions>
         </v-card>
       </v-row>

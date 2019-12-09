@@ -8,8 +8,8 @@
       <div id="nav" class="ml-0 pl-4">
         <router-link to="/" :style="{'text-decoration':'none', 'color':'black'}"><span>Home</span></router-link>
         <router-link to="/event_creator" :style="{'text-decoration':'none', 'color':'black'}"> | Create Event</router-link>
-        <router-link to="/fh_All" :style="{'text-decoration':'none', 'color':'black'}"> | Friends</router-link>
         <router-link to="/searchEvent" :style="{'text-decoration':'none', 'color':'black'}"> | Search Event</router-link>
+        <router-link to="/fh_All" :style="{'text-decoration':'none', 'color':'black'}"> | Friends</router-link>
 
       </div>
       <v-spacer></v-spacer>
