@@ -104,7 +104,7 @@
         </div>
 
         <!-- submit button. the @click will trigger the submit function in the methods section -->
-        <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="createEvent(); eventPage()">Submit</v-btn>
+        <v-btn color="#ff6347" :style="{'color':'#ffffff'}" @click="createEvent();">Submit</v-btn>
 
       </v-layout>
   </div>
@@ -173,7 +173,7 @@ export default {
   },
 
   mounted(){
-    this.eventProp['creator'] = this.currentUser; 
+    this.eventProp['creator'] = this.currentUser;
   },
 
   // this section is to watch variables. Anytime a variable with a corresponding
@@ -193,16 +193,13 @@ export default {
     createEvent(){
       console.info("i am submitting: ", this.eventProp)
       this.$store.dispatch('save_event', this.eventProp)
-      let context = this
       setTimeout( () => {
-        context.$store.dispatch('get_events')
+        this.$store.dispatch('get_events')
+        .then(
+          this.$router.push('/eventPage')
+        )
       }, 2000)
-    },
 
-    eventPage(){
-      console.log("works: ", this.eventProp)
-      this.$store.commit('set_current_event', this.eventProp)
-      this.$router.push('/eventPage')
     },
 
     // this function will run when the input event is emitted from the date

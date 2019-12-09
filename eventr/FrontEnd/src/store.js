@@ -113,7 +113,8 @@ export default new Vuex.Store({
         .then(response => {
           console.log("Response")
           console.log(response.data)
-          commit('add_event', payload)
+          commit('add_event', response.data)
+          commit('set_current_event',response.data)
         }, (err) => {
           console.log(err)
         })

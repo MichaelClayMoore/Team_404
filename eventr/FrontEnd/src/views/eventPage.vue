@@ -116,12 +116,9 @@ export default {
       ]
     }
   },
-  beforeMount(){
-    this.getAttendList();
-  },
   mounted(){
-    this.$store.dispatch('get_test')
     this.eventProp['creator'] = this.currentUser;
+    this.getAttendList();
   },
 
   // this section is to watch variables. Anytime a variable with a corresponding
@@ -150,11 +147,13 @@ export default {
     console.info("fetching data from attend list", this.eventProp)
     let payload = { 'eventId':this.current_Event.id}
     console.log(this.attend)
-    this.$store.dispatch('get_A_List', payload)
+    setTimeout( () => {
+      this.$store.dispatch('get_A_List', payload)
+    },100)
   }
 
   },
-  
+
 }
 </script>
 
